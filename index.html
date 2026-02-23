@@ -225,12 +225,24 @@
 #sapp .plan-badge {
       position: absolute; top: 6px; left: 6px;
       background: #1a3a5c; color: white; font-size: 0.65rem; font-weight: 700;
-      border-radius: 3px; padding: 1px 5px; pointer-events: none; z-index: 1;
+      border-radius: 3px; padding: 1px 5px; pointer-events: auto; z-index: 10;
+      cursor: pointer; user-select: none; transition: background 0.15s, transform 0.1s;
     }
 #sapp .plan-card.unchecked .plan-badge { background: #9ca3af; }
 #sapp .plan-thumb { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #f8fafc; border-radius: 4px; pointer-events: none; }
 #sapp .plan-thumb-placeholder { width: 100%; aspect-ratio: 4/3; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 1.8rem; }
+#sapp .plan-badge:hover { background: #2a5a8c; transform: scale(1.08); }
+#sapp .plan-pos-menu { position: absolute; top: 34px; left: 6px; z-index: 100; background: #fff; border: 1.5px solid #0080AD; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); padding: 4px 0; min-width: 130px; font-family: Arial, sans-serif; }
+#sapp .plan-pos-menu-title { font-size: 0.68rem; font-weight: 700; color: #94a3b8; padding: 5px 12px 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+#sapp .plan-pos-item { padding: 6px 12px; font-size: 0.8rem; color: #1a3a5c; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.1s; }
+#sapp .plan-pos-item:hover { background: #e0f2fe; }
+#sapp .plan-pos-item.current { font-weight: 700; background: #f0f9ff; }
+#sapp .plan-pos-item .pos-num { font-weight: 800; color: #0080AD; min-width: 18px; text-align: center; }
 #sapp .plan-check-row { display: flex; align-items: center; gap: 6px; }
+#sapp .plan-name { font-size: 0.72rem; font-weight: 700; color: #1a3a5c; text-align: center; padding: 4px 6px 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+#sapp .plan-edited-badge { display: none; position: absolute; top: 6px; right: 6px; background: #16a34a; color: #fff; font-size: 0.62rem; font-weight: 800; border-radius: 20px; padding: 2px 8px; pointer-events: none; }
+#sapp .plan-card.edited .plan-edited-badge { display: block; }
+#sapp .plan-card.edited { border-color: #86efac; }
 #sapp .plan-check-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; accent-color: #1a3a5c; }
 #sapp .plan-check-row label { font-size: 0.78rem; color: #374151; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 230px; }
 #sapp .plan-drag-handle { text-align: center; font-size: 0.85rem; color: #cbd5e1; line-height: 1; pointer-events: none; }
@@ -1382,7 +1394,24 @@ async function loadAllData() {
     if (nbPlans > 0)          parts.push(`${nbPlans} plan(s)`);
     if (prelevements.length)  parts.push(`${prelevements.length} prélèvement(s)`);
     if (pvPdfEntries.length)  parts.push(`${pvPdfEntries.length} PDF PV`);
-    setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
+    // Auto-load JSON : Config_Plans_*.json present dans le dossier mission
+    const jsonEntry = Object.entries(fileIndex).find(([k]) =>
+      k.toLowerCase().includes('config_plans') && k.toLowerCase().endsWith('.json')
+    );
+    if (jsonEntry) {
+      log('JSON trouvé : ' + jsonEntry[0] + ' - chargement auto...', 'ok');
+      try {
+        const jsonText = await jsonEntry[1].text();
+        applyStateFromJSON(jsonText, true);
+        setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'} — ✓ Config restaurée`, 'success');
+      } catch(ej) {
+        log('Erreur auto-load JSON : ' + ej.message, 'warn');
+        setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
+      }
+    } else {
+      setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
+    }
+
 
   } catch(e) {
     setStatus('Erreur : ' + e.message, 'error');
@@ -1432,6 +1461,8 @@ function buildPlanGrid(planFiles) {
     const badge = document.createElement('div');
     badge.className = 'plan-badge';
     badge.textContent = i + 1;
+    badge.title = 'Cliquer pour changer la position';
+    badge.addEventListener('click', (e) => { e.stopPropagation(); openPlanPosMenu(card, badge); });
     const thumbWrap = document.createElement('div');
     const img = document.createElement('img');
     img.className = 'plan-thumb';
@@ -1457,8 +1488,18 @@ function buildPlanGrid(planFiles) {
     btnCrop.dataset.cardIdx = i;
     btnCrop.innerHTML = '&#x2702; Recadrer l\'image';
     btnCrop.addEventListener('click', (e) => { e.stopPropagation(); openCropModal(i, card, img); });
+    const editedBadge = document.createElement('div');
+    editedBadge.className = 'plan-edited-badge';
+    editedBadge.textContent = '✓ Corrigé';
+    const planName = document.createElement('div');
+    planName.className = 'plan-name';
+    planName.dataset.cardIdx = i;
+    planName.textContent = nomDefaut;
+    planName.title = nomDefaut;
+    card.appendChild(editedBadge);
     card.appendChild(badge);
     card.appendChild(thumbWrap);
+    card.appendChild(planName);
     card.appendChild(checkRow);
     card.appendChild(btnCrop);
     card.appendChild(handle);
@@ -1494,6 +1535,102 @@ function onDrop(e) {
   updatePlanBadges(); updatePlanCountLabel();
 }
 function onDragEnd() { this.classList.remove('dragging'); document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('drag-over')); }
+
+function openPlanPosMenu(card, badge) {
+  // Fermer tout menu deja ouvert
+  document.querySelectorAll('.plan-pos-menu').forEach(m => m.remove());
+
+  const grid = document.getElementById('planGrid');
+  const allCards = [...grid.querySelectorAll('.plan-card')];
+  const currentPos = allCards.indexOf(card);
+  const total = allCards.length;
+
+  const menu = document.createElement('div');
+  menu.className = 'plan-pos-menu';
+
+  // Position fixe sous le badge (pas dans la card pour eviter overflow)
+  const rect = badge.getBoundingClientRect();
+  menu.style.cssText = [
+    'position:fixed',
+    'top:' + (rect.bottom + 4) + 'px',
+    'left:' + rect.left + 'px',
+    'z-index:9999',
+    'background:#fff',
+    'border:1.5px solid #0080AD',
+    'border-radius:8px',
+    'box-shadow:0 4px 20px rgba(0,0,0,0.22)',
+    'padding:4px 0',
+    'min-width:160px',
+    'font-family:Arial,sans-serif'
+  ].join(';');
+
+  const title = document.createElement('div');
+  title.style.cssText = 'font-size:0.68rem;font-weight:700;color:#94a3b8;padding:5px 12px 3px;text-transform:uppercase;letter-spacing:0.5px;';
+  title.textContent = 'Déplacer en position :';
+  menu.appendChild(title);
+
+  for (let p = 1; p <= total; p++) {
+    const isCurrent = (p === currentPos + 1);
+    const item = document.createElement('div');
+    item.style.cssText = [
+      'padding:7px 12px',
+      'font-size:0.82rem',
+      'color:#1a3a5c',
+      'cursor:' + (isCurrent ? 'default' : 'pointer'),
+      'display:flex',
+      'align-items:center',
+      'gap:10px',
+      'background:' + (isCurrent ? '#f0f9ff' : 'transparent'),
+      'font-weight:' + (isCurrent ? '700' : '400')
+    ].join(';');
+
+    const numSpan = document.createElement('span');
+    numSpan.style.cssText = 'font-weight:800;color:#0080AD;min-width:22px;text-align:center;font-size:0.9rem;';
+    numSpan.textContent = p;
+
+    const lbl = document.createElement('span');
+    lbl.textContent = isCurrent ? '← Position actuelle' : '';
+    lbl.style.cssText = 'font-size:0.72rem;color:#94a3b8;';
+
+    item.appendChild(numSpan);
+    item.appendChild(lbl);
+
+    if (!isCurrent) {
+      item.addEventListener('mouseenter', () => { item.style.background = '#e0f2fe'; });
+      item.addEventListener('mouseleave', () => { item.style.background = 'transparent'; });
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        movePlanToPosition(card, p - 1);
+        menu.remove();
+      });
+    }
+    menu.appendChild(item);
+  }
+
+  document.body.appendChild(menu);
+
+  // Fermer au clic en dehors
+  const closeMenu = (e) => {
+    if (!menu.contains(e.target)) {
+      menu.remove();
+      document.removeEventListener('click', closeMenu, true);
+    }
+  };
+  setTimeout(() => document.addEventListener('click', closeMenu, true), 50);
+}
+
+function movePlanToPosition(card, targetIdx) {
+  const grid = document.getElementById('planGrid');
+  const allCards = [...grid.querySelectorAll('.plan-card')];
+  const currentIdx = allCards.indexOf(card);
+  if (currentIdx === targetIdx) return;
+  allCards.splice(currentIdx, 1);
+  allCards.splice(targetIdx, 0, card);
+  allCards.forEach(c => grid.appendChild(c));
+  updatePlanBadges();
+  updatePlanCountLabel();
+  buildPlanTable();
+}
 
 function updatePlanBadges() {
   const cards = document.querySelectorAll('#planGrid .plan-card');
@@ -1623,7 +1760,35 @@ function populateCropForm(cardIdx) {
   comIn.oninput = () => { d.commentaire = comIn.value; };
 }
 
-function syncCropFormToTable(cardIdx) { buildPlanTable(); }
+function syncCropFormToTable(cardIdx) {
+  buildPlanTable();
+  refreshPlanCard(cardIdx);
+}
+
+function refreshPlanCard(cardIdx) {
+  const d = planTableData.get(cardIdx);
+  if (!d) return;
+  const card = document.querySelector('#planGrid .plan-card[data-idx="' + cardIdx + '"]');
+  if (!card) return;
+  // Mettre a jour le nom affiche
+  const nameEl = card.querySelector('.plan-name');
+  if (nameEl) {
+    const label = (d.objet === 'Champ libre' && d.objetLibre)
+      ? d.objetLibre
+      : (d.localisation || d.objet || '');
+    nameEl.textContent = label;
+    nameEl.title = label;
+  }
+  // Badge corrige : si modification par rapport aux valeurs initiales
+  const pf = xmlData && xmlData.planFiles ? xmlData.planFiles[cardIdx] : null;
+  const locDefaut = pf ? pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ') : '';
+  const isEdited = (d.localisation && d.localisation !== locDefaut)
+    || (d.objet && d.objet !== 'Croquis de prélèvements')
+    || (d.objetLibre !== '')
+    || Object.values(d.complements || {}).some(Boolean)
+    || (d.commentaire !== '');
+  card.classList.toggle('edited', isEdited);
+}
 
 function closeCropModal() {
   document.getElementById('cropModalOverlay').classList.remove('open');
@@ -1761,6 +1926,7 @@ function applyCrop() {
     thumbEl.src = URL.createObjectURL(blob);
     const btnCrop = cardEl.querySelector('.btn-crop');
     if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
+    cardEl.classList.add('edited');
     closeCropModal();
     log(`Crop appliqué : carte ${cardIdx + 1} — ${Math.round(sel.w)}×${Math.round(sel.h)} px`, 'ok');
   }, 'image/jpeg', 0.95);
@@ -3146,11 +3312,15 @@ function loadState(input) {
   if (!file) return;
   input.value = '';
   const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const state = JSON.parse(e.target.result);
+  reader.onload = e => { applyStateFromJSON(e.target.result); };
+  reader.readAsText(file);
+}
+
+function applyStateFromJSON(jsonText, silent = false) {
+  try {
+      const state = JSON.parse(jsonText);
       if (!state.plans || !Array.isArray(state.plans)) throw new Error('Format JSON invalide');
-      if (!xmlData) { showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true); return; }
+      if (!xmlData) { if(!silent) showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true); return; }
       if (state.agence)  document.getElementById('optAgence').value  = state.agence;
       if (state.qualite) document.getElementById('optQualite').value = state.qualite;
       const fnToIdx = {};
@@ -3167,6 +3337,7 @@ function loadState(input) {
         if (card) {
           const chk = card.querySelector('input[type="checkbox"]');
           if (chk) { chk.checked = saved.checked !== false; card.classList.toggle('checked', chk.checked); card.classList.toggle('unchecked', !chk.checked); }
+          refreshPlanCard(idx); // actualise nom + badge corrige
         }
         applied++;
       });
@@ -3191,18 +3362,20 @@ function loadState(input) {
             if (thumb) thumb.src = URL.createObjectURL(restoredBlob);
             const btnCrop = card.querySelector('.btn-crop');
             if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
+            card.classList.add('edited');
           }
           cropCount++;
         } catch(e) { log(`Erreur restauration crop ${saved.fileName} : ${e.message}`, 'err'); }
       });
       Promise.all(cropPromises).then(() => {
+        // Rafraichir toutes les cards apres restauration async des crops
+        allCards.forEach(c => { const ci = parseInt(c.dataset.idx,10); if (!isNaN(ci)) refreshPlanCard(ci); });
+        buildPlanTable();
         const msg = cropCount > 0 ? `✓ ${applied} plan(s) restauré(s) · ${cropCount} crop(s) recalculé(s)` : `✓ ${applied} plan(s) restauré(s)`;
         showSaveLoadMsg(msg);
         log(`Configuration chargée : ${applied} plan(s), ${cropCount} crop(s)`, 'ok');
       });
-    } catch(err) { showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true); log('Erreur chargement JSON : ' + err.message, 'err'); }
-  };
-  reader.readAsText(file);
+    } catch(err) { if(!silent) showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true); log('Erreur chargement JSON : ' + err.message, 'err'); }
 }
 
 function showSaveLoadMsg(msg, isError=false) {
