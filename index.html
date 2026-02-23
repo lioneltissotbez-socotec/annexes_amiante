@@ -5,21 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Générateur Dossiers Amiante — SOCOTEC</title>
   <style>
-    /* ════════════════════════════════════════════════════════════
-       ISOLATION CSS — Embedding LumApps
-       Tous les sélecteurs sont préfixés #sapp pour éviter tout
-       conflit avec les styles de la page hôte.
-       all:initial sur #sapp coupe l'héritage entrant.
-    ════════════════════════════════════════════════════════════ */
 #sapp { all: initial; display: block; box-sizing: border-box;
         font-family: Arial, sans-serif; font-size: 14px;
         color: #333; background: #e8ecf1; min-height: 100vh; }
 #sapp *, #sapp *::before, #sapp *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ── Wrapper global ── */
 #sapp .app-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
-
-    /* ── Header ── */
 #sapp .header {
       background: linear-gradient(135deg, #1a3a5c 0%, #2a5a8c 100%);
       color: white; padding: 16px 28px; flex-shrink: 0;
@@ -32,52 +22,28 @@
     }
 #sapp .header h1 { font-size: 1rem; margin-bottom: 2px; }
 #sapp .header p { font-size: 0.75rem; opacity: 0.72; }
-
-    /* ── Layout 2 colonnes sous le header ── */
-#sapp .app-body {
-      display: flex; flex: 1; gap: 0; overflow: hidden;
-    }
-
-    /* ── Colonne gauche : panneau de contrôle ── */
+#sapp .app-body { display: flex; flex: 1; gap: 0; overflow: hidden; }
 #sapp .panel-left {
-      width: 340px; flex-shrink: 0;
-      background: white;
-      border-right: 1px solid #dde3ea;
-      display: flex; flex-direction: column;
-      overflow-y: auto;
-      box-shadow: 2px 0 6px rgba(0,0,0,0.05);
+      width: 340px; flex-shrink: 0; background: white;
+      border-right: 1px solid #dde3ea; display: flex; flex-direction: column;
+      overflow-y: auto; box-shadow: 2px 0 6px rgba(0,0,0,0.05);
     }
 #sapp .panel-left-inner { padding: 20px; flex: 1; }
-
-    /* ── Colonne droite : zone de contenu / plans ── */
-#sapp .panel-right {
-      flex: 1; display: flex; flex-direction: column;
-      overflow: hidden; background: #e8ecf1;
-    }
-#sapp .panel-right-inner {
-      flex: 1; padding: 20px; overflow-y: auto;
-    }
-
-    /* ── Card (utilisée dans le panneau gauche) ── */
+#sapp .panel-right { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #e8ecf1; }
+#sapp .panel-right-inner { flex: 1; padding: 20px; overflow-y: auto; }
 #sapp .card { background: white; }
-
-    /* ── Intro ── */
 #sapp .intro { font-size: 0.82rem; color: #555; margin-bottom: 10px; line-height: 1.5; }
 #sapp .structure-box {
       background: #f5f7fa; border: 1px solid #e0e4ea; border-radius: 5px;
       padding: 10px 12px; font-size: 0.73rem; font-family: 'Courier New', monospace;
       color: #444; margin-bottom: 16px; line-height: 1.65;
     }
-
-    /* ── Options ── */
 #sapp .options-row { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
 #sapp .option-group label { font-size: 0.78rem; color: #374151; font-weight: 600; display: block; margin-bottom: 4px; }
 #sapp .option-group select, #sapp .option-group input[type="text"] {
       border: 1px solid #d1d5db; border-radius: 5px; padding: 6px 9px;
       font-size: 0.82rem; font-family: Arial, sans-serif; color: #374151; width: 100%;
     }
-
-    /* ── Upload zone ── */
 #sapp .upload-zone {
       border: 2px dashed #94a3b8; border-radius: 8px; padding: 18px 14px;
       text-align: center; background: #f8fafc; cursor: pointer;
@@ -89,8 +55,6 @@
 #sapp .upload-zone small { font-size: 0.7rem; color: #94a3b8; }
 #sapp #folderInput { display: none; }
 #sapp #folderName { font-size: 0.78rem; color: #1a3a5c; font-weight: 600; margin-top: 5px; }
-
-    /* ── Boutons ── */
 #sapp .btn-row { display: flex; flex-direction: column; gap: 8px; }
 #sapp .btn {
       display: flex; align-items: center; justify-content: center; gap: 8px; border: none;
@@ -101,9 +65,9 @@
 #sapp .btn-photos:hover { background: #15803d; }
 #sapp .btn-plans { background: #1a3a5c; color: white; }
 #sapp .btn-plans:hover { background: #2a5a8c; }
+#sapp .btn-pv { background: #7c3aed; color: white; }
+#sapp .btn-pv:hover { background: #6d28d9; }
 #sapp .btn:disabled { background: #9ca3af; cursor: not-allowed; }
-
-    /* ── Info grid ── */
 #sapp hr { border: none; border-top: 1px solid #e5e7eb; margin: 14px 0; }
 #sapp .info-section h3 { font-size: 0.72rem; color: #6b7280; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
 #sapp .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 12px; }
@@ -112,35 +76,23 @@
 #sapp .info-item span { font-size: 0.9rem; font-weight: 700; color: #1a3a5c; }
 #sapp .info-item.green span { color: #16a34a; }
 #sapp .info-item.red   span { color: #dc2626; }
-#sapp .info-item.yellow span { color: #d97706; }
-
-    /* ── Status ── */
+#sapp .info-item.yellow span { color: #1565C0; }
 #sapp .status { display: none; margin-top: 16px; padding: 12px 16px; border-radius: 6px;
       font-size: 0.88rem; border-left: 4px solid #1a3a5c; background: #eff6ff; }
 #sapp .status.error { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
 #sapp .status.success { background: #f0fdf4; border-color: #16a34a; color: #15803d; }
-
-    /* ── Progress ── */
 #sapp .progress-wrap { display: none; margin-top: 12px; }
 #sapp .progress-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; }
 #sapp .progress-fill { height: 100%; background: linear-gradient(90deg, #1a3a5c, #2a5a8c); border-radius: 4px; transition: width 0.3s ease; width: 0%; }
 #sapp .progress-label { font-size: 0.75rem; color: #9ca3af; margin-top: 4px; text-align: right; }
-
-    /* ── Log console ── */
 #sapp .log { display: none; background: #1e2330; color: #c9d1d9; padding: 12px 14px;
       border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.75rem;
       max-height: 150px; overflow-y: auto; margin-top: 14px; line-height: 1.6; }
 #sapp .log .ok { color: #4ade80; }
 #sapp .log .err { color: #f87171; }
 #sapp .log .warn { color: #fbbf24; }
-
-    /* Plans info grid */
 #sapp .info-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-
-    /* ---- Preview plans grille drag & drop ---- */
-#sapp .plans-toolbar {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
-    }
+#sapp .plans-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 #sapp .plans-toolbar span { font-size: 0.78rem; color: #6b7280; }
 #sapp .plans-toolbar button {
       border: 1px solid #d1d5db; background: #f9fafb; border-radius: 5px;
@@ -148,36 +100,22 @@
       color: #374151; transition: background 0.15s;
     }
 #sapp .plans-toolbar button:hover { background: #e5e7eb; }
-    /* Titres panneau droit */
 #sapp .panel-section-title {
       font-size: 0.72rem; font-weight: 700; color: #6b7280; text-transform: uppercase;
       letter-spacing: 0.6px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
     }
-#sapp .panel-section-title::after {
-      content: ''; flex: 1; height: 1px; background: #e5e7eb;
-    }
-
-    /* Zone réservée droite */
+#sapp .panel-section-title::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; }
 #sapp .panel-placeholder {
       background: white; border: 2px dashed #e2e8f0; border-radius: 10px;
-      padding: 40px 20px; text-align: center; color: #94a3b8;
-      margin-top: 20px;
+      padding: 40px 20px; text-align: center; color: #94a3b8; margin-top: 20px;
     }
 #sapp .panel-placeholder svg { width: 40px; height: 40px; margin-bottom: 10px; opacity: 0.35; }
 #sapp .panel-placeholder p { font-size: 0.82rem; }
 #sapp .panel-placeholder small { font-size: 0.72rem; color: #cbd5e1; }
-
-    /* Stats dans le panneau droit */
-#sapp .right-stats {
-      background: white; border-radius: 8px; padding: 16px 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px;
-    }
+#sapp .right-stats { background: white; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px; }
 #sapp .right-stats .info-grid { margin-bottom: 0; }
-
-    /* Grille plans — pleine largeur dans le panneau droit */
 #sapp #planGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 14px; margin-bottom: 16px; padding: 2px;
     }
 #sapp .plan-card {
@@ -197,32 +135,12 @@
       border-radius: 3px; padding: 1px 5px; pointer-events: none; z-index: 1;
     }
 #sapp .plan-card.unchecked .plan-badge { background: #9ca3af; }
-#sapp .plan-thumb {
-      width: 100%; aspect-ratio: 4/3; object-fit: contain;
-      background: #f8fafc; border-radius: 4px; pointer-events: none;
-    }
-#sapp .plan-thumb-placeholder {
-      width: 100%; aspect-ratio: 4/3; background: #f1f5f9; border-radius: 4px;
-      display: flex; align-items: center; justify-content: center;
-      color: #94a3b8; font-size: 1.8rem;
-    }
+#sapp .plan-thumb { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #f8fafc; border-radius: 4px; pointer-events: none; }
+#sapp .plan-thumb-placeholder { width: 100%; aspect-ratio: 4/3; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 1.8rem; }
 #sapp .plan-check-row { display: flex; align-items: center; gap: 6px; }
-#sapp .plan-check-row input[type="checkbox"] {
-      width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; accent-color: #1a3a5c;
-    }
-#sapp .plan-check-row label {
-      font-size: 0.78rem; color: #374151; cursor: pointer;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 230px;
-    }
-#sapp .plan-name-input {
-      width: 100%; border: 1px solid #e2e8f0; border-radius: 4px;
-      padding: 5px 8px; font-size: 0.82rem; font-family: Arial, sans-serif;
-      color: #1e293b; background: #f8fafc; box-sizing: border-box; transition: border-color 0.15s;
-    }
-#sapp .plan-name-input:focus { outline: none; border-color: #1a3a5c; background: #fff; }
+#sapp .plan-check-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; accent-color: #1a3a5c; }
+#sapp .plan-check-row label { font-size: 0.78rem; color: #374151; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 230px; }
 #sapp .plan-drag-handle { text-align: center; font-size: 0.85rem; color: #cbd5e1; line-height: 1; pointer-events: none; }
-
-    /* Bouton recadrage */
 #sapp .btn-crop {
       width: 100%; border: 1px dashed #94a3b8; background: #f8fafc; border-radius: 5px;
       padding: 5px 0; font-size: 0.78rem; cursor: pointer; font-family: Arial, sans-serif;
@@ -231,202 +149,77 @@
     }
 #sapp .btn-crop:hover { background: #eff6ff; border-color: #1a3a5c; color: #1a3a5c; }
 #sapp .btn-crop.has-crop { border-color: #16a34a; color: #16a34a; background: #f0fdf4; border-style: solid; }
-
-    /* Modal crop */
 #sapp .crop-modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.72);
       display: none; align-items: center; justify-content: center; z-index: 2000;
     }
 #sapp .crop-modal-overlay.open { display: flex; }
 #sapp .crop-modal {
-      background: #1e2330; border-radius: 10px;
-      padding: 0; width: 96vw; max-width: 1400px; max-height: 96vh;
+      background: #1e2330; border-radius: 10px; padding: 0;
+      width: 96vw; max-width: 1400px; max-height: 96vh;
       display: flex; flex-direction: column; overflow: hidden;
       box-shadow: 0 20px 60px rgba(0,0,0,0.6);
     }
-#sapp .crop-modal-header {
-      background: #1a3a5c; color: white; padding: 12px 18px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-shrink: 0;
-    }
+#sapp .crop-modal-header { background: #1a3a5c; color: white; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
 #sapp .crop-modal-header h3 { font-size: 0.95rem; font-family: Arial, sans-serif; margin: 0; }
 #sapp .crop-modal-header small { font-size: 0.72rem; opacity: 0.7; margin-top: 2px; display: block; }
-
-    /* Layout 2 colonnes dans le modal */
-#sapp .crop-modal-body {
-      flex: 1; overflow: hidden;
-      display: flex; flex-direction: row; gap: 0;
-    }
-#sapp .crop-canvas-zone {
-      flex: 1; overflow: auto; padding: 14px;
-      display: flex; align-items: center; justify-content: center;
-      background: #161b27;
-    }
-#sapp #cropCanvas {
-      cursor: crosshair; max-width: 100%;
-      max-height: calc(96vh - 160px); display: block;
-    }
-
-    /* Panneau droit du modal : formulaire cartouche */
-#sapp .crop-form-panel {
-      width: 280px; flex-shrink: 0;
-      background: #252d3d; overflow-y: auto;
-      padding: 16px; border-left: 1px solid #1a2236;
-      display: flex; flex-direction: column; gap: 12px;
-    }
-#sapp .crop-form-panel h4 {
-      font-size: 0.78rem; font-weight: 700; color: #93c5fd;
-      text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px 0;
-      font-family: Arial, sans-serif;
-    }
-#sapp .crop-form-sep {
-      height: 1px; background: #1a2236; margin: 4px 0;
-    }
-#sapp .crop-field-label {
-      font-size: 0.7rem; color: #94a3b8; font-family: Arial, sans-serif;
-      margin-bottom: 3px; display: block;
-    }
-#sapp .crop-field-select, #sapp .crop-field-input, #sapp .crop-field-textarea {
-      width: 100%; border: 1px solid #374151; border-radius: 4px;
-      padding: 5px 8px; font-size: 0.78rem; font-family: Arial, sans-serif;
-      color: #e2e8f0; background: #1e2330;
-    }
-#sapp .crop-field-select:focus, #sapp .crop-field-input:focus, #sapp .crop-field-textarea:focus {
-      outline: none; border-color: #3b82f6; background: #1a2236;
-    }
+#sapp .crop-modal-body { flex: 1; overflow: hidden; display: flex; flex-direction: row; gap: 0; }
+#sapp .crop-canvas-zone { flex: 1; overflow: auto; padding: 14px; display: flex; align-items: center; justify-content: center; background: #161b27; }
+#sapp #cropCanvas { cursor: crosshair; max-width: 100%; max-height: calc(96vh - 160px); display: block; }
+#sapp .crop-form-panel { width: 280px; flex-shrink: 0; background: #252d3d; overflow-y: auto; padding: 16px; border-left: 1px solid #1a2236; display: flex; flex-direction: column; gap: 12px; }
+#sapp .crop-form-panel h4 { font-size: 0.78rem; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px 0; font-family: Arial, sans-serif; }
+#sapp .crop-form-sep { height: 1px; background: #1a2236; margin: 4px 0; }
+#sapp .crop-field-label { font-size: 0.7rem; color: #94a3b8; font-family: Arial, sans-serif; margin-bottom: 3px; display: block; }
+#sapp .crop-field-select, #sapp .crop-field-input, #sapp .crop-field-textarea { width: 100%; border: 1px solid #374151; border-radius: 4px; padding: 5px 8px; font-size: 0.78rem; font-family: Arial, sans-serif; color: #e2e8f0; background: #1e2330; }
+#sapp .crop-field-select:focus, #sapp .crop-field-input:focus, #sapp .crop-field-textarea:focus { outline: none; border-color: #3b82f6; background: #1a2236; }
 #sapp .crop-field-textarea { resize: vertical; min-height: 64px; }
-#sapp .crop-comp-grid {
-      display: flex; flex-wrap: wrap; gap: 4px 10px;
-    }
-#sapp .crop-comp-item {
-      display: flex; align-items: center; gap: 4px; white-space: nowrap;
-    }
-#sapp .crop-comp-item input[type="checkbox"] {
-      width: 13px; height: 13px; accent-color: #3b82f6; cursor: pointer;
-    }
+#sapp .crop-comp-grid { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+#sapp .crop-comp-item { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+#sapp .crop-comp-item input[type="checkbox"] { width: 13px; height: 13px; accent-color: #3b82f6; cursor: pointer; }
 #sapp .crop-comp-item label { font-size: 0.72rem; color: #cbd5e1; cursor: pointer; }
-#sapp .crop-autres-input {
-      width: 100%; border: 1px solid #374151; border-radius: 4px;
-      padding: 4px 7px; font-size: 0.72rem; font-family: Arial, sans-serif;
-      color: #e2e8f0; background: #1e2330; margin-top: 4px; display: none;
-    }
-
-#sapp .crop-modal-footer {
-      background: #161b27; padding: 10px 18px;
-      display: flex; align-items: center; gap: 10px; flex-shrink: 0; flex-wrap: wrap;
-    }
+#sapp .crop-autres-input { width: 100%; border: 1px solid #374151; border-radius: 4px; padding: 4px 7px; font-size: 0.72rem; font-family: Arial, sans-serif; color: #e2e8f0; background: #1e2330; margin-top: 4px; display: none; }
+#sapp .crop-modal-footer { background: #161b27; padding: 10px 18px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; flex-wrap: wrap; }
 #sapp .crop-modal-footer span { font-size: 0.75rem; color: #64748b; flex: 1; }
-#sapp .btn-crop-apply {
-      background: #16a34a; color: white; border: none; border-radius: 6px;
-      padding: 8px 20px; font-size: 0.88rem; font-family: Arial, sans-serif;
-      font-weight: 600; cursor: pointer;
-    }
+#sapp .btn-crop-apply { background: #16a34a; color: white; border: none; border-radius: 6px; padding: 8px 20px; font-size: 0.88rem; font-family: Arial, sans-serif; font-weight: 600; cursor: pointer; }
 #sapp .btn-crop-apply:hover { background: #15803d; }
-#sapp .btn-crop-reset {
-      background: #374151; color: #d1d5db; border: none; border-radius: 6px;
-      padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer;
-    }
+#sapp .btn-crop-reset { background: #374151; color: #d1d5db; border: none; border-radius: 6px; padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer; }
 #sapp .btn-crop-reset:hover { background: #4b5563; }
-#sapp .btn-crop-cancel {
-      background: transparent; color: #94a3b8; border: 1px solid #374151; border-radius: 6px;
-      padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer;
-    }
+#sapp .btn-crop-cancel { background: transparent; color: #94a3b8; border: 1px solid #374151; border-radius: 6px; padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer; }
 #sapp .btn-crop-cancel:hover { color: white; border-color: #6b7280; }
-#sapp .btn-crop-rotate {
-      background: #1e3a5f; color: #93c5fd; border: 1px solid #2a5a8c; border-radius: 6px;
-      padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer;
-    }
+#sapp .btn-crop-rotate { background: #1e3a5f; color: #93c5fd; border: 1px solid #2a5a8c; border-radius: 6px; padding: 8px 16px; font-size: 0.88rem; font-family: Arial, sans-serif; cursor: pointer; }
 #sapp .btn-crop-rotate:hover { background: #2a5a8c; color: white; }
-
-    /* ── Tableau de saisie plans ── */
-#sapp #sectionPlanTable {
-      background: white; border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      margin-top: 20px; overflow: hidden;
-    }
-#sapp .plan-table-header {
-      background: #1a3a5c; color: white; padding: 10px 16px;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    }
+#sapp #sectionPlanTable { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-top: 20px; overflow: hidden; }
+#sapp .plan-table-header { background: #1a3a5c; color: white; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 #sapp .plan-table-header h4 { font-size: 0.82rem; font-family: Arial, sans-serif; margin: 0; }
-#sapp .btn-copy-table {
-      background: white; color: #1a3a5c; border: none; border-radius: 5px;
-      padding: 5px 12px; font-size: 0.75rem; font-family: Arial, sans-serif;
-      font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;
-      transition: background 0.15s;
-    }
+#sapp .btn-copy-table { background: white; color: #1a3a5c; border: none; border-radius: 5px; padding: 5px 12px; font-size: 0.75rem; font-family: Arial, sans-serif; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: background 0.15s; }
 #sapp .btn-copy-table:hover { background: #e0f2fe; }
 #sapp .btn-copy-table.copied { background: #d1fae5; color: #16a34a; }
-
-#sapp #planInfoTable {
-      width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: Arial, sans-serif;
-    }
-#sapp #planInfoTable thead th {
-      background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.4px;
-      padding: 7px 10px; border-bottom: 2px solid #e2e8f0;
-      text-align: left; white-space: nowrap;
-    }
+#sapp #planInfoTable { width: 100%; border-collapse: collapse; font-size: 0.78rem; font-family: Arial, sans-serif; }
+#sapp #planInfoTable thead th { background: #f1f5f9; color: #475569; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; padding: 7px 10px; border-bottom: 2px solid #e2e8f0; text-align: left; white-space: nowrap; }
 #sapp #planInfoTable thead th:first-child { text-align: center; width: 52px; }
 #sapp #planInfoTable tbody tr { border-bottom: 1px solid #f1f5f9; }
 #sapp #planInfoTable tbody tr:hover { background: #fafbff; }
 #sapp #planInfoTable tbody td { padding: 6px 8px; vertical-align: top; }
 #sapp #planInfoTable tbody td:first-child { text-align: center; font-weight: 700; color: #1a3a5c; font-size: 0.82rem; }
-
-    /* Cellule Objet */
-#sapp .pt-objet-select {
-      width: 100%; border: 1px solid #e2e8f0; border-radius: 4px;
-      padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif;
-      color: #1e293b; background: #f8fafc; cursor: pointer;
-    }
-#sapp .pt-objet-libre {
-      width: 100%; border: 1px solid #bfdbfe; border-radius: 4px;
-      padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif;
-      color: #1e293b; margin-top: 4px; display: none;
-      background: #eff6ff;
-    }
-
-    /* Cellule Localisation */
-#sapp .pt-loc-input {
-      width: 100%; border: 1px solid #e2e8f0; border-radius: 4px;
-      padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif;
-      color: #1e293b; background: #f8fafc;
-    }
+#sapp .pt-objet-select { width: 100%; border: 1px solid #e2e8f0; border-radius: 4px; padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif; color: #1e293b; background: #f8fafc; cursor: pointer; }
+#sapp .pt-objet-libre { width: 100%; border: 1px solid #bfdbfe; border-radius: 4px; padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif; color: #1e293b; margin-top: 4px; display: none; background: #eff6ff; }
+#sapp .pt-loc-input { width: 100%; border: 1px solid #e2e8f0; border-radius: 4px; padding: 4px 6px; font-size: 0.75rem; font-family: Arial, sans-serif; color: #1e293b; background: #f8fafc; }
 #sapp .pt-loc-input:focus, #sapp .pt-objet-select:focus { outline: none; border-color: #1a3a5c; background: #fff; }
-
-    /* Cellule Compléments */
-#sapp .pt-comp-grid {
-      display: flex; flex-wrap: wrap; gap: 3px 8px;
-    }
-#sapp .pt-comp-item {
-      display: flex; align-items: center; gap: 3px; white-space: nowrap;
-    }
+#sapp .pt-comp-grid { display: flex; flex-wrap: wrap; gap: 3px 8px; }
+#sapp .pt-comp-item { display: flex; align-items: center; gap: 3px; white-space: nowrap; }
 #sapp .pt-comp-item input[type="checkbox"] { width: 12px; height: 12px; accent-color: #1a3a5c; cursor: pointer; }
 #sapp .pt-comp-item label { font-size: 0.72rem; color: #374151; cursor: pointer; }
-#sapp .pt-autres-input {
-      width: 90px; border: 1px solid #e2e8f0; border-radius: 3px;
-      padding: 2px 5px; font-size: 0.72rem; font-family: Arial, sans-serif;
-      display: none; margin-top: 3px;
-    }
+#sapp .pt-autres-input { width: 90px; border: 1px solid #e2e8f0; border-radius: 3px; padding: 2px 5px; font-size: 0.72rem; font-family: Arial, sans-serif; display: none; margin-top: 3px; }
 #sapp .pt-empty { color: #94a3b8; font-style: italic; font-size: 0.75rem; padding: 20px; text-align: center; }
-
-    /* ── Boutons save/load ── */
-    #sapp #saveLoadRow { display: flex; }
-    #sapp .btn-saveload {
-      flex: 1; border: 1px solid #d1d5db; background: #f9fafb; border-radius: 5px;
-      padding: 6px 10px; font-size: 0.75rem; cursor: pointer;
-      font-family: Arial, sans-serif; color: #374151;
-      transition: background 0.15s; display: flex; align-items: center;
-      justify-content: center; gap: 4px;
-    }
-    #sapp .btn-saveload:hover { background: #e0f2fe; border-color: #0080AD; color: #0080AD; }
+#sapp #saveLoadRow { display: flex; }
+#sapp .btn-saveload { flex: 1; border: 1px solid #d1d5db; background: #f9fafb; border-radius: 5px; padding: 6px 10px; font-size: 0.75rem; cursor: pointer; font-family: Arial, sans-serif; color: #374151; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 4px; }
+#sapp .btn-saveload:hover { background: #e0f2fe; border-color: #0080AD; color: #0080AD; }
   </style>
 </head>
 <body>
 <div id="sapp">
 <div class="app-wrapper">
 
-  <!-- ── Header pleine largeur ── -->
   <div class="header">
     <div class="header-logo">SOCOTEC</div>
     <div>
@@ -435,10 +228,8 @@
     </div>
   </div>
 
-  <!-- ── Layout 2 colonnes ── -->
   <div class="app-body">
 
-    <!-- ════ PANNEAU GAUCHE : contrôles ════ -->
     <div class="panel-left">
       <div class="panel-left-inner">
 
@@ -455,7 +246,6 @@
 &nbsp;&nbsp;📁 plan/ &nbsp;← *_Ami.jpg
         </div>
 
-        <!-- Sauvegarde / Chargement état -->
         <div id="saveLoadRow" style="display:none; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
           <button class="btn-saveload" onclick="saveState()" title="Exporter la configuration en JSON">
             &#x1F4BE; Sauvegarder
@@ -468,17 +258,14 @@
           <span id="saveLoadMsg" style="font-size:0.7rem;color:#16a34a;align-self:center;display:none;"></span>
         </div>
 
-        <!-- Zone sélection dossier -->
         <div class="upload-zone" onclick="selectMissionFolder()">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
           <p>Cliquer pour sélectionner le dossier</p>
           <small>Chrome, Edge — Firefox : sélection fichiers</small>
         </div>
-        <!-- Fallback Firefox : input webkitdirectory -->
         <input id="folderInput" type="file" webkitdirectory multiple style="display:none;">
         <div id="folderName"></div>
 
-        <!-- Options -->
         <div id="sectionOptions" style="display:none;">
           <hr>
           <div class="options-row">
@@ -499,7 +286,6 @@
           </div>
         </div>
 
-        <!-- Stats dossier photos -->
         <div id="sectionStatsPhotos" style="display:none;">
           <hr>
           <div class="info-section">
@@ -508,7 +294,6 @@
           </div>
         </div>
 
-        <!-- Stats plans (résumé compact) -->
         <div id="sectionStatsPlans" style="display:none;">
           <div class="info-section">
             <h3>&#x1F4D0; Plans</h3>
@@ -516,7 +301,6 @@
           </div>
         </div>
 
-        <!-- Boutons génération -->
         <div id="sectionResultat" style="display:none;">
           <hr>
           <div class="btn-row">
@@ -526,45 +310,36 @@
             <button class="btn btn-plans" id="btnGenPlans" onclick="generateDocxPlans()">
               📐 Dossier Plans (.docx)
             </button>
+            <button class="btn btn-pv" id="btnGenPV" onclick="generateDocxPV()">
+              📑 Annexe PV d'analyses (.docx)
+            </button>
           </div>
         </div>
 
-        <!-- Status -->
         <div class="status" id="status"></div>
-
-        <!-- Progress -->
         <div class="progress-wrap" id="progressWrap">
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           <div class="progress-label" id="progressLabel">0%</div>
         </div>
-
-        <!-- Log console -->
         <div class="log" id="log"></div>
 
-      </div><!-- /panel-left-inner -->
-    </div><!-- /panel-left -->
+      </div>
+    </div>
 
-    <!-- ════ PANNEAU DROIT : grille plans + zone réservée ════ -->
     <div class="panel-right">
       <div class="panel-right-inner">
 
-        <!-- Grille plans (visible après chargement) -->
         <div id="sectionPlanGrid" style="display:none;">
           <div class="panel-section-title">&#x1F4D0; Plans de repérage — _Ami.jpg</div>
-
-          <!-- Toolbar plans -->
           <div class="plans-toolbar" id="plansToolbar">
             <span id="planCountLabel"></span>
             <button onclick="selectAllPlans(true)">&#x2705; Tout cocher</button>
             <button onclick="selectAllPlans(false)">&#x274C; Tout d&eacute;cocher</button>
             <span style="color:#94a3b8;font-size:0.72rem;">&#8645; Glisser-d&eacute;poser pour r&eacute;ordonner</span>
           </div>
-
-          <!-- Grille vignettes -->
           <div id="planGrid"></div>
         </div>
 
-        <!-- Placeholder affiché avant chargement ou si pas de plans -->
         <div id="panelPlaceholder">
           <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
             <div style="text-align:center;color:#94a3b8;">
@@ -575,10 +350,8 @@
               <p style="font-size:0.78rem;margin-top:6px;">Les plans <em>_Ami.jpg</em> s'afficheront ici</p>
             </div>
           </div>
-
         </div>
 
-        <!-- Tableau de saisie des informations cartouche -->
         <div id="sectionPlanTable" style="display:none;">
           <div class="plan-table-header">
             <h4>&#x1F4CB; Informations cartouche des plans</h4>
@@ -603,72 +376,51 @@
           </div>
         </div>
 
-      </div><!-- /panel-right-inner -->
-    </div><!-- /panel-right -->
+      </div>
+    </div>
 
-  </div><!-- /app-body -->
-</div><!-- /app-wrapper -->
+  </div>
+</div>
 
-<!-- Modal édition plan : recadrage + informations cartouche -->
+<!-- Modal édition plan -->
 <div class="crop-modal-overlay" id="cropModalOverlay">
   <div class="crop-modal">
-
-    <!-- En-tête -->
     <div class="crop-modal-header">
       <div>
         <h3>&#x2702;&#xFE0F; &Eacute;dition du plan</h3>
         <small id="cropModalFileName"></small>
       </div>
     </div>
-
-    <!-- Corps : canvas gauche + formulaire droit -->
     <div class="crop-modal-body">
-
-      <!-- Zone canvas -->
       <div class="crop-canvas-zone">
         <canvas id="cropCanvas"></canvas>
       </div>
-
-      <!-- Panneau formulaire -->
       <div class="crop-form-panel">
-
         <h4>&#x1F4CB; Informations cartouche</h4>
         <div class="crop-form-sep"></div>
-
-        <!-- Objet -->
         <div>
           <span class="crop-field-label">Objet</span>
           <select id="cropFieldObjet" class="crop-field-select"></select>
           <input type="text" id="cropFieldObjetLibre" class="crop-field-input"
             placeholder="Saisir librement…" style="margin-top:4px;display:none;">
         </div>
-
-        <!-- Localisation -->
         <div>
           <span class="crop-field-label">Localisation</span>
           <input type="text" id="cropFieldLoc" class="crop-field-input" placeholder="Localisation…">
         </div>
-
-        <!-- Compléments -->
         <div>
           <span class="crop-field-label">Compl&eacute;ments</span>
           <div class="crop-comp-grid" id="cropCompGrid"></div>
           <input type="text" id="cropAutresInput" class="crop-autres-input" placeholder="Préciser…">
         </div>
-
         <div class="crop-form-sep"></div>
-
-        <!-- Commentaires -->
         <div>
           <span class="crop-field-label">Commentaires</span>
           <textarea id="cropFieldComment" class="crop-field-textarea"
             placeholder="Commentaires libres…" rows="4"></textarea>
         </div>
-
-      </div><!-- /crop-form-panel -->
-    </div><!-- /crop-modal-body -->
-
-    <!-- Footer boutons -->
+      </div>
+    </div>
     <div class="crop-modal-footer">
       <span>Cliquer-glisser pour d&eacute;finir la zone &bull; Poign&eacute;es aux coins pour redimensionner &bull; Cliquer dans la s&eacute;lection pour la d&eacute;placer</span>
       <button class="btn-crop-rotate" onclick="cropRotate90()">&#x21BB; Rotation 90&deg;</button>
@@ -676,24 +428,23 @@
       <button class="btn-crop-cancel" onclick="closeCropModal()">Annuler</button>
       <button class="btn-crop-apply"  onclick="applyCrop()">&#x2705; Appliquer</button>
     </div>
-
   </div>
 </div>
 </div><!-- /sapp -->
 
-
-<!-- docx.js v7 UMD — expose window.docx dans le navigateur -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(typeof pdfjsLib !== 'undefined') pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
 // VARIABLES GLOBALES
 // ═══════════════════════════════════════════════════════════════
-let xmlData         = null;   // données issues des 3 XML amiante + bien
-let fileIndex       = {};     // chemin normalisé → File
-let rootName        = '';
-let missionDirHandle = null;  // FileSystemDirectoryHandle (File System Access API)
-let isRunning = false;
+let xmlData          = null;
+let fileIndex        = {};
+let rootName         = '';
+let missionDirHandle = null;  // FileSystemDirectoryHandle
+let isRunning        = false;
 
 // ═══════════════════════════════════════════════════════════════
 // HELPERS UI
@@ -719,16 +470,17 @@ function setProgress(pct, label) {
   document.getElementById('progressLabel').textContent = label || pct + '%';
 }
 function resetUI() {
-  document.getElementById('sectionResultat').style.display   = 'none';
-  document.getElementById('sectionOptions').style.display    = 'none';
-  document.getElementById('sectionStatsPhotos').style.display= 'none';
-  document.getElementById('sectionStatsPlans').style.display = 'none';
-  document.getElementById('sectionPlanGrid').style.display   = 'none';
-  document.getElementById('sectionPlanTable').style.display  = 'none';
-  document.getElementById('panelPlaceholder').style.display  = 'block';
-  document.getElementById('saveLoadRow').style.display       = 'none';
+  document.getElementById('sectionResultat').style.display    = 'none';
+  document.getElementById('sectionOptions').style.display     = 'none';
+  document.getElementById('sectionStatsPhotos').style.display = 'none';
+  document.getElementById('sectionStatsPlans').style.display  = 'none';
+  document.getElementById('sectionPlanGrid').style.display    = 'none';
+  document.getElementById('sectionPlanTable').style.display   = 'none';
+  document.getElementById('panelPlaceholder').style.display   = 'block';
+  document.getElementById('saveLoadRow').style.display        = 'none';
   planTableData.clear();
-  missionDirHandle = null;
+  // ⚠️ NE PAS toucher missionDirHandle ici — il est affecté AVANT resetUI()
+  // et doit survivre pour les exports
   document.getElementById('log').innerHTML = '';
   document.getElementById('log').style.display = 'none';
   document.getElementById('progressWrap').style.display = 'none';
@@ -738,7 +490,7 @@ function resetUI() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// LECTURE MULTI-ENCODAGE (UTF-8 → ISO-8859-1 → Windows-1252)
+// LECTURE MULTI-ENCODAGE
 // ═══════════════════════════════════════════════════════════════
 async function readFileCorrectly(file) {
   const buffer = await file.arrayBuffer();
@@ -755,8 +507,7 @@ function normPath(p) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// PARSING Table_General_Photo.xml
-// Blocs LiItem_table_General_Photo — DOMParser par bloc + fallback regex
+// PARSING XMLs
 // ═══════════════════════════════════════════════════════════════
 function parseTableGeneralPhoto(xmlText) {
   const photoMap = {};
@@ -780,10 +531,6 @@ function parseTableGeneralPhoto(xmlText) {
   return photoMap;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// PARSING Table_Z_Amiante.xml
-// Blocs LiItem_table_Z_Amiante — DOMParser par bloc + fallback regex
-// ═══════════════════════════════════════════════════════════════
 function parseTableZAmiante(xmlText) {
   const zpsoMap = {};
   const itemRx  = /<LiItem_table_Z_Amiante>([\s\S]*?)<\/LiItem_table_Z_Amiante>/gi;
@@ -817,10 +564,6 @@ function parseTableZAmiante(xmlText) {
   return zpsoMap;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// PARSING Table_Z_Amiante_prelevements.xml
-// Format LiColonne_* à plat — découpe par id_classement_champs, regex pure
-// ═══════════════════════════════════════════════════════════════
 function parsePrelevementFlatColonne(xmlText) {
   const rows    = [];
   const blocks  = xmlText.split(/(?=<LiColonne_id_classement_champs>)/g).filter(b => b.trim());
@@ -837,10 +580,6 @@ function parsePrelevementFlatColonne(xmlText) {
   return rows;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// PARSING Table_General_Bien.xml
-// Structure plate (pas de LiItem) — regex pure sur les LiColonne_
-// ═══════════════════════════════════════════════════════════════
 function parseTableGeneralBien(xmlText) {
   const bien = {};
   const colRx = /<LiColonne_([^>]+)>([\s\S]*?)<\/LiColonne_[^>]+>/g;
@@ -852,25 +591,17 @@ function parseTableGeneralBien(xmlText) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// ROGNAGE AUTOMATIQUE DES BORDS BLANCS (canvas)
-// Reçoit un canvas déjà dessiné, renvoie un nouveau canvas rogné.
-// seuil : valeur min RGB pour qu'un pixel soit considéré "blanc"
-//         (240/255 → tolère les gris très clairs de scan)
+// ROGNAGE AUTOMATIQUE DES BORDS BLANCS
 // ═══════════════════════════════════════════════════════════════
 function cropWhiteBorders(srcCanvas, seuil = 240) {
   const ctx  = srcCanvas.getContext('2d');
   const w    = srcCanvas.width;
   const h    = srcCanvas.height;
   const data = ctx.getImageData(0, 0, w, h).data;
-  // data = Uint8ClampedArray [R, G, B, A,  R, G, B, A, ...]
-
-  // ── Teste si un pixel (x, y) est "blanc" ───────────────
   const isBlanc = (x, y) => {
     const idx = (y * w + x) * 4;
     return data[idx] >= seuil && data[idx + 1] >= seuil && data[idx + 2] >= seuil;
   };
-
-  // ── Bord HAUT : première ligne contenant un pixel non-blanc ──
   let top = 0;
   outer_top:
   for (let y = 0; y < h; y++) {
@@ -878,8 +609,6 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
       if (!isBlanc(x, y)) { top = y; break outer_top; }
     }
   }
-
-  // ── Bord BAS ──────────────────────────────────────────────
   let bottom = h - 1;
   outer_bottom:
   for (let y = h - 1; y >= top; y--) {
@@ -887,8 +616,6 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
       if (!isBlanc(x, y)) { bottom = y; break outer_bottom; }
     }
   }
-
-  // ── Bord GAUCHE ───────────────────────────────────────────
   let left = 0;
   outer_left:
   for (let x = 0; x < w; x++) {
@@ -896,8 +623,6 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
       if (!isBlanc(x, y)) { left = x; break outer_left; }
     }
   }
-
-  // ── Bord DROIT ────────────────────────────────────────────
   let right = w - 1;
   outer_right:
   for (let x = w - 1; x >= left; x--) {
@@ -905,33 +630,23 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
       if (!isBlanc(x, y)) { right = x; break outer_right; }
     }
   }
-
-  // ── Sécurité : si rien trouvé (image entièrement blanche) ─
-  if (right <= left || bottom <= top) return srcCanvas;
-
-  // ── Padding de 8px autour du contenu utile (évite le serré) ─
+  if (right <= left || bottom <= top) return { canvas: srcCanvas, cropX: 0, cropY: 0, cropW: w, cropH: h };
   const pad = 8;
   left   = Math.max(0,     left   - pad);
   top    = Math.max(0,     top    - pad);
   right  = Math.min(w - 1, right  + pad);
   bottom = Math.min(h - 1, bottom + pad);
-
   const cropW = right  - left + 1;
   const cropH = bottom - top  + 1;
-
-  // ── Redessine uniquement la zone utile sur un nouveau canvas ─
   const dst = document.createElement('canvas');
   dst.width  = cropW;
   dst.height = cropH;
   dst.getContext('2d').drawImage(srcCanvas, left, top, cropW, cropH, 0, 0, cropW, cropH);
-
-  // Retourne le canvas rogné ET les coordonnées dans l'image source
-  // (utile pour initialiser la sélection du crop manuel)
   return { canvas: dst, cropX: left, cropY: top, cropW, cropH };
 }
 
 // ═══════════════════════════════════════════════════════════════
-// COMPRESSION IMAGE (canvas)
+// COMPRESSION IMAGE
 // ═══════════════════════════════════════════════════════════════
 async function compressImage(file, targetKB, maxDim = 1200) {
   return new Promise(resolve => {
@@ -969,32 +684,40 @@ async function compressImage(file, targetKB, maxDim = 1200) {
 // ═══════════════════════════════════════════════════════════════
 // SÉLECTION DU DOSSIER
 // ═══════════════════════════════════════════════════════════════
-// Tente showDirectoryPicker (Chrome/Edge) → handle lecture + écriture
-// Fallback : <input webkitdirectory> (Firefox) → lecture seule
-
 async function selectMissionFolder() {
   if (window.showDirectoryPicker) {
-    // ── Chemin A : File System Access API ─────────────────────
     try {
+      // ── Ouvre le picker ────────────────────────────────────────
       const dirHandle = await window.showDirectoryPicker({
-  mode: 'readwrite',
-  startIn: 'documents'
-});
-await dirHandle.requestPermission({ mode: 'readwrite' });
-      missionDirHandle = dirHandle;   // stocké pour les exports
-      resetUI();
+        mode: 'readwrite',
+        startIn: 'documents',
+      });
+
+      // ── Demande la permission write explicitement ──────────────
+      await dirHandle.requestPermission({ mode: 'readwrite' });
+
+      // ── IMPORTANT : affecter missionDirHandle AVANT resetUI() ──
+      // resetUI() remet fileIndex/xmlData à zéro mais ne doit PAS
+      // effacer le handle d'écriture qu'on vient d'obtenir.
+      missionDirHandle = dirHandle;
+
+      resetUI();   // ← appelé APRÈS — ne touche plus missionDirHandle
+
       rootName = dirHandle.name;
       document.getElementById('folderName').innerHTML =
-  `📁 ${rootName} <br>
-   <span style="color:#16a34a;font-size:0.75rem;">
-   🟢 Mode écriture locale activé (/exports/)
-   </span>`;
+        `📁 ${rootName}<br>
+         <span style="color:#16a34a;font-size:0.75rem;">
+           💾 Exports enregistrés directement dans ce dossier
+         </span>`;
+
       setStatus('📂 Indexation des fichiers…', '');
       log(`Dossier ouvert (FS Access) : ${dirHandle.name}`, 'ok');
-      // Parcours récursif du handle
+
       await indexDirectoryHandle(dirHandle, '');
       log('Fichiers indexés : ' + Object.keys(fileIndex).length, 'ok');
+
       await loadAllData();
+
     } catch (e) {
       if (e.name !== 'AbortError') {
         log('showDirectoryPicker échoué (' + e.message + ') — bascule sur input', 'warn');
@@ -1002,12 +725,11 @@ await dirHandle.requestPermission({ mode: 'readwrite' });
       }
     }
   } else {
-    // ── Chemin B : fallback <input webkitdirectory> ───────────
     document.getElementById('folderInput').click();
   }
 }
 
-// Parcours récursif d'un FileSystemDirectoryHandle
+// Parcours récursif du handle
 async function indexDirectoryHandle(dirHandle, prefix) {
   for await (const [name, handle] of dirHandle.entries()) {
     const path = prefix ? prefix + '/' + name : name;
@@ -1020,17 +742,18 @@ async function indexDirectoryHandle(dirHandle, prefix) {
   }
 }
 
-// Fallback Firefox : listener sur <input webkitdirectory>
+// Fallback Firefox
 document.getElementById('folderInput').addEventListener('change', async (e) => {
   const allFiles = [...e.target.files];
   if (!allFiles.length) return;
+  missionDirHandle = null;  // pas de handle en mode Firefox
   resetUI();
   rootName = allFiles[0].webkitRelativePath.split('/')[0] || 'Mission';
   document.getElementById('folderName').innerHTML =
-  `📁 ${rootName}<br>
-   <span style="color:#dc2626;font-size:0.75rem;">
-   🔴 Mode téléchargement navigateur (écriture locale impossible)
-   </span>`;
+    `📁 ${rootName}<br>
+     <span style="color:#dc2626;font-size:0.75rem;">
+       🔴 Mode téléchargement navigateur (écriture locale impossible)
+     </span>`;
   setStatus('📂 Indexation des fichiers…', '');
   for (const file of allFiles) {
     const parts   = file.webkitRelativePath.split('/');
@@ -1045,7 +768,6 @@ document.getElementById('folderInput').addEventListener('change', async (e) => {
 // CHARGEMENT & PARSING DE TOUS LES XML
 // ═══════════════════════════════════════════════════════════════
 async function loadAllData() {
-  // ── Fichiers XML requis ─────────────────────────────────────
   const xmlRequired = {
     photo        : 'xml/table_general_photo.xml',
     zpso         : 'xml/table_z_amiante.xml',
@@ -1066,14 +788,13 @@ async function loadAllData() {
       }
     } else {
       xmlFiles[key] = file;
-      log('Trouvé : ' + file.webkitRelativePath, 'ok');
+      log('Trouvé : ' + (file.webkitRelativePath || file.name), 'ok');
     }
   }
 
   try {
     setStatus('⏳ Lecture des fichiers XML…', '');
 
-    // ── Parsing amiante ──────────────────────────────────────
     const photoMap = parseTableGeneralPhoto(await readFileCorrectly(xmlFiles.photo));
     log(`Photos indexées : ${Object.keys(photoMap).length}`, 'ok');
 
@@ -1089,6 +810,7 @@ async function loadAllData() {
         commentaire    : (r['Commentaires_Prelevement'] || '').trim(),
         resultat       : (r['Resultat_reperage']        || r['Data_07'] || '').trim(),
         date           : (r['Date_Prelevement']         || '').trim(),
+        pvAnalyseLie   : (r['PV_Analyse_Lie']           || '').trim(),
       }))
       .filter(p => p.numPrelevement)
       .sort((a, b) => {
@@ -1098,14 +820,12 @@ async function loadAllData() {
       });
     log(`Prélèvements : ${prelevements.length}`, 'ok');
 
-    // ── Parsing bien ─────────────────────────────────────────
     let bien = {};
     if (xmlFiles.bien) {
       bien = parseTableGeneralBien(await readFileCorrectly(xmlFiles.bien));
       log('Table_General_Bien chargée', 'ok');
     }
 
-    // ── Détection des plans (*_Ami.jpg dans plan/) ───────────
     const planFiles = Object.entries(fileIndex)
       .filter(([path]) => path.startsWith('plan/') && path.toLowerCase().endsWith('_ami.jpg'))
       .map(([path, file]) => ({ path, file }))
@@ -1114,7 +834,6 @@ async function loadAllData() {
 
     xmlData = { photoMap, zpsoMap, prelevements, bien, planFiles };
 
-    // ── Statistiques ─────────────────────────────────────────
     let cntAbsence = 0, cntPresence = 0, cntAttente = 0;
     for (const p of prelevements) {
       const r = (p.resultat || '').toLowerCase();
@@ -1123,7 +842,6 @@ async function loadAllData() {
       else                       cntAttente++;
     }
 
-    // Stats photos
     document.getElementById('sectionStatsPhotos').style.display = 'block';
     document.getElementById('infoGridPhotos').innerHTML = `
       <div class="info-item"><label>Prélèvements</label><span>${prelevements.length}</span></div>
@@ -1131,10 +849,9 @@ async function loadAllData() {
       <div class="info-item"><label>ZPSO</label><span>${Object.keys(zpsoMap).length}</span></div>
       <div class="info-item green"><label>🟢 Absence</label><span>${cntAbsence}</span></div>
       <div class="info-item red"><label>🔴 Présence</label><span>${cntPresence}</span></div>
-      <div class="info-item yellow"><label>🟡 En attente</label><span>${cntAttente}</span></div>
+      <div class="info-item yellow"><label>🔵 En attente</label><span>${cntAttente}</span></div>
     `;
 
-    // Stats + preview plans
     document.getElementById('sectionStatsPlans').style.display = 'block';
     document.getElementById('infoGridPlans').innerHTML = `
       <div class="info-item"><label>Plans trouvés</label><span>${planFiles.length}</span></div>
@@ -1153,9 +870,9 @@ async function loadAllData() {
       document.getElementById('btnGenPlans').disabled = true;
     }
 
-    document.getElementById('sectionOptions').style.display   = 'block';
-    document.getElementById('sectionResultat').style.display   = 'block';
-    document.getElementById('saveLoadRow').style.display       = 'flex';
+    document.getElementById('sectionOptions').style.display  = 'block';
+    document.getElementById('sectionResultat').style.display  = 'block';
+    document.getElementById('saveLoadRow').style.display      = 'flex';
 
     setStatus('✅ Données chargées.', 'success');
 
@@ -1167,12 +884,8 @@ async function loadAllData() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// PREVIEW PLANS : construction de la grille + drag & drop
+// PREVIEW PLANS : grille + drag & drop
 // ═══════════════════════════════════════════════════════════════
-
-// ── Crop automatique en arrière-plan pour le preview ──────────
-// Applique cropWhiteBorders sur l'image originale, met à jour la miniature
-// et stocke le blob + les coordonnées dans planCropData
 async function cropAutoForPreview(cardIdx, file, imgEl) {
   try {
     const url = URL.createObjectURL(file);
@@ -1183,67 +896,42 @@ async function cropAutoForPreview(cardIdx, file, imgEl) {
       im.src = url;
     });
     URL.revokeObjectURL(url);
-
-    // Dessine sur canvas intermédiaire
     const srcCanvas = document.createElement('canvas');
     srcCanvas.width  = srcImg.width;
     srcCanvas.height = srcImg.height;
     srcCanvas.getContext('2d').drawImage(srcImg, 0, 0);
-
-    // Crop auto
     const { canvas: croppedCanvas, cropX, cropY, cropW, cropH } = cropWhiteBorders(srcCanvas, 240);
-
     croppedCanvas.toBlob(blob => {
-      // Stocke dans planCropData (sans écraser un éventuel crop manuel)
       const existing = planCropData.get(cardIdx) || {};
-      if (!existing.manualBlob) {  // ne pas écraser un crop manuel déjà appliqué
-        planCropData.set(cardIdx, {
-          ...existing,
-          autoCropBlob : blob,
-          autoCropSel  : { x: cropX, y: cropY, w: cropW, h: cropH },
-        });
-        // Met à jour la miniature dans la card
-        const previewUrl = URL.createObjectURL(blob);
-        imgEl.src = previewUrl;
+      if (!existing.manualBlob) {
+        planCropData.set(cardIdx, { ...existing, autoCropBlob: blob, autoCropSel: { x: cropX, y: cropY, w: cropW, h: cropH } });
+        imgEl.src = URL.createObjectURL(blob);
       }
     }, 'image/jpeg', 0.88);
-  } catch(e) {
-    // Silencieux : la miniature reste l'image originale
-  }
+  } catch(e) { /* silencieux */ }
 }
 
-// Construit la grille de cards à partir de planFiles
 function buildPlanGrid(planFiles) {
   const grid = document.getElementById('planGrid');
   grid.innerHTML = '';
-
   planFiles.forEach((pf, i) => {
     const nomDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
     const id = 'plan_' + i;
-
     const card = document.createElement('div');
     card.className = 'plan-card checked';
     card.draggable  = true;
     card.dataset.idx = i;
-
-    // Badge numéro (mis à jour après chaque drag)
     const badge = document.createElement('div');
     badge.className = 'plan-badge';
     badge.textContent = i + 1;
-
-    // Miniature — affiche d'abord l'originale, puis crop auto en arrière-plan
     const thumbWrap = document.createElement('div');
     const img = document.createElement('img');
     img.className = 'plan-thumb';
     img.alt = nomDefaut;
-    // Affichage immédiat de l'image originale le temps du crop
     const objUrl = URL.createObjectURL(pf.file);
     img.src = objUrl;
-    // Lance le crop automatique en arrière-plan
     cropAutoForPreview(i, pf.file, img);
     thumbWrap.appendChild(img);
-
-    // Ligne checkbox + nom du fichier court
     const checkRow = document.createElement('div');
     checkRow.className = 'plan-check-row';
     const chk = document.createElement('input');
@@ -1253,99 +941,63 @@ function buildPlanGrid(planFiles) {
     lbl.textContent = pf.file.name.replace(/_Ami\.jpg$/i, '');
     lbl.title = pf.file.name;
     checkRow.appendChild(chk); checkRow.appendChild(lbl);
-
-    // Handle drag visuel
     const handle = document.createElement('div');
     handle.className = 'plan-drag-handle';
     handle.textContent = '⠿ déplacer';
-
-    // Bouton recadrage
     const btnCrop = document.createElement('button');
     btnCrop.className = 'btn-crop';
     btnCrop.dataset.cardIdx = i;
     btnCrop.innerHTML = '&#x2702; Recadrer l\'image';
-    btnCrop.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openCropModal(i, card, img);
-    });
-
+    btnCrop.addEventListener('click', (e) => { e.stopPropagation(); openCropModal(i, card, img); });
     card.appendChild(badge);
     card.appendChild(thumbWrap);
     card.appendChild(checkRow);
     card.appendChild(btnCrop);
     card.appendChild(handle);
-
-    // Mise à jour classe checked/unchecked selon checkbox
     chk.addEventListener('change', () => {
       card.classList.toggle('checked',   chk.checked);
       card.classList.toggle('unchecked', !chk.checked);
       updatePlanCountLabel();
     });
-
-    // Drag & Drop
     card.addEventListener('dragstart', onDragStart);
     card.addEventListener('dragover',  onDragOver);
     card.addEventListener('dragleave', onDragLeave);
     card.addEventListener('drop',      onDrop);
     card.addEventListener('dragend',   onDragEnd);
-
     grid.appendChild(card);
   });
-
   updatePlanCountLabel();
   updatePlanBadges();
 }
 
-// ---- Drag & Drop ----
 let dragSrc = null;
-
-function onDragStart(e) {
-  dragSrc = this;
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onDragOver(e) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  if (this !== dragSrc) this.classList.add('drag-over');
-}
-function onDragLeave() {
-  this.classList.remove('drag-over');
-}
+function onDragStart(e) { dragSrc = this; this.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
+function onDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; if (this !== dragSrc) this.classList.add('drag-over'); }
+function onDragLeave() { this.classList.remove('drag-over'); }
 function onDrop(e) {
-  e.preventDefault();
-  this.classList.remove('drag-over');
+  e.preventDefault(); this.classList.remove('drag-over');
   if (this === dragSrc) return;
   const grid = document.getElementById('planGrid');
   const cards = [...grid.querySelectorAll('.plan-card')];
   const srcIdx = cards.indexOf(dragSrc);
   const tgtIdx = cards.indexOf(this);
-  if (srcIdx < tgtIdx) {
-    grid.insertBefore(dragSrc, this.nextSibling);
-  } else {
-    grid.insertBefore(dragSrc, this);
-  }
-  updatePlanBadges();
-  updatePlanCountLabel();
+  if (srcIdx < tgtIdx) grid.insertBefore(dragSrc, this.nextSibling);
+  else grid.insertBefore(dragSrc, this);
+  updatePlanBadges(); updatePlanCountLabel();
 }
-function onDragEnd() {
-  this.classList.remove('dragging');
-  document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('drag-over'));
-}
+function onDragEnd() { this.classList.remove('dragging'); document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('drag-over')); }
 
-// Remet à jour les badges numéros après réordonnancement
 function updatePlanBadges() {
   const cards = document.querySelectorAll('#planGrid .plan-card');
   let n = 1;
   cards.forEach(card => {
     const chk = card.querySelector('input[type="checkbox"]');
     const badge = card.querySelector('.plan-badge');
-    if (chk && chk.checked) { badge.textContent = n++; }
-    else                    { badge.textContent = '—'; }
+    if (chk && chk.checked) badge.textContent = n++;
+    else badge.textContent = '—';
   });
 }
 
-// Mise à jour du compteur "X / Y plan(s) sélectionné(s)"
 function updatePlanCountLabel() {
   updatePlanBadges();
   const cards  = document.querySelectorAll('#planGrid .plan-card');
@@ -1355,7 +1007,6 @@ function updatePlanCountLabel() {
   buildPlanTable();
 }
 
-// Tout cocher / décocher
 function selectAllPlans(state) {
   document.querySelectorAll('#planGrid .plan-card').forEach(card => {
     const chk = card.querySelector('input[type="checkbox"]');
@@ -1366,110 +1017,64 @@ function selectAllPlans(state) {
   updatePlanCountLabel();
 }
 
-// ================================================================
-// CROP MODAL — logique complète
-// ================================================================
+// ═══════════════════════════════════════════════════════════════
+// CROP MODAL
+// ═══════════════════════════════════════════════════════════════
 let cropState = {
-  cardIdx   : null,   // index de la card en cours d'édition
-  cardEl    : null,   // élément DOM de la card
-  thumbEl   : null,   // élément <img> de la miniature
-  srcImage  : null,   // Image() originale (résolution complète)
-  canvas    : null,   // canvas #cropCanvas
-  ctx       : null,
-  // Sélection en coordonnées IMAGE (pixels originaux)
-  sel       : { x: 0, y: 0, w: 0, h: 0 },
-  // Echelle image → canvas
-  scale     : 1,
-  // Offset de l'image dans le canvas (si centré)
-  offX      : 0, offY: 0,
-  // Etat de la souris
-  mouseMode : 'none',  // 'draw' | 'move' | 'resize'
-  resizeHandle : null, // 'tl','tr','bl','br'
-  dragStart : { x: 0, y: 0, selSnap: null },
-  // Nb de rotations 90° appliquées (pour sauvegarde/restauration)
-  rotations : 0,
+  cardIdx: null, cardEl: null, thumbEl: null, srcImage: null,
+  canvas: null, ctx: null, sel: { x: 0, y: 0, w: 0, h: 0 },
+  scale: 1, offX: 0, offY: 0,
+  mouseMode: 'none', resizeHandle: null, dragStart: { x: 0, y: 0, selSnap: null },
+  rotations: 0,
 };
-
-const HANDLE_R = 7; // rayon des poignées en pixels canvas
+const HANDLE_R = 7;
 
 function openCropModal(cardIdx, cardEl, thumbEl) {
   const pf = xmlData.planFiles[cardIdx];
   cropState.cardIdx   = cardIdx;
   cropState.cardEl    = cardEl;
   cropState.thumbEl   = thumbEl;
-  // Restaurer le compteur de rotations pour cette card
   const storedEntry = planCropData.get(cardIdx);
   cropState.rotations = (storedEntry && storedEntry.rotations) ? storedEntry.rotations : 0;
-
   document.getElementById('cropModalFileName').textContent = pf.file.name;
-
   const url = URL.createObjectURL(pf.file);
   const img = new Image();
   img.onload = () => {
     URL.revokeObjectURL(url);
     cropState.srcImage = img;
-
     const canvas = document.getElementById('cropCanvas');
-    // Taille max du canvas : 80% de la fenêtre
     const maxW = Math.min(window.innerWidth  * 0.84, 1400);
     const maxH = Math.min(window.innerHeight * 0.72, 900);
     const scale = Math.min(maxW / img.width, maxH / img.height, 1);
     canvas.width  = Math.round(img.width  * scale);
     canvas.height = Math.round(img.height * scale);
-    cropState.canvas = canvas;
-    cropState.ctx    = canvas.getContext('2d');
-    cropState.scale  = scale;
-    cropState.offX   = 0;
-    cropState.offY   = 0;
-
-    // Sélection initiale :
-    //  1. crop manuel déjà appliqué → utilise manualSel
-    //  2. crop auto disponible       → utilise autoCropSel (zone sans bords blancs)
-    //  3. sinon                      → image entière
+    cropState.canvas = canvas; cropState.ctx = canvas.getContext('2d');
+    cropState.scale = scale; cropState.offX = 0; cropState.offY = 0;
     const stored = planCropData.get(cardIdx);
-    if (stored && stored.manualSel) {
-      cropState.sel = { ...stored.manualSel };
-    } else if (stored && stored.autoCropSel) {
-      cropState.sel = { ...stored.autoCropSel };
-    } else {
-      cropState.sel = { x: 0, y: 0, w: img.width, h: img.height };
-    }
-
+    if (stored && stored.manualSel) cropState.sel = { ...stored.manualSel };
+    else if (stored && stored.autoCropSel) cropState.sel = { ...stored.autoCropSel };
+    else cropState.sel = { x: 0, y: 0, w: img.width, h: img.height };
     drawCropOverlay();
-
-    // Bind events
     canvas.onmousedown  = cropMouseDown;
     canvas.onmousemove  = cropMouseMove;
     canvas.onmouseup    = cropMouseUp;
     canvas.onmouseleave = cropMouseUp;
-
-    // Touch support
     canvas.ontouchstart = (e) => { e.preventDefault(); cropMouseDown(e.touches[0]); };
     canvas.ontouchmove  = (e) => { e.preventDefault(); cropMouseMove(e.touches[0]); };
     canvas.ontouchend   = (e) => { e.preventDefault(); cropMouseUp(); };
-
-    // ── Remplir le formulaire cartouche ──────────────────
     populateCropForm(cardIdx);
-
     document.getElementById('cropModalOverlay').classList.add('open');
   };
   img.src = url;
 }
 
-// Remplit le formulaire du modal depuis planTableData[cardIdx]
 function populateCropForm(cardIdx) {
-  // Garantir que les données existent
   if (!planTableData.has(cardIdx)) {
     const pf = xmlData.planFiles[cardIdx];
     const locDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
-    planTableData.set(cardIdx, {
-      objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut,
-      complements: {}, autresText: '', commentaire: '',
-    });
+    planTableData.set(cardIdx, { objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut, complements: {}, autresText: '', commentaire: '' });
   }
   const d = planTableData.get(cardIdx);
-
-  // ── Objet select ──────────────────────────────────────
   const selObjet = document.getElementById('cropFieldObjet');
   selObjet.innerHTML = '';
   OBJET_OPTIONS.forEach(opt => {
@@ -1479,57 +1084,38 @@ function populateCropForm(cardIdx) {
     selObjet.appendChild(o);
   });
   const libreIn = document.getElementById('cropFieldObjetLibre');
-  libreIn.value   = d.objetLibre || '';
+  libreIn.value = d.objetLibre || '';
   libreIn.style.display = (d.objet === 'Champ libre') ? 'block' : 'none';
-  selObjet.onchange = () => {
-    d.objet = selObjet.value;
-    libreIn.style.display = (selObjet.value === 'Champ libre') ? 'block' : 'none';
-    syncCropFormToTable(cardIdx);
-  };
+  selObjet.onchange = () => { d.objet = selObjet.value; libreIn.style.display = (selObjet.value === 'Champ libre') ? 'block' : 'none'; syncCropFormToTable(cardIdx); };
   libreIn.oninput = () => { d.objetLibre = libreIn.value; syncCropFormToTable(cardIdx); };
-
-  // ── Localisation ──────────────────────────────────────
   const locIn = document.getElementById('cropFieldLoc');
   locIn.value = d.localisation || '';
   locIn.oninput = () => { d.localisation = locIn.value; syncCropFormToTable(cardIdx); };
-
-  // ── Compléments ───────────────────────────────────────
   const compGrid = document.getElementById('cropCompGrid');
   compGrid.innerHTML = '';
   const autresIn = document.getElementById('cropAutresInput');
   autresIn.value = d.autresText || '';
   autresIn.style.display = 'none';
   autresIn.oninput = () => { d.autresText = autresIn.value; syncCropFormToTable(cardIdx); };
-
   COMP_OPTIONS.forEach(opt => {
     const item = document.createElement('div');
     item.className = 'crop-comp-item';
     const chkId = `mchk_${cardIdx}_${opt.replace(/[^a-z]/gi,'_')}`;
     const chk = document.createElement('input');
-    chk.type = 'checkbox'; chk.id = chkId;
-    chk.checked = !!d.complements[opt];
-    chk.onchange = () => {
-      d.complements[opt] = chk.checked;
-      if (opt === 'Autres') autresIn.style.display = chk.checked ? 'block' : 'none';
-      syncCropFormToTable(cardIdx);
-    };
+    chk.type = 'checkbox'; chk.id = chkId; chk.checked = !!d.complements[opt];
+    chk.onchange = () => { d.complements[opt] = chk.checked; if (opt === 'Autres') autresIn.style.display = chk.checked ? 'block' : 'none'; syncCropFormToTable(cardIdx); };
     if (opt === 'Autres' && chk.checked) autresIn.style.display = 'block';
     const lbl = document.createElement('label');
     lbl.htmlFor = chkId; lbl.textContent = opt;
     item.appendChild(chk); item.appendChild(lbl);
     compGrid.appendChild(item);
   });
-
-  // ── Commentaire ───────────────────────────────────────
   const comIn = document.getElementById('cropFieldComment');
   comIn.value = d.commentaire || '';
   comIn.oninput = () => { d.commentaire = comIn.value; };
 }
 
-// Synchronise les changements du modal vers le tableau de saisie (rebuild)
-function syncCropFormToTable(cardIdx) {
-  buildPlanTable();
-}
+function syncCropFormToTable(cardIdx) { buildPlanTable(); }
 
 function closeCropModal() {
   document.getElementById('cropModalOverlay').classList.remove('open');
@@ -1541,44 +1127,33 @@ function closeCropModal() {
 function cropReset() {
   if (!cropState.srcImage) return;
   cropState.sel = { x: 0, y: 0, w: cropState.srcImage.width, h: cropState.srcImage.height };
-  // Ne remet pas les rotations à 0 (reset = juste la sélection, pas l'orientation)
   drawCropOverlay();
 }
 
-// Rotation 90° dans le sens horaire — reconstruit le canvas source pivoté
 function cropRotate90() {
   if (!cropState.srcImage) return;
   const src = cropState.srcImage;
-
-  // Nouveau canvas pivoté (largeur/hauteur inversées)
   const rot = document.createElement('canvas');
-  rot.width  = src.height;
-  rot.height = src.width;
+  rot.width = src.height; rot.height = src.width;
   const ctx = rot.getContext('2d');
   ctx.translate(rot.width / 2, rot.height / 2);
   ctx.rotate(Math.PI / 2);
   ctx.drawImage(src, -src.width / 2, -src.height / 2);
-
   rot.toBlob(blob => {
     const url = URL.createObjectURL(blob);
     const newImg = new Image();
     newImg.onload = () => {
       URL.revokeObjectURL(url);
       cropState.srcImage = newImg;
-
-      // Recalcule l'échelle pour le nouveau format
-      const maxW = Math.min(window.innerWidth  * 0.84, 1400);
+      const maxW = Math.min(window.innerWidth * 0.84, 1400);
       const maxH = Math.min(window.innerHeight * 0.72, 900);
       const scale = Math.min(maxW / newImg.width, maxH / newImg.height, 1);
       const canvas = cropState.canvas;
       canvas.width  = Math.round(newImg.width  * scale);
       canvas.height = Math.round(newImg.height * scale);
       cropState.scale = scale;
-
-      // Sélection = image entière après rotation
       cropState.sel = { x: 0, y: 0, w: newImg.width, h: newImg.height };
       cropState.rotations = (cropState.rotations + 1) % 4;
-      // Mettre à jour le compteur dans planCropData (pour sauvegarde)
       const existing = planCropData.get(cropState.cardIdx) || {};
       planCropData.set(cropState.cardIdx, { ...existing, rotations: cropState.rotations });
       drawCropOverlay();
@@ -1587,222 +1162,105 @@ function cropRotate90() {
   }, 'image/jpeg', 0.95);
 }
 
-// Convertit coordonnées canvas → coordonnées image
-function canvasToImg(cx, cy) {
-  return {
-    x: (cx - cropState.offX) / cropState.scale,
-    y: (cy - cropState.offY) / cropState.scale,
-  };
-}
+function canvasToImg(cx, cy) { return { x: (cx - cropState.offX) / cropState.scale, y: (cy - cropState.offY) / cropState.scale }; }
 
-// Retourne la poignée sous (cx,cy) en coord canvas, ou null
 function hitHandle(cx, cy) {
-  const s = cropState.sel;
-  const sc = cropState.scale;
-  const ox = cropState.offX, oy = cropState.offY;
-  const handles = {
-    tl: { x: s.x * sc + ox,           y: s.y * sc + oy            },
-    tr: { x: (s.x + s.w) * sc + ox,   y: s.y * sc + oy            },
-    bl: { x: s.x * sc + ox,           y: (s.y + s.h) * sc + oy    },
-    br: { x: (s.x + s.w) * sc + ox,   y: (s.y + s.h) * sc + oy   },
-  };
-  for (const [key, pt] of Object.entries(handles)) {
-    if (Math.hypot(cx - pt.x, cy - pt.y) <= HANDLE_R + 4) return key;
-  }
+  const s = cropState.sel; const sc = cropState.scale; const ox = cropState.offX, oy = cropState.offY;
+  const handles = { tl: { x: s.x*sc+ox, y: s.y*sc+oy }, tr: { x: (s.x+s.w)*sc+ox, y: s.y*sc+oy }, bl: { x: s.x*sc+ox, y: (s.y+s.h)*sc+oy }, br: { x: (s.x+s.w)*sc+ox, y: (s.y+s.h)*sc+oy } };
+  for (const [key, pt] of Object.entries(handles)) { if (Math.hypot(cx - pt.x, cy - pt.y) <= HANDLE_R + 4) return key; }
   return null;
 }
 
-// Teste si (cx,cy) est dans la sélection (coord canvas)
 function insideSel(cx, cy) {
-  const s = cropState.sel;
-  const sc = cropState.scale;
-  const ox = cropState.offX, oy = cropState.offY;
-  return cx >= s.x * sc + ox && cx <= (s.x + s.w) * sc + ox &&
-         cy >= s.y * sc + oy && cy <= (s.y + s.h) * sc + oy;
+  const s = cropState.sel; const sc = cropState.scale; const ox = cropState.offX, oy = cropState.offY;
+  return cx >= s.x*sc+ox && cx <= (s.x+s.w)*sc+ox && cy >= s.y*sc+oy && cy <= (s.y+s.h)*sc+oy;
 }
 
-function getCanvasXY(e) {
-  const rect = cropState.canvas.getBoundingClientRect();
-  return { x: e.clientX - rect.left, y: e.clientY - rect.top };
-}
+function getCanvasXY(e) { const rect = cropState.canvas.getBoundingClientRect(); return { x: e.clientX - rect.left, y: e.clientY - rect.top }; }
 
 function cropMouseDown(e) {
   const { x, y } = getCanvasXY(e);
   const handle = hitHandle(x, y);
-  if (handle) {
-    cropState.mouseMode     = 'resize';
-    cropState.resizeHandle  = handle;
-    cropState.dragStart     = { x, y, selSnap: { ...cropState.sel } };
-  } else if (insideSel(x, y)) {
-    cropState.mouseMode = 'move';
-    cropState.dragStart = { x, y, selSnap: { ...cropState.sel } };
-  } else {
-    // Nouveau rectangle
-    const ip = canvasToImg(x, y);
-    cropState.mouseMode = 'draw';
-    cropState.sel       = { x: ip.x, y: ip.y, w: 0, h: 0 };
-    cropState.dragStart = { x, y };
-  }
+  if (handle) { cropState.mouseMode = 'resize'; cropState.resizeHandle = handle; cropState.dragStart = { x, y, selSnap: { ...cropState.sel } }; }
+  else if (insideSel(x, y)) { cropState.mouseMode = 'move'; cropState.dragStart = { x, y, selSnap: { ...cropState.sel } }; }
+  else { const ip = canvasToImg(x, y); cropState.mouseMode = 'draw'; cropState.sel = { x: ip.x, y: ip.y, w: 0, h: 0 }; cropState.dragStart = { x, y }; }
 }
 
 function cropMouseMove(e) {
   if (cropState.mouseMode === 'none') return;
   const { x, y } = getCanvasXY(e);
-  const sc = cropState.scale;
-  const img = cropState.srcImage;
-  const snap = cropState.dragStart.selSnap;
-  const dx = (x - cropState.dragStart.x) / sc;
-  const dy = (y - cropState.dragStart.y) / sc;
-
+  const sc = cropState.scale; const img = cropState.srcImage; const snap = cropState.dragStart.selSnap;
+  const dx = (x - cropState.dragStart.x) / sc; const dy = (y - cropState.dragStart.y) / sc;
   if (cropState.mouseMode === 'draw') {
     const start = canvasToImg(cropState.dragStart.x, cropState.dragStart.y);
     const end   = canvasToImg(x, y);
-    cropState.sel = {
-      x: Math.max(0, Math.min(start.x, end.x)),
-      y: Math.max(0, Math.min(start.y, end.y)),
-      w: Math.abs(end.x - start.x),
-      h: Math.abs(end.y - start.y),
-    };
+    cropState.sel = { x: Math.max(0, Math.min(start.x, end.x)), y: Math.max(0, Math.min(start.y, end.y)), w: Math.abs(end.x - start.x), h: Math.abs(end.y - start.y) };
   } else if (cropState.mouseMode === 'move') {
-    cropState.sel.x = Math.max(0, Math.min(img.width  - snap.w, snap.x + dx));
+    cropState.sel.x = Math.max(0, Math.min(img.width - snap.w, snap.x + dx));
     cropState.sel.y = Math.max(0, Math.min(img.height - snap.h, snap.y + dy));
   } else if (cropState.mouseMode === 'resize') {
     let { x: sx, y: sy, w: sw, h: sh } = snap;
     switch (cropState.resizeHandle) {
-      case 'tl':
-        sx = Math.min(sx + sw - 20, sx + dx); sy = Math.min(sy + sh - 20, sy + dy);
-        sw = snap.x + snap.w - sx; sh = snap.y + snap.h - sy; break;
-      case 'tr':
-        sy = Math.min(sy + sh - 20, sy + dy);
-        sw = Math.max(20, snap.w + dx); sh = snap.y + snap.h - sy; break;
-      case 'bl':
-        sx = Math.min(sx + sw - 20, sx + dx);
-        sw = snap.x + snap.w - sx; sh = Math.max(20, snap.h + dy); break;
-      case 'br':
-        sw = Math.max(20, snap.w + dx); sh = Math.max(20, snap.h + dy); break;
+      case 'tl': sx = Math.min(sx+sw-20, sx+dx); sy = Math.min(sy+sh-20, sy+dy); sw = snap.x+snap.w-sx; sh = snap.y+snap.h-sy; break;
+      case 'tr': sy = Math.min(sy+sh-20, sy+dy); sw = Math.max(20, snap.w+dx); sh = snap.y+snap.h-sy; break;
+      case 'bl': sx = Math.min(sx+sw-20, sx+dx); sw = snap.x+snap.w-sx; sh = Math.max(20, snap.h+dy); break;
+      case 'br': sw = Math.max(20, snap.w+dx); sh = Math.max(20, snap.h+dy); break;
     }
-    // Clamp dans l'image
     sx = Math.max(0, sx); sy = Math.max(0, sy);
-    sw = Math.min(img.width  - sx, sw);
-    sh = Math.min(img.height - sy, sh);
+    sw = Math.min(img.width - sx, sw); sh = Math.min(img.height - sy, sh);
     cropState.sel = { x: sx, y: sy, w: sw, h: sh };
   }
-
   drawCropOverlay();
 }
 
-function cropMouseUp() {
-  cropState.mouseMode = 'none';
-}
+function cropMouseUp() { cropState.mouseMode = 'none'; }
 
 function drawCropOverlay() {
   const { canvas, ctx, srcImage, sel, scale, offX, offY } = cropState;
   const cw = canvas.width, ch = canvas.height;
-
-  // Image de fond
   ctx.clearRect(0, 0, cw, ch);
   ctx.drawImage(srcImage, offX, offY, srcImage.width * scale, srcImage.height * scale);
-
-  // Zone hors sélection assombrie
-  const sx = sel.x * scale + offX;
-  const sy = sel.y * scale + offY;
-  const sw = sel.w * scale;
-  const sh = sel.h * scale;
-
+  const sx = sel.x * scale + offX, sy = sel.y * scale + offY, sw = sel.w * scale, sh = sel.h * scale;
   ctx.fillStyle = 'rgba(0,0,0,0.52)';
-  ctx.fillRect(0,   0,   cw,  sy);            // haut
-  ctx.fillRect(0,   sy + sh, cw, ch - sy - sh); // bas
-  ctx.fillRect(0,   sy,  sx, sh);              // gauche
-  ctx.fillRect(sx + sw, sy, cw - sx - sw, sh); // droite
-
-  // Bordure de sélection
-  ctx.strokeStyle = '#ffffff';
-  ctx.lineWidth   = 1.5;
-  ctx.setLineDash([5, 4]);
-  ctx.strokeRect(sx, sy, sw, sh);
-  ctx.setLineDash([]);
-
-  // Grille tiers (règle des tiers)
-  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-  ctx.lineWidth   = 0.8;
+  ctx.fillRect(0, 0, cw, sy); ctx.fillRect(0, sy+sh, cw, ch-sy-sh);
+  ctx.fillRect(0, sy, sx, sh); ctx.fillRect(sx+sw, sy, cw-sx-sw, sh);
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]);
+  ctx.strokeRect(sx, sy, sw, sh); ctx.setLineDash([]);
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)'; ctx.lineWidth = 0.8;
   for (let t = 1; t <= 2; t++) {
-    ctx.beginPath(); ctx.moveTo(sx + sw * t/3, sy); ctx.lineTo(sx + sw * t/3, sy + sh); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(sx, sy + sh * t/3); ctx.lineTo(sx + sw, sy + sh * t/3); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx+sw*t/3, sy); ctx.lineTo(sx+sw*t/3, sy+sh); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(sx, sy+sh*t/3); ctx.lineTo(sx+sw, sy+sh*t/3); ctx.stroke();
   }
-
-  // Poignées aux 4 coins
-  const corners = [
-    { x: sx,      y: sy      },
-    { x: sx + sw, y: sy      },
-    { x: sx,      y: sy + sh },
-    { x: sx + sw, y: sy + sh },
-  ];
-  corners.forEach(c => {
-    ctx.beginPath();
-    ctx.arc(c.x, c.y, HANDLE_R, 0, Math.PI * 2);
-    ctx.fillStyle   = '#ffffff';
-    ctx.fill();
-    ctx.strokeStyle = '#1a3a5c';
-    ctx.lineWidth   = 2;
-    ctx.stroke();
+  [{ x: sx, y: sy }, { x: sx+sw, y: sy }, { x: sx, y: sy+sh }, { x: sx+sw, y: sy+sh }].forEach(c => {
+    ctx.beginPath(); ctx.arc(c.x, c.y, HANDLE_R, 0, Math.PI*2);
+    ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.strokeStyle = '#1a3a5c'; ctx.lineWidth = 2; ctx.stroke();
   });
-
-  // Dimensions affichées
   const dimText = `${Math.round(sel.w)} × ${Math.round(sel.h)} px`;
-  ctx.font      = 'bold 13px Arial';
-  ctx.fillStyle = 'rgba(0,0,0,0.6)';
-  ctx.fillRect(sx + 4, sy + 4, ctx.measureText(dimText).width + 10, 20);
-  ctx.fillStyle = 'white';
-  ctx.fillText(dimText, sx + 9, sy + 18);
+  ctx.font = 'bold 13px Arial';
+  ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.fillRect(sx+4, sy+4, ctx.measureText(dimText).width+10, 20);
+  ctx.fillStyle = 'white'; ctx.fillText(dimText, sx+9, sy+18);
 }
 
 function applyCrop() {
   const { sel, srcImage, cardIdx, cardEl, thumbEl } = cropState;
   if (!srcImage || sel.w < 4 || sel.h < 4) { closeCropModal(); return; }
-
-  // Découpe sur un canvas temporaire
   const out = document.createElement('canvas');
-  out.width  = Math.round(sel.w);
-  out.height = Math.round(sel.h);
+  out.width = Math.round(sel.w); out.height = Math.round(sel.h);
   out.getContext('2d').drawImage(srcImage, sel.x, sel.y, sel.w, sel.h, 0, 0, out.width, out.height);
-
   out.toBlob(blob => {
-    // Stocke le crop manuel (en conservant les données auto-crop existantes)
     const existing = planCropData.get(cardIdx) || {};
-    planCropData.set(cardIdx, {
-      ...existing,          // conserve autoCropBlob + autoCropSel
-      manualBlob : blob,
-      manualSel  : { ...sel },
-      rotations  : cropState.rotations,   // nb de 90° appliqués (pour save/restore)
-    });
-
-    // Met à jour la miniature dans la card
-    const url = URL.createObjectURL(blob);
-    thumbEl.src = url;
-
-    // Marque le bouton crop comme actif
+    planCropData.set(cardIdx, { ...existing, manualBlob: blob, manualSel: { ...sel }, rotations: cropState.rotations });
+    thumbEl.src = URL.createObjectURL(blob);
     const btnCrop = cardEl.querySelector('.btn-crop');
-    if (btnCrop) {
-      btnCrop.classList.add('has-crop');
-      btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓';
-    }
-
+    if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
     closeCropModal();
     log(`Crop appliqué : carte ${cardIdx + 1} — ${Math.round(sel.w)}×${Math.round(sel.h)} px`, 'ok');
   }, 'image/jpeg', 0.95);
 }
 
-// Map : cardIdx → { blob, sel } — stocke les crops appliqués
-const planCropData = new Map();
-
-// ================================================================
-// ================================================================
-// STORE DONNÉES TABLEAU DE SAISIE
-// Map<cardIdx, {objet, objetLibre, localisation, complements:{}, autresText}>
-// ================================================================
+const planCropData  = new Map();
 const planTableData = new Map();
 
-// Constantes
 const OBJET_OPTIONS = [
   'Croquis de prélèvements',
   'Croquis de prélèvements avec présence d\'amiante',
@@ -1811,194 +1269,83 @@ const OBJET_OPTIONS = [
   'Croquis de périmètre de repérage',
   'Champ libre',
 ];
-const COMP_OPTIONS = [
-  'Sol','Mur','Plafond','Façade','Toiture',
-  'Extérieur','Intérieur','Équipement',
-  'Nord','Sud','Est','Ouest','Autres',
-];
+const COMP_OPTIONS = ['Sol','Mur','Plafond','Façade','Toiture','Extérieur','Intérieur','Équipement','Nord','Sud','Est','Ouest','Autres'];
 
-// ── Reconstruit le tableau de saisie depuis l'ordre actuel de la grille ──
-// Seules les cards cochées apparaissent.
-// Les valeurs déjà saisies sont préservées via planTableData.
 function buildPlanTable() {
   const tbody = document.getElementById('planInfoTbody');
   if (!tbody) return;
-
-  // Récupérer les cards cochées dans l'ordre de la grille
   const cards = [...document.querySelectorAll('#planGrid .plan-card')]
     .filter(c => c.querySelector('input[type="checkbox"]').checked);
-
-  if (cards.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" class="pt-empty">Aucun plan sélectionné.</td></tr>';
-    return;
-  }
-
+  if (cards.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="pt-empty">Aucun plan sélectionné.</td></tr>'; return; }
   const total = cards.length;
   tbody.innerHTML = '';
-
   cards.forEach((card, pos) => {
     const cardIdx = parseInt(card.dataset.idx, 10);
     const pf = xmlData.planFiles[cardIdx];
-    const numPlanche = `${pos + 1} / ${total}`;
-
-    // Lire les données sauvegardées ou initialiser
     if (!planTableData.has(cardIdx)) {
       const locDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
-      planTableData.set(cardIdx, {
-        objet       : OBJET_OPTIONS[0],
-        objetLibre  : '',
-        localisation: locDefaut,
-        complements : {},
-        autresText  : '',
-        commentaire : '',
-      });
+      planTableData.set(cardIdx, { objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut, complements: {}, autresText: '', commentaire: '' });
     }
     const d = planTableData.get(cardIdx);
-
     const tr = document.createElement('tr');
-
-    // ── Col 0 : N° planche ──────────────────────────────────
-    const tdNum = document.createElement('td');
-    tdNum.textContent = numPlanche;
-    tr.appendChild(tdNum);
-
-    // ── Col 1 : Objet ───────────────────────────────────────
+    const tdNum = document.createElement('td'); tdNum.textContent = `${pos + 1} / ${total}`; tr.appendChild(tdNum);
     const tdObjet = document.createElement('td');
-
-    const sel = document.createElement('select');
-    sel.className = 'pt-objet-select';
-    OBJET_OPTIONS.forEach(opt => {
-      const o = document.createElement('option');
-      o.value = opt; o.textContent = opt;
-      if (opt === d.objet) o.selected = true;
-      sel.appendChild(o);
-    });
-
-    const libreInput = document.createElement('input');
-    libreInput.type = 'text'; libreInput.className = 'pt-objet-libre';
-    libreInput.placeholder = 'Saisir librement…';
-    libreInput.value = d.objetLibre || '';
-    libreInput.style.display = (d.objet === 'Champ libre') ? 'block' : 'none';
-
-    sel.addEventListener('change', () => {
-      d.objet = sel.value;
-      libreInput.style.display = (sel.value === 'Champ libre') ? 'block' : 'none';
-    });
+    const sel = document.createElement('select'); sel.className = 'pt-objet-select';
+    OBJET_OPTIONS.forEach(opt => { const o = document.createElement('option'); o.value = opt; o.textContent = opt; if (opt === d.objet) o.selected = true; sel.appendChild(o); });
+    const libreInput = document.createElement('input'); libreInput.type = 'text'; libreInput.className = 'pt-objet-libre'; libreInput.placeholder = 'Saisir librement…'; libreInput.value = d.objetLibre || ''; libreInput.style.display = (d.objet === 'Champ libre') ? 'block' : 'none';
+    sel.addEventListener('change', () => { d.objet = sel.value; libreInput.style.display = (sel.value === 'Champ libre') ? 'block' : 'none'; });
     libreInput.addEventListener('input', () => { d.objetLibre = libreInput.value; });
-
-    tdObjet.appendChild(sel);
-    tdObjet.appendChild(libreInput);
-    tr.appendChild(tdObjet);
-
-    // ── Col 2 : Localisation ────────────────────────────────
+    tdObjet.appendChild(sel); tdObjet.appendChild(libreInput); tr.appendChild(tdObjet);
     const tdLoc = document.createElement('td');
-    const locInput = document.createElement('input');
-    locInput.type = 'text'; locInput.className = 'pt-loc-input';
-    locInput.value = d.localisation;
+    const locInput = document.createElement('input'); locInput.type = 'text'; locInput.className = 'pt-loc-input'; locInput.value = d.localisation;
     locInput.addEventListener('input', () => { d.localisation = locInput.value; });
-    tdLoc.appendChild(locInput);
-    tr.appendChild(tdLoc);
-
-    // ── Col 3 : Compléments ─────────────────────────────────
+    tdLoc.appendChild(locInput); tr.appendChild(tdLoc);
     const tdComp = document.createElement('td');
-    const grid = document.createElement('div');
-    grid.className = 'pt-comp-grid';
-
+    const grid = document.createElement('div'); grid.className = 'pt-comp-grid';
     let autresInputEl = null;
-
     COMP_OPTIONS.forEach(opt => {
-      const item = document.createElement('div');
-      item.className = 'pt-comp-item';
-
+      const item = document.createElement('div'); item.className = 'pt-comp-item';
       const chkId = `comp_${cardIdx}_${opt.replace(/[^a-z]/gi,'_')}`;
-      const chk = document.createElement('input');
-      chk.type = 'checkbox'; chk.id = chkId;
-      chk.checked = !!d.complements[opt];
-      chk.addEventListener('change', () => {
-        d.complements[opt] = chk.checked;
-        if (opt === 'Autres' && autresInputEl) {
-          autresInputEl.style.display = chk.checked ? 'inline-block' : 'none';
-        }
-      });
-
-      const lbl = document.createElement('label');
-      lbl.htmlFor = chkId; lbl.textContent = opt;
-
-      item.appendChild(chk); item.appendChild(lbl);
-      grid.appendChild(item);
-
-      // Si Autres : ajouter l'input texte juste après
+      const chk = document.createElement('input'); chk.type = 'checkbox'; chk.id = chkId; chk.checked = !!d.complements[opt];
+      chk.addEventListener('change', () => { d.complements[opt] = chk.checked; if (opt === 'Autres' && autresInputEl) autresInputEl.style.display = chk.checked ? 'inline-block' : 'none'; });
+      const lbl = document.createElement('label'); lbl.htmlFor = chkId; lbl.textContent = opt;
+      item.appendChild(chk); item.appendChild(lbl); grid.appendChild(item);
       if (opt === 'Autres') {
-        const autresInput = document.createElement('input');
-        autresInput.type = 'text'; autresInput.className = 'pt-autres-input';
-        autresInput.placeholder = 'Préciser…';
-        autresInput.value = d.autresText || '';
-        autresInput.style.display = chk.checked ? 'inline-block' : 'none';
+        const autresInput = document.createElement('input'); autresInput.type = 'text'; autresInput.className = 'pt-autres-input'; autresInput.placeholder = 'Préciser…'; autresInput.value = d.autresText || ''; autresInput.style.display = chk.checked ? 'inline-block' : 'none';
         autresInput.addEventListener('input', () => { d.autresText = autresInput.value; });
-        autresInputEl = autresInput;
-        grid.appendChild(autresInput);
+        autresInputEl = autresInput; grid.appendChild(autresInput);
       }
     });
-
-    tdComp.appendChild(grid);
-    tr.appendChild(tdComp);
-
+    tdComp.appendChild(grid); tr.appendChild(tdComp);
     tbody.appendChild(tr);
   });
 }
 
-// ── Copie le tableau en HTML formaté (pour coller dans Word) ──
 function copyPlanTable() {
-  const cards = [...document.querySelectorAll('#planGrid .plan-card')]
-    .filter(c => c.querySelector('input[type="checkbox"]').checked);
+  const cards = [...document.querySelectorAll('#planGrid .plan-card')].filter(c => c.querySelector('input[type="checkbox"]').checked);
   const total = cards.length;
-
-  let html = `<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:11pt;">
-<thead><tr style="background:#1a3a5c;color:white;">
-<th>N°</th><th>Objet</th><th>Localisation</th><th>Compléments</th>
-</tr></thead><tbody>`;
-
+  let html = `<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:11pt;"><thead><tr style="background:#1a3a5c;color:white;"><th>N°</th><th>Objet</th><th>Localisation</th><th>Compléments</th></tr></thead><tbody>`;
   cards.forEach((card, pos) => {
     const cardIdx = parseInt(card.dataset.idx, 10);
     const d = planTableData.get(cardIdx);
     if (!d) return;
-
-    const numPlanche = `${pos + 1} / ${total}`;
     const objet = d.objet === 'Champ libre' ? (d.objetLibre || '—') : d.objet;
     const loc   = d.localisation || '—';
-    const compList = COMP_OPTIONS
-      .filter(o => o !== 'Autres' && d.complements[o])
-      .map(o => o);
+    const compList = COMP_OPTIONS.filter(o => o !== 'Autres' && d.complements[o]);
     if (d.complements['Autres'] && d.autresText) compList.push(d.autresText);
-    const comp = compList.length > 0 ? compList.join(', ') : 'Sans Objet';
-
-    html += `<tr>
-<td align="center"><b>${numPlanche}</b></td>
-<td>${objet}</td>
-<td>${loc}</td>
-<td>${comp}</td>
-</tr>`;
+    html += `<tr><td align="center"><b>${pos+1}/${total}</b></td><td>${objet}</td><td>${loc}</td><td>${compList.length > 0 ? compList.join(', ') : 'Sans Objet'}</td></tr>`;
   });
-
   html += '</tbody></table>';
-
-  // Copier via ClipboardItem (HTML)
   try {
     const blob = new Blob([html], { type: 'text/html' });
     navigator.clipboard.write([new ClipboardItem({ 'text/html': blob })]).then(() => {
       const btn = document.getElementById('btnCopyTable');
-      btn.classList.add('copied');
-      btn.innerHTML = '&#x2705; Copié !';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.innerHTML = '&#x1F4CB; Copier le tableau';
-      }, 2500);
+      btn.classList.add('copied'); btn.innerHTML = '&#x2705; Copié !';
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '&#x1F4CB; Copier le tableau'; }, 2500);
     });
   } catch(e) {
-    // Fallback texte brut
     const rows = cards.map((card, pos) => {
-      const cardIdx = parseInt(card.dataset.idx, 10);
-      const d = planTableData.get(cardIdx) || {};
+      const cardIdx = parseInt(card.dataset.idx, 10); const d = planTableData.get(cardIdx) || {};
       const objet = d.objet === 'Champ libre' ? (d.objetLibre || '—') : (d.objet || '—');
       const comp = COMP_OPTIONS.filter(o => o !== 'Autres' && d.complements && d.complements[o]).join(', ') || 'Sans Objet';
       return `${pos+1}/${total}\t${objet}\t${d.localisation || '—'}\t${comp}`;
@@ -2008,40 +1355,26 @@ function copyPlanTable() {
   }
 }
 
-// ================================================================
-// Retourne la liste ordonnée des plans sélectionnés pour la génération Word
-// (respecte l'ordre actuel de la grille, filtre les décochés)
 function getPlanFilesFromGrid() {
   const result = [];
   document.querySelectorAll('#planGrid .plan-card').forEach(card => {
-    const chk       = card.querySelector('input[type="checkbox"]');
-    const idx       = parseInt(card.dataset.idx, 10);
+    const chk = card.querySelector('input[type="checkbox"]');
+    const idx = parseInt(card.dataset.idx, 10);
     if (chk && chk.checked) {
-      const pf        = xmlData.planFiles[idx];
-      const cropEntry  = planCropData.get(idx);
-      const cropBlob = (cropEntry && cropEntry.manualBlob)
-                     ? cropEntry.manualBlob
-                     : (cropEntry && cropEntry.autoCropBlob)
-                     ? cropEntry.autoCropBlob
-                     : null;
-      // Données cartouche depuis le tableau de saisie
+      const pf = xmlData.planFiles[idx];
+      const cropEntry = planCropData.get(idx);
+      const cropBlob = (cropEntry && cropEntry.manualBlob) ? cropEntry.manualBlob : (cropEntry && cropEntry.autoCropBlob) ? cropEntry.autoCropBlob : null;
       const td = planTableData.get(idx) || {};
       const objet = (td.objet === 'Champ libre') ? (td.objetLibre || '—') : (td.objet || OBJET_OPTIONS[0]);
-      const compList = COMP_OPTIONS
-        .filter(o => o !== 'Autres' && td.complements && td.complements[o]);
+      const compList = COMP_OPTIONS.filter(o => o !== 'Autres' && td.complements && td.complements[o]);
       if (td.complements && td.complements['Autres'] && td.autresText) compList.push(td.autresText);
-      const complements = compList.length > 0 ? compList.join(', ') : 'Sans Objet';
-
       result.push({
-        path         : pf.path,
-        file         : pf.file,
-        nomEdite     : td.localisation || pf.file.name,
-        objet,
-        localisation : td.localisation || pf.file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' '),
-        complements,
-        commentaire  : td.commentaire || '',
-        cropBlob,
-        hasManualCrop: !!(cropEntry && cropEntry.manualBlob),
+        path: pf.path, file: pf.file,
+        nomEdite: td.localisation || pf.file.name,
+        objet, localisation: td.localisation || pf.file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' '),
+        complements: compList.length > 0 ? compList.join(', ') : 'Sans Objet',
+        commentaire: td.commentaire || '',
+        cropBlob, hasManualCrop: !!(cropEntry && cropEntry.manualBlob),
       });
     }
   });
@@ -2049,14 +1382,11 @@ function getPlanFilesFromGrid() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// HELPERS DOCX COMMUNS
+// HELPERS DOCX
 // ═══════════════════════════════════════════════════════════════
 function getLib() {
   const lib = window.docx;
-  if (!lib) {
-    setStatus('❌ La librairie docx.js n\'est pas chargée. Vérifiez votre connexion internet.', 'error');
-    return null;
-  }
+  if (!lib) { setStatus('❌ La librairie docx.js n\'est pas chargée.', 'error'); return null; }
   return lib;
 }
 
@@ -2068,71 +1398,35 @@ async function generateDocxPhotos() {
   isRunning = true;
   document.getElementById('btnGenPhotos').disabled = true;
   document.getElementById('btnGenPlans').disabled  = true;
-
+  document.getElementById('btnGenPV').disabled     = true;
   const lib = getLib();
-  if (!lib) { isRunning = false; document.getElementById('btnGenPhotos').disabled = false; document.getElementById('btnGenPlans').disabled = false; return; }
-
-  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          ImageRun, AlignmentType, PageOrientation, BorderStyle, WidthType,
-          ShadingType, VerticalAlign, SectionType } = lib;
-
+  if (!lib) { isRunning = false; document.getElementById('btnGenPhotos').disabled = false; document.getElementById('btnGenPlans').disabled = false; document.getElementById('btnGenPV').disabled = false; return; }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, ImageRun, AlignmentType, PageOrientation, BorderStyle, WidthType, ShadingType, VerticalAlign, SectionType } = lib;
   const targetKB = parseInt(document.getElementById('optQualite').value, 10);
   const { photoMap, zpsoMap, prelevements, bien } = xmlData;
   const total = prelevements.length;
-
   setStatus('⏳ Génération du dossier photos…', '');
   setProgress(0, 'Démarrage…');
   log('=== Génération dossier PHOTOS ===', 'ok');
-
-  // A4 paysage — contenu 15398 DXA
   const colWidths = [800, 2700, 2200, 2998, 900, 1800, 4000];
   const TOTAL_W   = 15398;
-
   const brd  = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
   const brds = { top: brd, bottom: brd, left: brd, right: brd };
-
-  const mkCell = (idx, children, extra = {}) => new TableCell({
-    borders: brds, verticalAlign: VerticalAlign.CENTER,
-    width: { size: colWidths[idx], type: WidthType.DXA },
-    margins: { top: 80, bottom: 80, left: 120, right: 120 },
-    ...extra, children,
-  });
-
-  const mkPara = (text, rOpts = {}, pOpts = {}) => new Paragraph({
-    ...pOpts,
-    children: [new TextRun({ text: text || '—', font: 'Arial', size: 16, ...rOpts })],
-  });
-
-  // En-tête tableau
-  const HEADS = ['N° de prélèvement', 'N° de composant & Description opérateur',
-    'Localisation', 'Composant de la construction', 'Date du prélèvement', "Résultat de l'analyse", 'Photo'];
-
-  const headerRow = new TableRow({
-    tableHeader: true,
-    children: HEADS.map((lbl, i) => mkCell(i,
-      [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: lbl, bold: true, color: 'FFFFFF', size: 17, font: 'Arial' })] })],
-      { shading: { fill: '00B0F0', type: ShadingType.CLEAR } }
-    )),
-  });
-
-  const dataRows = [];
-  let nbOK = 0, nbMissing = 0;
-
+  const mkCell = (idx, children, extra = {}) => new TableCell({ borders: brds, verticalAlign: VerticalAlign.CENTER, width: { size: colWidths[idx], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, ...extra, children });
+  const mkPara = (text, rOpts = {}, pOpts = {}) => new Paragraph({ ...pOpts, children: [new TextRun({ text: text || '—', font: 'Arial', size: 16, ...rOpts })] });
+  const HEADS = ['N° de prélèvement', 'N° de composant & Description opérateur', 'Localisation', 'Composant de la construction', 'Date du prélèvement', "Résultat de l'analyse", 'Photo'];
+  const headerRow = new TableRow({ tableHeader: true, children: HEADS.map((lbl, i) => mkCell(i, [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: lbl, bold: true, color: 'FFFFFF', size: 17, font: 'Arial' })] })], { shading: { fill: '00B0F0', type: ShadingType.CLEAR } })) });
+  const dataRows = []; let nbOK = 0, nbMissing = 0;
   for (let i = 0; i < prelevements.length; i++) {
-    const p    = prelevements[i];
-    const zpso = zpsoMap[p.numMateriau] || {};
+    const p = prelevements[i]; const zpso = zpsoMap[p.numMateriau] || {};
     setProgress(Math.round((i / total) * 88), `${p.numPrelevement} (${i + 1}/${total})`);
     setStatus(`⏳ <strong>${p.numPrelevement}</strong> (${i + 1} sur ${total})…`, '');
-
     const resRaw = (p.resultat || zpso.resultats || '').toLowerCase();
     let fillRes, lblRes;
-    if      (resRaw.includes('absence')) { fillRes = 'C8E6C9'; lblRes = "Absence d'amiante"; }
-    else if (resRaw.includes('pr'))      { fillRes = 'FFCDD2'; lblRes = "Présence d'amiante"; }
-    else                                 { fillRes = 'FFF9C4'; lblRes = 'En attente de résultat'; }
-
+    if (resRaw.includes('absence')) { fillRes = 'C8E6C9'; lblRes = "Absence d'amiante"; }
+    else if (resRaw.includes('pr')) { fillRes = 'FFCDD2'; lblRes = "Présence d'amiante"; }
+    else { fillRes = 'BBDEFB'; lblRes = 'En attente de résultat'; }
     const rowBg = { fill: i % 2 === 0 ? 'FFFFFF' : 'F8FAFB', type: ShadingType.CLEAR };
-
-    // Cellule photo
     let c6;
     const chm = photoMap[p.numPrelevement];
     if (chm) {
@@ -2140,30 +1434,14 @@ async function generateDocxPhotos() {
       if (photoFile) {
         try {
           const comp = await compressImage(photoFile, targetKB);
-          if (comp) {
-            const dW = 230, dH = Math.round(comp.height * dW / comp.width);
-            nbOK++;
-            log(`Photo OK : ${p.numPrelevement} → ${comp.sizeKB} Ko`, 'ok');
-            c6 = mkCell(6,
-              [new Paragraph({ alignment: AlignmentType.CENTER,
-                children: [new ImageRun({ data: comp.data, transformation: { width: dW, height: dH }, type: 'jpg' })] })],
-              { shading: rowBg }
-            );
-          }
+          if (comp) { const dW = 230, dH = Math.round(comp.height * dW / comp.width); nbOK++; log(`Photo OK : ${p.numPrelevement} → ${comp.sizeKB} Ko`, 'ok'); c6 = mkCell(6, [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: comp.data, transformation: { width: dW, height: dH }, type: 'jpg' })] })], { shading: rowBg }); }
         } catch(e) { log(`Erreur image ${p.numPrelevement} : ${e.message}`, 'warn'); }
       } else { log(`Fichier introuvable : ${chm}`, 'warn'); }
     }
-    if (!c6) {
-      nbMissing++;
-      c6 = mkCell(6, [mkPara('Photo non disponible', { italics: true, color: 'AAAAAA', size: 14 })], { shading: rowBg });
-    }
-
-    const descCh = [
-      new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: `Identifiant : ${p.numMateriau || '—'}`, bold: true, size: 16, font: 'Arial' })] }),
-    ];
+    if (!c6) { nbMissing++; c6 = mkCell(6, [mkPara('Photo non disponible', { italics: true, color: 'AAAAAA', size: 14 })], { shading: rowBg }); }
+    const descCh = [new Paragraph({ spacing: { after: 40 }, children: [new TextRun({ text: `Identifiant : ${p.numMateriau || '—'}`, bold: true, size: 16, font: 'Arial' })] })];
     if (zpso.description) descCh.push(mkPara(zpso.description, { size: 15, color: '333333' }));
     if (p.commentaire && p.commentaire !== zpso.description) descCh.push(mkPara('Obs. : ' + p.commentaire, { size: 14, italics: true, color: '666666' }));
-
     dataRows.push(new TableRow({ children: [
       mkCell(0, [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: p.numPrelevement, bold: true, size: 16, font: 'Arial' })] })], { shading: rowBg }),
       mkCell(1, descCh, { shading: rowBg }),
@@ -2174,477 +1452,151 @@ async function generateDocxPhotos() {
       c6,
     ]}));
   }
-
   setProgress(90, 'Assemblage…');
-
-  // ── Page de garde photos ──────────────────────────────────────
-  const agence_ph  = document.getElementById('optAgence').value.trim();
+  const agence_ph = document.getElementById('optAgence').value.trim();
   const agenceLines_ph = agence_ph.split(/\s*[—\n]\s*/).filter(Boolean);
-  const PG_W = 15704;  // paysage 16838 - 2×567
-  const PG_COL_PHOTO = 4800;
-  const PG_COL_INFO  = PG_W - PG_COL_PHOTO - 200;
-
-  const adresseBien_ph = [
-    (bien || {})['Immeuble_Adresse1']    || '',
-    (bien || {})['Immeuble_Departement'] || '',
-    (bien || {})['Immeuble_Commune']     || '',
-  ].filter(Boolean).join(' ');
-  const refRapport_ph  = (bien || {})['Mission_Num_Dossier']  || '—';
+  const PG_W = 15704; const PG_COL_PHOTO = 4800; const PG_COL_INFO = PG_W - PG_COL_PHOTO - 200;
+  const adresseBien_ph = [(bien || {})['Immeuble_Adresse1']||'', (bien || {})['Immeuble_Departement']||'', (bien || {})['Immeuble_Commune']||''].filter(Boolean).join(' ');
+  const refRapport_ph = (bien || {})['Mission_Num_Dossier'] || '—';
   const dateRapport_ph = (bien || {})['Mission_Date_Rapport'] || '—';
-  const redacteur_ph   = (bien || {})['Gen_Nom_operateur']    || '—';
-
+  const redacteur_ph = (bien || {})['Gen_Nom_operateur'] || '—';
   const brdNone_ph = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
   const brdsNone_ph = { top: brdNone_ph, bottom: brdNone_ph, left: brdNone_ph, right: brdNone_ph };
   const brdRecap_ph = { style: BorderStyle.SINGLE, size: 4, color: 'CBD5E1' };
   const brdsRecap_ph = { top: brdRecap_ph, bottom: brdRecap_ph, left: brdRecap_ph, right: brdRecap_ph };
-
-  const pgPara = (txt, bold=false, sz=18, color='222222', spacing={before:80,after:40}) =>
-    new Paragraph({ spacing, children: [new TextRun({ text: txt||'—', bold, size: sz, font: 'Arial', color })] });
-
-  // Chercher presentation.jpeg
-  const presKey_ph = Object.keys(fileIndex).find(k =>
-    k.startsWith('photos/') && (k.toLowerCase().endsWith('presentation.jpeg') || k.toLowerCase().endsWith('presentation.jpg'))
-  );
+  const pgPara = (txt, bold=false, sz=18, color='222222', spacing={before:80,after:40}) => new Paragraph({ spacing, children: [new TextRun({ text: txt||'—', bold, size: sz, font: 'Arial', color })] });
+  const presKey_ph = Object.keys(fileIndex).find(k => k.startsWith('photos/') && (k.toLowerCase().endsWith('presentation.jpeg') || k.toLowerCase().endsWith('presentation.jpg')));
   let presImg_ph = null, presW_ph = 0, presH_ph = 0;
   if (presKey_ph) {
     const pc = await compressImage(fileIndex[presKey_ph], 120, 2400);
-    if (pc) {
-      presImg_ph = pc.data;
-      const maxWpx = Math.floor((PG_COL_PHOTO - 80) / 1440 * 96);
-      const maxHpx = Math.floor(8000 / 1440 * 96);
-      const r = Math.min(maxWpx / pc.width, maxHpx / pc.height, 1);
-      presW_ph = Math.round(pc.width * r);
-      presH_ph = Math.round(pc.height * r);
-    }
+    if (pc) { presImg_ph = pc.data; const maxWpx = Math.floor((PG_COL_PHOTO - 80) / 1440 * 96); const maxHpx = Math.floor(8000 / 1440 * 96); const r = Math.min(maxWpx / pc.width, maxHpx / pc.height, 1); presW_ph = Math.round(pc.width * r); presH_ph = Math.round(pc.height * r); }
   }
-
-  const cellPhoto_ph = new TableCell({
-    borders: brdsNone_ph, width: { size: PG_COL_PHOTO, type: WidthType.DXA },
-    verticalAlign: VerticalAlign.TOP,
-    margins: { top: 0, bottom: 0, left: 0, right: 200 },
-    children: presImg_ph
-      ? [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: presImg_ph, transformation: { width: presW_ph, height: presH_ph }, type: 'jpg' })] })]
-      : [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })] })],
-  });
-
-  // Compteurs prélèvements
+  const cellPhoto_ph = new TableCell({ borders: brdsNone_ph, width: { size: PG_COL_PHOTO, type: WidthType.DXA }, verticalAlign: VerticalAlign.TOP, margins: { top: 0, bottom: 0, left: 0, right: 200 }, children: presImg_ph ? [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: presImg_ph, transformation: { width: presW_ph, height: presH_ph }, type: 'jpg' })] })] : [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })] })] });
   let cntAbs = 0, cntPres = 0, cntAtt = 0;
-  for (const p of prelevements) {
-    const r = (p.resultat || '').toLowerCase();
-    if (r.includes('absence')) cntAbs++;
-    else if (r.includes('pr')) cntPres++;
-    else cntAtt++;
-  }
-
-  const cellInfos_ph = new TableCell({
-    borders: brdsNone_ph, width: { size: PG_COL_INFO, type: WidthType.DXA },
-    verticalAlign: VerticalAlign.TOP,
-    margins: { top: 0, bottom: 0, left: 200, right: 0 },
-    children: [
-      pgPara('Adresse du bien :', true, 18, '0080AD', { before: 0, after: 40 }),
-      pgPara(adresseBien_ph || '—'),
-      pgPara('Référence rapport :', true, 18, '0080AD', { before: 120, after: 40 }),
-      pgPara(refRapport_ph),
-      pgPara('Rédacteur :', true, 18, '0080AD', { before: 120, after: 40 }),
-      pgPara(redacteur_ph),
-      pgPara('Date :', true, 18, '0080AD', { before: 120, after: 40 }),
-      pgPara(dateRapport_ph),
-      pgPara('Entreprise réalisant le repérage :', true, 18, '0080AD', { before: 120, after: 40 }),
-      ...agenceLines_ph.map(l => pgPara(l)),
-    ],
-  });
-
-  // Tableau récap prélèvements
-  const RECAP_COLS_PH = [560, 900, 900, PG_W - 560 - 900 - 900]; // N° | Absence | Présence | Attente
-  const mkRecapCell_ph = (colIdx, children, isHeader=false) => new TableCell({
-    borders: brdsRecap_ph,
-    width: { size: RECAP_COLS_PH[colIdx], type: WidthType.DXA },
-    verticalAlign: VerticalAlign.CENTER,
-    shading: isHeader ? { fill: '00B0F0', type: ShadingType.CLEAR } : undefined,
-    margins: { top: 80, bottom: 80, left: 120, right: 120 },
-    children,
-  });
-  const mkRP = (txt, bold=false, color='222222', align=AlignmentType.LEFT) =>
-    new Paragraph({ alignment: align, children: [new TextRun({ text: txt||'—', bold, size: 16, font: 'Arial', color })] });
-
+  for (const p of prelevements) { const r = (p.resultat || '').toLowerCase(); if (r.includes('absence')) cntAbs++; else if (r.includes('pr')) cntPres++; else cntAtt++; }
+  const cellInfos_ph = new TableCell({ borders: brdsNone_ph, width: { size: PG_COL_INFO, type: WidthType.DXA }, verticalAlign: VerticalAlign.TOP, margins: { top: 0, bottom: 0, left: 200, right: 0 }, children: [pgPara('Adresse du bien :', true, 18, '0080AD', { before: 0, after: 40 }), pgPara(adresseBien_ph || '—'), pgPara('Référence rapport :', true, 18, '0080AD', { before: 120, after: 40 }), pgPara(refRapport_ph), pgPara('Rédacteur :', true, 18, '0080AD', { before: 120, after: 40 }), pgPara(redacteur_ph), pgPara('Date :', true, 18, '0080AD', { before: 120, after: 40 }), pgPara(dateRapport_ph), pgPara('Entreprise réalisant le repérage :', true, 18, '0080AD', { before: 120, after: 40 }), ...agenceLines_ph.map(l => pgPara(l))] });
+  const RECAP_COLS_PH = [560, 900, 900, PG_W - 560 - 900 - 900];
+  const mkRecapCell_ph = (colIdx, children, isHeader=false) => new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[colIdx], type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, shading: isHeader ? { fill: '00B0F0', type: ShadingType.CLEAR } : undefined, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children });
+  const mkRP = (txt, bold=false, color='222222', align=AlignmentType.LEFT) => new Paragraph({ alignment: align, children: [new TextRun({ text: txt||'—', bold, size: 16, font: 'Arial', color })] });
   const recapRows_ph = [
-    new TableRow({ tableHeader: true, children: [
-      mkRecapCell_ph(0, [mkRP('Total', true, 'FFFFFF')], true),
-      mkRecapCell_ph(1, [mkRP('🟢 Absence', true, 'FFFFFF')], true),
-      mkRecapCell_ph(2, [mkRP('🔴 Présence', true, 'FFFFFF')], true),
-      mkRecapCell_ph(3, [mkRP('🟡 En attente', true, 'FFFFFF')], true),
-    ]}),
+    new TableRow({ tableHeader: true, children: [mkRecapCell_ph(0, [mkRP('Total', true, 'FFFFFF')], true), mkRecapCell_ph(1, [mkRP('🟢 Absence', true, 'FFFFFF')], true), mkRecapCell_ph(2, [mkRP('🔴 Présence', true, 'FFFFFF')], true), mkRecapCell_ph(3, [mkRP('🔵 En attente', true, 'FFFFFF')], true)] }),
     new TableRow({ children: [
-      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[0], type: WidthType.DXA },
-        margins: { top: 80, bottom: 80, left: 120, right: 120 },
-        children: [mkRP(String(prelevements.length), true, '0080AD', AlignmentType.CENTER)] }),
-      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[1], type: WidthType.DXA },
-        margins: { top: 80, bottom: 80, left: 120, right: 120 },
-        shading: { fill: 'E8F5E9', type: ShadingType.CLEAR },
-        children: [mkRP(String(cntAbs), true, '2E7D32', AlignmentType.CENTER)] }),
-      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[2], type: WidthType.DXA },
-        margins: { top: 80, bottom: 80, left: 120, right: 120 },
-        shading: { fill: 'FFEBEE', type: ShadingType.CLEAR },
-        children: [mkRP(String(cntPres), true, 'C62828', AlignmentType.CENTER)] }),
-      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[3], type: WidthType.DXA },
-        margins: { top: 80, bottom: 80, left: 120, right: 120 },
-        shading: { fill: 'FFFDE7', type: ShadingType.CLEAR },
-        children: [mkRP(String(cntAtt), true, 'E65100', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[0], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [mkRP(String(prelevements.length), true, '0080AD', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[1], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, shading: { fill: 'E8F5E9', type: ShadingType.CLEAR }, children: [mkRP(String(cntAbs), true, '2E7D32', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[2], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, shading: { fill: 'FFEBEE', type: ShadingType.CLEAR }, children: [mkRP(String(cntPres), true, 'C62828', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_ph, width: { size: RECAP_COLS_PH[3], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, shading: { fill: 'BBDEFB', type: ShadingType.CLEAR }, children: [mkRP(String(cntAtt), true, '1565C0', AlignmentType.CENTER)] }),
     ]}),
   ];
-
   const coverChildren_ph = [
-    // Titre
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 0 },
-      children: [new TextRun({ text: '', size: 24, font: 'Arial' })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 },
-      children: [new TextRun({ text: 'DOSSIER PHOTOGRAPHIQUE', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 },
-      children: [new TextRun({ text: 'Mission Amiante — Prélèvements', size: 24, font: 'Arial', color: '0080AD', italics: true })] }),
-    // Photo + infos
-    new Table({
-      width: { size: PG_W, type: WidthType.DXA },
-      columnWidths: [PG_COL_PHOTO, PG_COL_INFO],
-      borders: { top: brdNone_ph, bottom: brdNone_ph, left: brdNone_ph, right: brdNone_ph, insideH: brdNone_ph, insideV: brdNone_ph },
-      rows: [new TableRow({ cantSplit: false, children: [cellPhoto_ph, cellInfos_ph] })],
-    }),
-    // Trait séparation
-    new Paragraph({
-      spacing: { before: 480, after: 320 },
-      border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } },
-      children: [],
-    }),
-    // Titre récap
-    new Paragraph({ spacing: { before: 0, after: 200 },
-      children: [new TextRun({ text: 'Récapitulatif des prélèvements', bold: true, size: 22, font: 'Arial', color: '0080AD' })] }),
-    // Tableau récap
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 }, children: [new TextRun({ text: 'DOSSIER PHOTOGRAPHIQUE', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 }, children: [new TextRun({ text: 'Mission Amiante — Prélèvements', size: 24, font: 'Arial', color: '0080AD', italics: true })] }),
+    new Table({ width: { size: PG_W, type: WidthType.DXA }, columnWidths: [PG_COL_PHOTO, PG_COL_INFO], borders: { top: brdNone_ph, bottom: brdNone_ph, left: brdNone_ph, right: brdNone_ph, insideH: brdNone_ph, insideV: brdNone_ph }, rows: [new TableRow({ cantSplit: false, children: [cellPhoto_ph, cellInfos_ph] })] }),
+    new Paragraph({ spacing: { before: 480, after: 320 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } }, children: [] }),
+    new Paragraph({ spacing: { before: 0, after: 200 }, children: [new TextRun({ text: 'Récapitulatif des prélèvements', bold: true, size: 22, font: 'Arial', color: '0080AD' })] }),
     new Table({ width: { size: PG_W, type: WidthType.DXA }, columnWidths: RECAP_COLS_PH, rows: recapRows_ph }),
   ];
-
   const doc = new Document({
     styles: { default: { document: { run: { font: 'Arial', size: 16 } } } },
     sections: [
-      // Section 1 : page de garde paysage
-      {
-        properties: {
-          type: SectionType.NEXT_PAGE,
-          page: {
-            size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE },
-            margin: { top: 567, right: 567, bottom: 567, left: 567 },
-          },
-        },
-        children: coverChildren_ph,
-      },
-      // Section 2 : tableau photos paysage
-      {
-        properties: {
-          page: {
-            size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE },
-            margin: { top: 720, right: 720, bottom: 720, left: 720 },
-          },
-        },
-        children: [
-          new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: 'Dossier Photographique — Mission Amiante', bold: true, size: 30, font: 'Arial', color: '0080AD' })] }),
-          new Paragraph({ spacing: { after: 280 }, children: [new TextRun({ text: `Mission : ${rootName}   ·   ${prelevements.length} prélèvements   ·   Généré le ${new Date().toLocaleDateString('fr-FR')}`, size: 18, font: 'Arial', color: '888888' })] }),
-          new Table({ width: { size: TOTAL_W, type: WidthType.DXA }, columnWidths: colWidths, rows: [headerRow, ...dataRows] }),
-        ],
-      },
+      { properties: { type: SectionType.NEXT_PAGE, page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 567, right: 567, bottom: 567, left: 567 } } }, children: coverChildren_ph },
+      { properties: { page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 720, right: 720, bottom: 720, left: 720 } } }, children: [
+        new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: 'Dossier Photographique — Mission Amiante', bold: true, size: 30, font: 'Arial', color: '0080AD' })] }),
+        new Paragraph({ spacing: { after: 280 }, children: [new TextRun({ text: `Mission : ${rootName}   ·   ${prelevements.length} prélèvements   ·   Généré le ${new Date().toLocaleDateString('fr-FR')}`, size: 18, font: 'Arial', color: '888888' })] }),
+        new Table({ width: { size: TOTAL_W, type: WidthType.DXA }, columnWidths: colWidths, rows: [headerRow, ...dataRows] }),
+      ]},
     ],
   });
-
   setProgress(96, 'Finalisation…');
   const blob = await Packer.toBlob(doc);
-  downloadBlob(blob, `Dossier_Photos_${rootName}.docx`);
-
+  await downloadBlob(blob, `Dossier_Photos_${rootName}.docx`);
   setProgress(100, '100% — Terminé !');
   setStatus(`✅ Dossier photos généré ! <strong>${nbOK}</strong> photos intégrées · <strong>${nbMissing}</strong> manquantes`, 'success');
   log(`=== Terminé. OK: ${nbOK} / Manquantes: ${nbMissing} ===`, 'ok');
-
   document.getElementById('btnGenPhotos').disabled = false;
   document.getElementById('btnGenPlans').disabled  = false;
+  document.getElementById('btnGenPV').disabled     = false;
   isRunning = false;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// GÉNÉRATION 2 : DOSSIER PLANS (cartouche)
+// GÉNÉRATION 2 : DOSSIER PLANS
 // ═══════════════════════════════════════════════════════════════
 async function generateDocxPlans() {
   if (!xmlData || isRunning) return;
   isRunning = true;
   document.getElementById('btnGenPhotos').disabled = true;
   document.getElementById('btnGenPlans').disabled  = true;
-
+  document.getElementById('btnGenPV').disabled     = true;
   const lib = getLib();
-  if (!lib) { isRunning = false; document.getElementById('btnGenPhotos').disabled = false; document.getElementById('btnGenPlans').disabled = false; return; }
-
-  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-          ImageRun, AlignmentType, PageOrientation, BorderStyle,
-          WidthType, ShadingType, VerticalAlign, SectionType } = lib;
-
-  // Lire l'ordre, la sélection et les noms depuis la grille de preview
+  if (!lib) { isRunning = false; document.getElementById('btnGenPhotos').disabled = false; document.getElementById('btnGenPlans').disabled = false; document.getElementById('btnGenPV').disabled = false; return; }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell, ImageRun, AlignmentType, PageOrientation, BorderStyle, WidthType, ShadingType, VerticalAlign, SectionType } = lib;
   const planFiles = getPlanFilesFromGrid();
   const { bien } = xmlData;
-  const total    = planFiles.length;
-  const agence   = document.getElementById('optAgence').value.trim();
-
-  // ── Données mission issues du XML ───────────────────────────
-  const adresseBien = [
-    bien['Immeuble_Adresse1']    || '',
-    bien['Immeuble_Departement'] || '',
-    bien['Immeuble_Commune']     || '',
-  ].filter(Boolean).join(' ');
-
-  const refRapport = bien['Mission_Num_Dossier']  || '—';
-  const dateRapport= bien['Mission_Date_Rapport'] || '—';
-  const redacteur  = bien['Gen_Nom_operateur']    || '—';
-
-  setStatus('⏳ Génération du dossier plans…', '');
-  setProgress(0, 'Démarrage…');
+  const total = planFiles.length;
+  const agence = document.getElementById('optAgence').value.trim();
+  const adresseBien = [bien['Immeuble_Adresse1']||'', bien['Immeuble_Departement']||'', bien['Immeuble_Commune']||''].filter(Boolean).join(' ');
+  const refRapport  = bien['Mission_Num_Dossier']  || '—';
+  const dateRapport = bien['Mission_Date_Rapport'] || '—';
+  const redacteur   = bien['Gen_Nom_operateur']    || '—';
+  setStatus('⏳ Génération du dossier plans…', ''); setProgress(0, 'Démarrage…');
   log('=== Génération dossier PLANS ===', 'ok');
   log(`${total} plan(s) à traiter`, 'ok');
-
-  // ── Dimensions A4 paysage ─────────────────────────────────
-  // Page A4 paysage : 16838 × 11906 DXA
-  // Marges 10mm (567 DXA chaque côté)
-  // Contenu total = 16838 − 1134 = 15704 DXA de large
-  //                 11906 − 1134 = 10772 DXA de haut
-  // Colonne plan : 11100 DXA  |  Cartouche : 4604 DXA
-  const COL_PLAN     = 11100;
-  const COL_CART     = 4604;
-  const TOTAL_W      = COL_PLAN + COL_CART;
-  const PAGE_H_DXA   = 10772;  // hauteur utile
-
-  const brdSolid = { style: BorderStyle.SINGLE, size: 8,  color: '0080AD' };
-  const brdThin  = { style: BorderStyle.SINGLE, size: 2,  color: '0080AD' };
-  const brdNone  = { style: BorderStyle.NONE,  size: 0, color: 'FFFFFF' };
-
-  // ── Helper textes cartouche ────────────────────────────────
-  const cartTitle = (text) => new Paragraph({
-    spacing: { before: 160, after: 60 },
-    children: [new TextRun({ text, bold: true, size: 18, font: 'Arial', color: '0080AD' })],
-  });
-  const cartValue = (text) => new Paragraph({
-    spacing: { before: 0, after: 80 },
-    children: [new TextRun({ text: text || '—', size: 16, font: 'Arial', color: '222222' })],
-  });
-  const cartSmall = (text) => new Paragraph({
-    spacing: { before: 0, after: 40 },
-    children: [new TextRun({ text: text || '', size: 14, font: 'Arial', color: '555555' })],
-  });
-
-  // ── Découpe de l'adresse agence en lignes ──────────────────
-  // L'utilisateur peut mettre " — " comme séparateur ou virgule
+  const COL_PLAN = 11100; const COL_CART = 4604; const TOTAL_W = COL_PLAN + COL_CART; const PAGE_H_DXA = 10772;
+  const brdSolid = { style: BorderStyle.SINGLE, size: 8, color: '0080AD' };
+  const brdThin  = { style: BorderStyle.SINGLE, size: 2, color: '0080AD' };
+  const brdNone  = { style: BorderStyle.NONE,   size: 0, color: 'FFFFFF' };
+  const cartTitle = (text) => new Paragraph({ spacing: { before: 160, after: 60 }, children: [new TextRun({ text, bold: true, size: 18, font: 'Arial', color: '0080AD' })] });
+  const cartValue = (text) => new Paragraph({ spacing: { before: 0, after: 80 }, children: [new TextRun({ text: text || '—', size: 16, font: 'Arial', color: '222222' })] });
+  const cartSmall = (text) => new Paragraph({ spacing: { before: 0, after: 40 }, children: [new TextRun({ text: text || '', size: 14, font: 'Arial', color: '555555' })] });
   const agenceLines = agence.split(/\s*[—\n]\s*/).filter(Boolean);
-
-  // ── Construction des pages ─────────────────────────────────────────────
-  // 2 sections : section 1 portrait (page de garde) + section 2 paysage (planches)
-  const children = [];        // planches (section 2)
-  const coverChildren = [];   // page de garde (section 1)
-
-  // ── Dimensions page de garde (A4 portrait, marges 20mm) ──────
-  const PORT_W   = 15704;  // 16838 - 2×567 (paysage)
-  const COL_PHOTO_PG = 4800;
-  const COL_INFO_PG  = PORT_W - COL_PHOTO_PG - 200; // 200 = écart inter-col
-
-  // ── Helpers page de garde ────────────────────────────────────
-  const pgTitle = (txt, sz=44) => new Paragraph({
-    alignment: AlignmentType.CENTER,
-    spacing: { before: 0, after: 320 },
-    children: [new TextRun({ text: txt, bold: true, size: sz, font: 'Arial', color: '0080AD' })],
-  });
-  const pgLabel = (txt) => new Paragraph({
-    spacing: { before: 120, after: 40 },
-    children: [new TextRun({ text: txt, bold: true, size: 18, font: 'Arial', color: '0080AD' })],
-  });
-  const pgValue = (txt) => new Paragraph({
-    spacing: { before: 0, after: 80 },
-    children: [new TextRun({ text: txt || '—', size: 18, font: 'Arial', color: '222222' })],
-  });
-  const brdPG = { style: BorderStyle.SINGLE, size: 4, color: '0080AD' };
+  const children = []; const coverChildren = [];
+  const PORT_W = 15704; const COL_PHOTO_PG = 4800; const COL_INFO_PG = PORT_W - COL_PHOTO_PG - 200;
+  const pgLabel = (txt) => new Paragraph({ spacing: { before: 120, after: 40 }, children: [new TextRun({ text: txt, bold: true, size: 18, font: 'Arial', color: '0080AD' })] });
+  const pgValue = (txt) => new Paragraph({ spacing: { before: 0, after: 80 }, children: [new TextRun({ text: txt || '—', size: 18, font: 'Arial', color: '222222' })] });
   const brdNonePG = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
-  const brdsPG = { top: brdPG, bottom: brdPG, left: brdPG, right: brdPG };
-  const brdsNone = { top: brdNonePG, bottom: brdNonePG, left: brdNonePG, right: brdNonePG };
-
-  // ── 1. Titre ─────────────────────────────────────────────────
+  const brdsNone  = { top: brdNonePG, bottom: brdNonePG, left: brdNonePG, right: brdNonePG };
   coverChildren.push(
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { before: 0, after: 0 },
-      children: [new TextRun({ text: '', size: 24, font: 'Arial' })],
-    }),
-    pgTitle('ANNEXE CROQUIS', 52),
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { before: 0, after: 480 },
-      children: [new TextRun({
-        text: 'Plans de repérage amiante',
-        size: 24, font: 'Arial', color: '0080AD', italics: true,
-      })],
-    }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 }, children: [new TextRun({ text: 'ANNEXE CROQUIS', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 }, children: [new TextRun({ text: 'Plans de repérage amiante', size: 24, font: 'Arial', color: '0080AD', italics: true })] }),
   );
-
-  // ── 2. Chercher presentation.jpeg dans fileIndex ─────────────
-  const presKey = Object.keys(fileIndex).find(k =>
-    k.startsWith('photos/') && k.toLowerCase().endsWith('presentation.jpeg') ||
-    k.startsWith('photos/') && k.toLowerCase().endsWith('presentation.jpg')
-  );
-  let presImageData = null;
-  let presImgW = 0, presImgH = 0;
+  const presKey = Object.keys(fileIndex).find(k => k.startsWith('photos/') && k.toLowerCase().endsWith('presentation.jpeg') || k.startsWith('photos/') && k.toLowerCase().endsWith('presentation.jpg'));
+  let presImageData = null, presImgW = 0, presImgH = 0;
   if (presKey) {
     log(`Photo de présentation trouvée : ${presKey}`, 'ok');
     const presComp = await compressImage(fileIndex[presKey], 120, 2400);
-    if (presComp) {
-      presImageData = presComp.data;
-      // Calcul taille image dans la colonne photo (DXA → px)
-      const maxWpx = Math.floor((COL_PHOTO_PG - 80) / 1440 * 96);
-      const maxHpx = Math.floor(8000 / 1440 * 96); // ~hauteur raisonnable
-      const r = Math.min(maxWpx / presComp.width, maxHpx / presComp.height, 1);
-      presImgW = Math.round(presComp.width  * r);
-      presImgH = Math.round(presComp.height * r);
-    }
-  } else {
-    log('presentation.jpeg non trouvé dans photos/', 'warn');
-  }
-
-  // ── 3. Tableau photo + infos mission ─────────────────────────
-  const cellPhoto = new TableCell({
-    borders: brdsNone,
-    width: { size: COL_PHOTO_PG, type: WidthType.DXA },
-    verticalAlign: VerticalAlign.TOP,
-    margins: { top: 0, bottom: 0, left: 0, right: 200 },
-    children: presImageData
-      ? [new Paragraph({
-          alignment: AlignmentType.CENTER,
-          children: [new ImageRun({ data: presImageData, transformation: { width: presImgW, height: presImgH }, type: 'jpg' })],
-        })]
-      : [new Paragraph({
-          alignment: AlignmentType.CENTER,
-          children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })],
-        })],
-  });
-
-  const cellInfos = new TableCell({
-    borders: brdsNone,
-    width: { size: COL_INFO_PG, type: WidthType.DXA },
-    verticalAlign: VerticalAlign.TOP,
-    margins: { top: 0, bottom: 0, left: 200, right: 0 },
-    children: [
-      pgLabel('Adresse du bien :'),
-      pgValue(adresseBien || '—'),
-      pgLabel('Référence rapport :'),
-      pgValue(refRapport),
-      pgLabel('Rédacteur :'),
-      pgValue(redacteur),
-      pgLabel('Date :'),
-      pgValue(dateRapport),
-      pgLabel('Entreprise réalisant le repérage :'),
-      ...agenceLines.map(l => pgValue(l)),
-    ],
-  });
-
-  coverChildren.push(new Table({
-    width: { size: PORT_W, type: WidthType.DXA },
-    columnWidths: [COL_PHOTO_PG, COL_INFO_PG],
-    borders: {
-      top: brdNonePG, bottom: brdNonePG,
-      left: brdNonePG, right: brdNonePG,
-      insideH: brdNonePG, insideV: brdNonePG,
-    },
-    rows: [new TableRow({ cantSplit: false, children: [cellPhoto, cellInfos] })],
-  }));
-
-  // ── 4. Trait de séparation ───────────────────────────────────
-  coverChildren.push(new Paragraph({
-    spacing: { before: 480, after: 320 },
-    border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } },
-    children: [],
-  }));
-
-  // ── 5. Titre tableau récap ───────────────────────────────────
-  coverChildren.push(new Paragraph({
-    spacing: { before: 0, after: 200 },
-    children: [new TextRun({ text: 'Récapitulatif des plans', bold: true, size: 22, font: 'Arial', color: '0080AD' })],
-  }));
-
-  // ── 6. Tableau récap plans ───────────────────────────────────
-  // Colonnes : N° | Objet | Localisation | Compléments
-  const RECAP_COLS = [640, 2800, 2600, PORT_W - 640 - 2800 - 2600]; // = 3598
+    if (presComp) { presImageData = presComp.data; const maxWpx = Math.floor((COL_PHOTO_PG - 80) / 1440 * 96); const maxHpx = Math.floor(8000 / 1440 * 96); const r = Math.min(maxWpx / presComp.width, maxHpx / presComp.height, 1); presImgW = Math.round(presComp.width * r); presImgH = Math.round(presComp.height * r); }
+  } else { log('presentation.jpeg non trouvé dans photos/', 'warn'); }
+  const cellPhoto = new TableCell({ borders: brdsNone, width: { size: COL_PHOTO_PG, type: WidthType.DXA }, verticalAlign: VerticalAlign.TOP, margins: { top: 0, bottom: 0, left: 0, right: 200 }, children: presImageData ? [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: presImageData, transformation: { width: presImgW, height: presImgH }, type: 'jpg' })] })] : [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })] })] });
+  const cellInfos = new TableCell({ borders: brdsNone, width: { size: COL_INFO_PG, type: WidthType.DXA }, verticalAlign: VerticalAlign.TOP, margins: { top: 0, bottom: 0, left: 200, right: 0 }, children: [pgLabel('Adresse du bien :'), pgValue(adresseBien || '—'), pgLabel('Référence rapport :'), pgValue(refRapport), pgLabel('Rédacteur :'), pgValue(redacteur), pgLabel('Date :'), pgValue(dateRapport), pgLabel('Entreprise réalisant le repérage :'), ...agenceLines.map(l => pgValue(l))] });
+  coverChildren.push(new Table({ width: { size: PORT_W, type: WidthType.DXA }, columnWidths: [COL_PHOTO_PG, COL_INFO_PG], borders: { top: brdNonePG, bottom: brdNonePG, left: brdNonePG, right: brdNonePG, insideH: brdNonePG, insideV: brdNonePG }, rows: [new TableRow({ cantSplit: false, children: [cellPhoto, cellInfos] })] }));
+  coverChildren.push(new Paragraph({ spacing: { before: 480, after: 320 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } }, children: [] }));
+  coverChildren.push(new Paragraph({ spacing: { before: 0, after: 200 }, children: [new TextRun({ text: 'Récapitulatif des plans', bold: true, size: 22, font: 'Arial', color: '0080AD' })] }));
+  const RECAP_COLS = [640, 2800, 2600, PORT_W - 640 - 2800 - 2600];
   const recapBrd = { style: BorderStyle.SINGLE, size: 4, color: 'CBD5E1' };
   const recapBrds = { top: recapBrd, bottom: recapBrd, left: recapBrd, right: recapBrd };
-
-  const mkRecapCell = (colIdx, children, isHeader=false) => new TableCell({
-    borders: recapBrds,
-    width: { size: RECAP_COLS[colIdx], type: WidthType.DXA },
-    verticalAlign: VerticalAlign.CENTER,
-    shading: isHeader ? { fill: '00B0F0', type: ShadingType.CLEAR } : undefined,
-    margins: { top: 80, bottom: 80, left: 120, right: 120 },
-    children,
-  });
-  const mkRecapPara = (txt, bold=false, color='222222') => new Paragraph({
-    children: [new TextRun({ text: txt || '—', bold, size: 16, font: 'Arial', color })],
-  });
-
+  const mkRecapCell = (colIdx, children, isHeader=false) => new TableCell({ borders: recapBrds, width: { size: RECAP_COLS[colIdx], type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, shading: isHeader ? { fill: '00B0F0', type: ShadingType.CLEAR } : undefined, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children });
+  const mkRecapPara = (txt, bold=false, color='222222') => new Paragraph({ children: [new TextRun({ text: txt || '—', bold, size: 16, font: 'Arial', color })] });
   const planFilesForRecap = getPlanFilesFromGrid();
-  const recapHeaderRow = new TableRow({
-    tableHeader: true,
-    children: [
-      mkRecapCell(0, [mkRecapPara('N°', true, 'FFFFFF')], true),
-      mkRecapCell(1, [mkRecapPara('Objet', true, 'FFFFFF')], true),
-      mkRecapCell(2, [mkRecapPara('Localisation', true, 'FFFFFF')], true),
-      mkRecapCell(3, [mkRecapPara('Compléments', true, 'FFFFFF')], true),
-    ],
-  });
-
+  const recapHeaderRow = new TableRow({ tableHeader: true, children: [mkRecapCell(0, [mkRecapPara('N°', true, 'FFFFFF')], true), mkRecapCell(1, [mkRecapPara('Objet', true, 'FFFFFF')], true), mkRecapCell(2, [mkRecapPara('Localisation', true, 'FFFFFF')], true), mkRecapCell(3, [mkRecapPara('Compléments', true, 'FFFFFF')], true)] });
   const recapDataRows = planFilesForRecap.map((pf, idx) => {
     const rowBg = idx % 2 === 0 ? 'FFFFFF' : 'F8FAFC';
-    const mkCell = (colIdx, txt) => mkRecapCell(colIdx, [mkRecapPara(txt)]);
-    const rowCell = (colIdx, txt) => new TableCell({
-      borders: recapBrds,
-      width: { size: RECAP_COLS[colIdx], type: WidthType.DXA },
-      verticalAlign: VerticalAlign.CENTER,
-      shading: { fill: rowBg, type: ShadingType.CLEAR },
-      margins: { top: 80, bottom: 80, left: 120, right: 120 },
-      children: [mkRecapPara(txt)],
-    });
-    return new TableRow({
-      children: [
-        rowCell(0, `${idx + 1} / ${planFilesForRecap.length}`),
-        rowCell(1, pf.objet || '—'),
-        rowCell(2, pf.localisation || '—'),
-        rowCell(3, pf.complements || 'Sans Objet'),
-      ],
-    });
+    const rowCell = (colIdx, txt) => new TableCell({ borders: recapBrds, width: { size: RECAP_COLS[colIdx], type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER, shading: { fill: rowBg, type: ShadingType.CLEAR }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [mkRecapPara(txt)] });
+    return new TableRow({ children: [rowCell(0, `${idx+1}/${planFilesForRecap.length}`), rowCell(1, pf.objet||'—'), rowCell(2, pf.localisation||'—'), rowCell(3, pf.complements||'Sans Objet')] });
   });
-
-  coverChildren.push(new Table({
-    width: { size: PORT_W, type: WidthType.DXA },
-    columnWidths: RECAP_COLS,
-    rows: [recapHeaderRow, ...recapDataRows],
-  }));
+  coverChildren.push(new Table({ width: { size: PORT_W, type: WidthType.DXA }, columnWidths: RECAP_COLS, rows: [recapHeaderRow, ...recapDataRows] }));
 
   for (let i = 0; i < planFiles.length; i++) {
-    const { path, file } = planFiles[i];
+    const { file } = planFiles[i];
     const planEntry = planFiles[i];
-    const nomBrut   = planEntry.localisation || planEntry.file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' ');
+    const nomBrut = planEntry.localisation || planEntry.file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' ');
     const numPlanche = `${i + 1} / ${total}`;
-
     setProgress(Math.round((i / total) * 88), `Plan ${i + 1} / ${total} : ${file.name}`);
     setStatus(`⏳ Traitement du plan <strong>${file.name}</strong> (${i + 1} sur ${total})…`, '');
-
-    // ── Chargement du plan : crop manuel prioritaire, sinon crop blanc auto ──
-    // Si l'utilisateur a appliqué un crop manuel → on l'utilise directement (cropBlob)
-    // Sinon → crop auto des bords blancs sur l'image originale
-    const sourceFile = planEntry.cropBlob
-      ? new File([planEntry.cropBlob], file.name, { type: 'image/jpeg' })
-      : file;
-
     const comp = await (async () => {
       if (planEntry.cropBlob) {
-        // Crop manuel déjà appliqué : on compresse directement
         log(`Plan ${file.name} : utilisation du crop manuel`, 'ok');
-        return await compressImage(sourceFile, 300, 3000);
+        return await compressImage(new File([planEntry.cropBlob], file.name, { type: 'image/jpeg' }), 300, 3000);
       } else {
-        // Crop automatique des bords blancs
         return await new Promise(resolve => {
           const url = URL.createObjectURL(file);
           const img = new Image();
@@ -2656,10 +1608,7 @@ async function generateDocxPlans() {
             const cropResult = cropWhiteBorders(srcCanvas, 240);
             const croppedCanvas = cropResult.canvas;
             log(`Crop auto ${file.name} : ${img.width}×${img.height} → ${croppedCanvas.width}×${croppedCanvas.height}`, 'ok');
-            croppedCanvas.toBlob(async blob => {
-              const croppedFile = new File([blob], file.name, { type: 'image/jpeg' });
-              resolve(await compressImage(croppedFile, 300, 3000));
-            }, 'image/jpeg', 0.95);
+            croppedCanvas.toBlob(async blob => { resolve(await compressImage(new File([blob], file.name, { type: 'image/jpeg' }), 300, 3000)); }, 'image/jpeg', 0.95);
           };
           img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
           img.src = url;
@@ -2667,152 +1616,503 @@ async function generateDocxPlans() {
       }
     })();
     log(`Plan OK : ${file.name} → ${comp ? comp.sizeKB + ' Ko' : 'erreur'}`, comp ? 'ok' : 'err');
-
-    // ── Calcul taille image dans la colonne ──────────────────
-    // ImageRun.transformation.width/height = PIXELS (96 dpi écran)
-    // Espace utile = largeur/hauteur colonne MINUS marges cellule (60 DXA × 2)
-    // Formule : DXA → px : valeur_DXA / 1440 * 96  (1440 DXA = 1 pouce = 96 px)
     let imgW = 0, imgH = 0;
     if (comp) {
-      const maxWpx = Math.floor((COL_PLAN   - 120) / 1440 * 96);  // ≈ 732 px
-      const maxHpx = Math.floor((PAGE_H_DXA - 120) / 1440 * 96);  // ≈ 710 px
-      const ratioW = maxWpx / comp.width;
-      const ratioH = maxHpx / comp.height;
-      const ratio  = Math.min(ratioW, ratioH, 1);  // ne jamais agrandir
-      imgW = Math.round(comp.width  * ratio);       // résultat en PIXELS ← correct
-      imgH = Math.round(comp.height * ratio);       // résultat en PIXELS ← correct
+      const maxWpx = Math.floor((COL_PLAN   - 120) / 1440 * 96);
+      const maxHpx = Math.floor((PAGE_H_DXA - 120) / 1440 * 96);
+      const ratio  = Math.min(maxWpx / comp.width, maxHpx / comp.height, 1);
+      imgW = Math.round(comp.width  * ratio);
+      imgH = Math.round(comp.height * ratio);
     }
-
-    // ── Cellule plan (colonne gauche) ──────────────────────
-    // Pour i > 0 : pageBreakBefore sur le paragraphe image = saut de page
-    // propre SANS paragraphe externe (qui créait une page blanche)
     const cellPlan = new TableCell({
       borders: { top: brdSolid, bottom: brdSolid, left: brdSolid, right: brdThin },
-      width: { size: COL_PLAN, type: WidthType.DXA },
-      verticalAlign: VerticalAlign.CENTER,
+      width: { size: COL_PLAN, type: WidthType.DXA }, verticalAlign: VerticalAlign.CENTER,
       margins: { top: 60, bottom: 60, left: 60, right: 60 },
-      children: [
-        new Paragraph({
-          alignment: AlignmentType.CENTER,
-          pageBreakBefore: i > 0,
-          children: comp ? [new ImageRun({ data: comp.data, transformation: { width: imgW, height: imgH }, type: 'jpg' })]
-                         : [new TextRun({ text: 'Plan non disponible', italics: true, color: 'AAAAAA', size: 16, font: 'Arial' })],
-        })
-      ],
+      children: [new Paragraph({ alignment: AlignmentType.CENTER, pageBreakBefore: i > 0, children: comp ? [new ImageRun({ data: comp.data, transformation: { width: imgW, height: imgH }, type: 'jpg' })] : [new TextRun({ text: 'Plan non disponible', italics: true, color: 'AAAAAA', size: 16, font: 'Arial' })] })],
     });
-
-    // ── Cellule cartouche (colonne droite) ────────────────
     const cartChildren = [
-      // ─ Titre principal ─
-      new Paragraph({
-        spacing: { before: 0, after: 120 },
-        children: [new TextRun({ text: 'Planche de repérage technique', bold: true, size: 22, font: 'Arial', color: 'FFFFFF' })],
-        shading: { fill: '00B0F0', type: ShadingType.CLEAR },
-      }),
-
-      // ─ N° planche ─
-      cartTitle('N° planche :'),
-      cartValue(numPlanche),
-
-      // ─ Objet / Localisation / Compléments ─
-      cartTitle('Objet :'),
-      cartValue(planEntry.objet || nomBrut),
-      cartTitle('Localisation :'),
-      cartValue(planEntry.localisation || nomBrut),
-      cartTitle('Compléments :'),
-      cartValue(planEntry.complements || 'Sans Objet'),
-
-      // ─ Entreprise ─
-      cartTitle('Entreprise réalisant le repérage :'),
-      ...agenceLines.map(l => cartSmall(l)),
-
-      // ─ Adresse du bien ─
-      cartTitle('Adresse du bien :'),
-      cartValue(adresseBien || '—'),
-
-      // ─ Infos rapport ─
-      cartTitle('Informations relatives au rapport :'),
-      cartSmall(`Réf. du rapport : ${refRapport}`),
-      cartSmall(`Rédacteur : ${redacteur}`),
-      cartSmall(`Date : ${dateRapport}`),
-
-      // ─ Commentaires ─
-      cartTitle('Commentaires :'),
-      cartValue(planEntry.commentaire || ''),
+      new Paragraph({ spacing: { before: 0, after: 120 }, children: [new TextRun({ text: 'Planche de repérage technique', bold: true, size: 22, font: 'Arial', color: 'FFFFFF' })], shading: { fill: '00B0F0', type: ShadingType.CLEAR } }),
+      cartTitle('N° planche :'), cartValue(numPlanche),
+      cartTitle('Objet :'), cartValue(planEntry.objet || nomBrut),
+      cartTitle('Localisation :'), cartValue(planEntry.localisation || nomBrut),
+      cartTitle('Compléments :'), cartValue(planEntry.complements || 'Sans Objet'),
+      cartTitle('Entreprise réalisant le repérage :'), ...agenceLines.map(l => cartSmall(l)),
+      cartTitle('Adresse du bien :'), cartValue(adresseBien || '—'),
+      cartTitle('Informations relatives au rapport :'), cartSmall(`Réf. du rapport : ${refRapport}`), cartSmall(`Rédacteur : ${redacteur}`), cartSmall(`Date : ${dateRapport}`),
+      cartTitle('Commentaires :'), cartValue(planEntry.commentaire || ''),
     ];
-
-    const cellCart = new TableCell({
-      borders: { top: brdSolid, bottom: brdSolid, left: brdThin, right: brdSolid },
-      width: { size: COL_CART, type: WidthType.DXA },
-      verticalAlign: VerticalAlign.TOP,
-      margins: { top: 120, bottom: 120, left: 160, right: 160 },
-      children: cartChildren,
-    });
-
-    // ── Tableau (1 rangée = plan + cartouche) ─────────────
-    // Pas de HeightRule.EXACT : on laisse le tableau prendre sa hauteur naturelle.
-    // cantSplit garantit que la ligne ne se coupe pas entre deux pages.
-    const tableauPage = new Table({
-      width: { size: TOTAL_W, type: WidthType.DXA },
-      columnWidths: [COL_PLAN, COL_CART],
-      rows: [new TableRow({
-        cantSplit: true,
-        children: [cellPlan, cellCart],
-      })],
-    });
-
-    children.push(tableauPage);
+    const cellCart = new TableCell({ borders: { top: brdSolid, bottom: brdSolid, left: brdThin, right: brdSolid }, width: { size: COL_CART, type: WidthType.DXA }, verticalAlign: VerticalAlign.TOP, margins: { top: 120, bottom: 120, left: 160, right: 160 }, children: cartChildren });
+    children.push(new Table({ width: { size: TOTAL_W, type: WidthType.DXA }, columnWidths: [COL_PLAN, COL_CART], rows: [new TableRow({ cantSplit: true, children: [cellPlan, cellCart] })] }));
   }
 
-  // ── Assemblage du document ─────────────────────────────
   setProgress(92, 'Assemblage…');
+  const doc = new Document({
+    styles: { default: { document: { run: { font: 'Arial', size: 16 } } } },
+    sections: [
+      { properties: { type: SectionType.NEXT_PAGE, page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 567, right: 567, bottom: 567, left: 567 } } }, children: coverChildren },
+      { properties: { page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 567, right: 567, bottom: 567, left: 567 } } }, children },
+    ],
+  });
+  setProgress(96, 'Finalisation…');
+  const blob = await Packer.toBlob(doc);
+  await downloadBlob(blob, `Dossier_Plans_${rootName}.docx`);
+  setProgress(100, '100% — Terminé !');
+  setStatus(`✅ Dossier plans généré ! <strong>${total}</strong> plan(s) intégré(s).`, 'success');
+  log(`=== Terminé. ${total} plan(s) traité(s) ===`, 'ok');
+  document.getElementById('btnGenPhotos').disabled = false;
+  document.getElementById('btnGenPlans').disabled  = false;
+  document.getElementById('btnGenPV').disabled     = false;
+  isRunning = false;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GÉNÉRATION 3 : ANNEXE PV D'ANALYSES — scan PDF (prelevements_amiante/)
+// ═══════════════════════════════════════════════════════════════════════
+async function generateDocxPV() {
+  if (!xmlData || isRunning) return;
+  isRunning = true;
+  ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = true);
+
+  const lib = getLib();
+  if (!lib) {
+    isRunning = false;
+    ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+          ImageRun, AlignmentType, BorderStyle,
+          WidthType, ShadingType, VerticalAlign, SectionType, PageNumber } = lib;
+
+  const { prelevements, bien } = xmlData;
+  const agence      = document.getElementById('optAgence').value.trim();
+  const agenceLines = agence.split(/\s*[—\n]\s*/).filter(Boolean);
+  const adresseBien = [bien['Immeuble_Adresse1']||'', bien['Immeuble_Departement']||'', bien['Immeuble_Commune']||''].filter(Boolean).join(' ');
+  const refRapport  = bien['Mission_Num_Dossier']  || '—';
+  const dateRapport = bien['Mission_Date_Rapport'] || '—';
+  const redacteur   = bien['Gen_Nom_operateur']    || '—';
+
+  setStatus('⏳ Scan des PDF d\'analyse…', '');
+  setProgress(0, 'Recherche des PDF…');
+  log('=== Génération ANNEXE PV D\'ANALYSES (scan PDF) ===', 'ok');
+
+  // ── 1. Trouver les PDF dans fileIndex ─────────────────────────────
+  // Cherche dans prelevements_amiante/ les fichiers PV_Analyse_*_Resultat_*.pdf
+  const pvPdfEntries = Object.entries(fileIndex)
+    .filter(([k]) => {
+      const lower = k.toLowerCase();
+      return lower.endsWith('.pdf') &&
+             lower.includes('pv_analyse') &&
+             (lower.includes('prelevements_amiante') || lower.includes('prélèvements_amiante') || lower.includes('pv_analyse'));
+    })
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }));
+
+  if (pvPdfEntries.length === 0) {
+    setStatus('⚠️ Aucun fichier PV_Analyse_*_Resultat_*.pdf trouvé dans le dossier prelevements_amiante/.', 'error');
+    log('Aucun PDF PV trouvé dans fileIndex. Clés disponibles : ' + Object.keys(fileIndex).filter(k=>k.endsWith('.pdf')).join(', '), 'warn');
+    isRunning = false;
+    ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+
+  log(`PDF trouvés : ${pvPdfEntries.length} → ${pvPdfEntries.map(([k])=>k).join(', ')}`, 'ok');
+
+  // ── 2. Pour chaque PDF : extraire texte + rendre pages en image ───
+  // Structure résultat : [ { sourceFile, pageIndex (0-based), imageBlob, refs:[P641,...] } ]
+  const allPages = [];   // pages ordonnées dans l'ordre des fichiers/pages
+  const refToPage = {}; // P641 → index dans allPages (0-based) → +2 pour docPage (page de garde = 1)
+
+  // Vérifier que PDF.js est disponible
+  if (typeof pdfjsLib === 'undefined') {
+    setStatus('⚠️ PDF.js non chargé. Vérifiez la connexion.', 'error');
+    isRunning = false;
+    ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+
+  setProgress(5, 'Lecture des PDF…');
+
+  for (let fi = 0; fi < pvPdfEntries.length; fi++) {
+    const [pdfKey, pdfFile] = pvPdfEntries[fi];
+    setStatus(`⏳ Analyse PDF ${fi + 1}/${pvPdfEntries.length} : ${pdfFile.name}…`, '');
+    log(`Lecture : ${pdfKey}`, 'ok');
+
+    try {
+      const arrayBuffer = await pdfFile.arrayBuffer();
+      const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      log(`  → ${pdfDoc.numPages} page(s)`, 'ok');
+
+      for (let p = 1; p <= pdfDoc.numPages; p++) {
+        const page = await pdfDoc.getPage(p);
+
+        // ── Extraction texte pour trouver les refs prélèvements ──
+        const textContent = await page.getTextContent();
+        const fullText = textContent.items.map(i => i.str).join(' ');
+
+        // Chercher les patterns P641, P642... dans "Réf échantillon client : P641"
+        const refs = [];
+        const refRegex = /P(\d{3,4})(?:\s*[-–]\s*[^\s])?/g;
+        // On cherche d'abord dans le contexte "Réf échantillon client"
+        const contextMatches = fullText.matchAll(/[Rr][ée]f[\s.]*[ée]chantillon\s+client\s*:?\s*(P\d{3,4})/g);
+        for (const m of contextMatches) {
+          refs.push(m[1]);
+        }
+        // Fallback : chercher tous les Pxxx isolés si pas trouvés par contexte
+        if (refs.length === 0) {
+          const allRefs = fullText.matchAll(/\b(P\d{3,4})\b/g);
+          for (const m of allRefs) {
+            if (!refs.includes(m[1])) refs.push(m[1]);
+          }
+        }
+
+        // ── Rendu page en image via canvas ──────────────────────
+        const scale = 2.0; // résolution × 2 pour qualité
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width  = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        // Canvas → Blob JPEG
+        const imageBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.88));
+        const imageData = await imageBlob.arrayBuffer();
+
+        const pageEntry = {
+          sourceFile : pdfFile.name,
+          pageIndex  : p - 1,
+          pageNum    : p,
+          width      : canvas.width,
+          height     : canvas.height,
+          imageData,
+          refs,
+        };
+
+        // Associer les refs trouvées à cette page (docPage = allPages.length + 2)
+        const docPage = allPages.length + 2; // +1 pour index 0→1, +1 pour page de garde
+        refs.forEach(ref => {
+          if (!refToPage[ref]) refToPage[ref] = docPage;
+        });
+
+        allPages.push(pageEntry);
+        log(`  Page ${p}/${pdfDoc.numPages} → refs: [${refs.join(', ') || 'aucune'}] → docPage ${docPage}`, refs.length ? 'ok' : 'warn');
+
+        setProgress(5 + Math.round(((fi / pvPdfEntries.length) + (p / pdfDoc.numPages / pvPdfEntries.length)) * 50), `PDF ${fi+1}/${pvPdfEntries.length} — p.${p}/${pdfDoc.numPages}`);
+      }
+    } catch(err) {
+      log(`Erreur lecture PDF ${pdfKey} : ${err.message}`, 'err');
+    }
+  }
+
+  if (allPages.length === 0) {
+    setStatus('⚠️ Aucune page PDF n\'a pu être rendue.', 'error');
+    isRunning = false;
+    ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+
+  log(`Total pages rendues : ${allPages.length} | Refs trouvées : ${Object.keys(refToPage).join(', ')}`, 'ok');
+  setProgress(58, 'Construction de la page de garde…');
+
+  // ── 3. Construire la liste des prélèvements avec leur docPage ───
+  // On croise les prélèvements XML avec les refs trouvées dans les PDF
+  // Si un prélèvement n'est pas trouvé dans les PDF → docPage = '?'
+  const pvList = prelevements.map(p => ({
+    ...p,
+    docPage: refToPage[p.numPrelevement] || null,
+  })).filter(p => p.docPage); // garder seulement ceux trouvés dans les PDF
+
+  const totalRefs = Object.keys(refToPage).length;
+  log(`Prélèvements référencés dans PDF : ${pvList.length} / ${prelevements.length}`, 'ok');
+
+  // ── Dimensions A4 portrait ──────────────────────────────────────
+  const PAGE_W   = 11906;
+  const PAGE_H   = 16838;
+  const MARGIN   = 1134;
+  const USABLE_W = PAGE_W - 2 * MARGIN;  // 9638
+  const USABLE_H = PAGE_H - 2 * MARGIN;  // 14570
+
+  // ── Helpers ─────────────────────────────────────────────────────
+  const brdNone  = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+  const brdsNone = { top: brdNone, bottom: brdNone, left: brdNone, right: brdNone };
+  const brdRecap = { style: BorderStyle.SINGLE, size: 3, color: 'CBD5E1' };
+  const brdsRecap = { top: brdRecap, bottom: brdRecap, left: brdRecap, right: brdRecap };
+
+  const getResultColor = (resultat) => {
+    const r = (resultat || '').toLowerCase();
+    if (r.includes('absence') || r.includes('non détecté')) return { fill: 'C8E6C9', text: '2E7D32' };
+    if (r.includes('pr') || r.includes('détecté'))          return { fill: 'FFCDD2', text: 'C62828' };
+    return { fill: 'BBDEFB', text: '1565C0' };
+  };
+
+  const pgLabel = (txt) => new Paragraph({
+    spacing: { before: 120, after: 40 },
+    children: [new TextRun({ text: txt, bold: true, size: 18, font: 'Arial', color: '0080AD' })],
+  });
+  const pgValue = (txt) => new Paragraph({
+    spacing: { before: 0, after: 80 },
+    children: [new TextRun({ text: txt || '—', size: 18, font: 'Arial', color: '222222' })],
+  });
+
+  // ── Photo de présentation (même logique que les autres générateurs) ──
+  const presKey = Object.keys(fileIndex).find(k =>
+    k.startsWith('photos/') && (k.toLowerCase().endsWith('presentation.jpeg') || k.toLowerCase().endsWith('presentation.jpg'))
+  );
+  let presImageData = null, presImgW = 0, presImgH = 0;
+  const PG_COL_PHOTO = 3600;
+  const PG_COL_INFO  = USABLE_W - PG_COL_PHOTO - 200;
+  if (presKey) {
+    const pc = await compressImage(fileIndex[presKey], 120, 2400);
+    if (pc) {
+      const maxWpx = Math.floor((PG_COL_PHOTO - 80) / 1440 * 96);
+      const maxHpx = Math.floor(6000 / 1440 * 96);
+      const r = Math.min(maxWpx / pc.width, maxHpx / pc.height, 1);
+      presImageData = pc.data;
+      presImgW = Math.round(pc.width * r);
+      presImgH = Math.round(pc.height * r);
+    }
+  }
+
+  const cellPhotoGuard = new TableCell({
+    borders: brdsNone,
+    width: { size: PG_COL_PHOTO, type: WidthType.DXA },
+    verticalAlign: VerticalAlign.TOP,
+    margins: { top: 0, bottom: 0, left: 0, right: 200 },
+    children: presImageData
+      ? [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: presImageData, transformation: { width: presImgW, height: presImgH }, type: 'jpg' })] })]
+      : [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })] })],
+  });
+
+  const cellInfosGuard = new TableCell({
+    borders: brdsNone,
+    width: { size: PG_COL_INFO, type: WidthType.DXA },
+    verticalAlign: VerticalAlign.TOP,
+    margins: { top: 0, bottom: 0, left: 200, right: 0 },
+    children: [
+      pgLabel('Adresse du bien :'), pgValue(adresseBien),
+      pgLabel('Référence rapport :'), pgValue(refRapport),
+      pgLabel('Rédacteur :'), pgValue(redacteur),
+      pgLabel('Date :'), pgValue(dateRapport),
+      pgLabel('Entreprise réalisant le repérage :'),
+      ...agenceLines.map(l => pgValue(l)),
+    ],
+  });
+
+  // ── Tableau récapitulatif : N° prélèvement | Page ────────────────
+  const N_GROUPS  = 5;
+  const PAIR_W    = Math.floor(USABLE_W / N_GROUPS);
+  const NUM_W     = Math.floor(PAIR_W * 0.66);
+  const PG_W_COL  = PAIR_W - NUM_W;
+  const adjust    = USABLE_W - (NUM_W + PG_W_COL) * N_GROUPS;
+  const colWidths_recap = [];
+  for (let g = 0; g < N_GROUPS; g++) {
+    colWidths_recap.push(NUM_W);
+    colWidths_recap.push(g === N_GROUPS - 1 ? PG_W_COL + adjust : PG_W_COL);
+  }
+
+  const mkNumCell = (p, isHeader = false) => {
+    const col = p ? getResultColor(p.resultat) : null;
+    return new TableCell({
+      borders: brdsRecap,
+      width: { size: NUM_W, type: WidthType.DXA },
+      verticalAlign: VerticalAlign.CENTER,
+      shading: isHeader
+        ? { fill: '1a3a5c', type: ShadingType.CLEAR }
+        : col ? { fill: col.fill, type: ShadingType.CLEAR } : { fill: 'F1F5F9', type: ShadingType.CLEAR },
+      margins: { top: 60, bottom: 60, left: 100, right: 60 },
+      children: [new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun({
+          text: isHeader ? 'N° prélèvement' : (p ? p.numPrelevement : ''),
+          bold: true, size: isHeader ? 15 : 16, font: 'Arial',
+          color: isHeader ? 'FFFFFF' : (col ? col.text : '9CA3AF'),
+        })],
+      })],
+    });
+  };
+
+  const mkPgCell = (pageNum, isHeader = false) => new TableCell({
+    borders: brdsRecap,
+    width: { size: PG_W_COL, type: WidthType.DXA },
+    verticalAlign: VerticalAlign.CENTER,
+    shading: isHeader ? { fill: '1a3a5c', type: ShadingType.CLEAR } : { fill: 'F8FAFC', type: ShadingType.CLEAR },
+    margins: { top: 60, bottom: 60, left: 60, right: 60 },
+    children: [new Paragraph({
+      alignment: AlignmentType.CENTER,
+      children: [new TextRun({
+        text: isHeader ? 'Page' : (pageNum ? String(pageNum) : '—'),
+        bold: isHeader, size: isHeader ? 15 : 16, font: 'Arial',
+        color: isHeader ? 'FFFFFF' : '374151',
+      })],
+    })],
+  });
+
+  const mkEmptyCell = (w) => new TableCell({
+    borders: brdsRecap,
+    width: { size: w, type: WidthType.DXA },
+    shading: { fill: 'F8FAFC', type: ShadingType.CLEAR },
+    margins: { top: 60, bottom: 60, left: 60, right: 60 },
+    children: [new Paragraph({ children: [new TextRun({ text: '' })] })],
+  });
+
+  // Lignes du tableau récap
+  const recapRows = [];
+  const headerCells = [];
+  for (let g = 0; g < N_GROUPS; g++) {
+    headerCells.push(mkNumCell(null, true));
+    headerCells.push(mkPgCell(null, true));
+  }
+  recapRows.push(new TableRow({ tableHeader: true, children: headerCells }));
+
+  for (let row = 0; row < Math.ceil(pvList.length / N_GROUPS); row++) {
+    const cells = [];
+    for (let col = 0; col < N_GROUPS; col++) {
+      const idx = row * N_GROUPS + col;
+      if (idx < pvList.length) {
+        const p = pvList[idx];
+        cells.push(mkNumCell(p, false));
+        cells.push(mkPgCell(p.docPage, false));
+      } else {
+        cells.push(mkEmptyCell(NUM_W));
+        cells.push(mkEmptyCell(PG_W_COL));
+      }
+    }
+    recapRows.push(new TableRow({ children: cells }));
+  }
+
+  // ── Assemblage page de garde ─────────────────────────────────────
+  const coverChildren = [
+    new Paragraph({
+      alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 },
+      children: [new TextRun({ text: 'ANNEXE PV D\'ANALYSES', bold: true, size: 52, font: 'Arial', color: '0080AD' })],
+    }),
+    new Paragraph({
+      alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 },
+      children: [new TextRun({ text: 'Procès-verbaux d\'analyses amiante', size: 24, font: 'Arial', color: '0080AD', italics: true })],
+    }),
+    new Table({
+      width: { size: USABLE_W, type: WidthType.DXA },
+      columnWidths: [PG_COL_PHOTO, PG_COL_INFO],
+      borders: { top: brdNone, bottom: brdNone, left: brdNone, right: brdNone, insideH: brdNone, insideV: brdNone },
+      rows: [new TableRow({ cantSplit: false, children: [cellPhotoGuard, cellInfosGuard] })],
+    }),
+    new Paragraph({
+      spacing: { before: 480, after: 320 },
+      border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } },
+      children: [],
+    }),
+    new Paragraph({
+      spacing: { before: 0, after: 200 },
+      children: [new TextRun({
+        text: `Récapitulatif — ${pvList.length} prélèvement(s) référencé(s) · ${allPages.length} page(s) de PV`,
+        bold: true, size: 22, font: 'Arial', color: '0080AD',
+      })],
+    }),
+    new Paragraph({
+      spacing: { before: 0, after: 180 },
+      children: [
+        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: '2E7D32' }),
+        new TextRun({ text: 'Absence d\'amiante   ', size: 16, font: 'Arial', color: '374151' }),
+        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: 'C62828' }),
+        new TextRun({ text: 'Présence d\'amiante   ', size: 16, font: 'Arial', color: '374151' }),
+        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: '1565C0' }),
+        new TextRun({ text: 'En attente de résultat', size: 16, font: 'Arial', color: '374151' }),
+      ],
+    }),
+    new Table({
+      width: { size: USABLE_W, type: WidthType.DXA },
+      columnWidths: colWidths_recap,
+      rows: recapRows,
+    }),
+  ];
+
+  setProgress(65, 'Intégration des pages PDF…');
+
+  // ── 4. Pages PV : chaque page PDF rendue = 1 page dans le docx ──
+  const pvPageChildren = [];
+
+  for (let i = 0; i < allPages.length; i++) {
+    const pg = allPages[i];
+    setProgress(65 + Math.round((i / allPages.length) * 25), `Page ${i+1}/${allPages.length}…`);
+
+    // En-tête : numéro page + prélèvements présents sur cette page
+    const docPage = i + 2;
+    const refsText = pg.refs.length ? `N° ${pg.refs.join(' / ')}` : pg.sourceFile;
+    pvPageChildren.push(new Paragraph({
+      pageBreakBefore: i > 0,
+      spacing: { before: 0, after: 120 },
+      children: [
+        new TextRun({ text: `p.${docPage}   —   `, size: 16, font: 'Arial', color: '6B7280' }),
+        new TextRun({ text: refsText, bold: true, size: 18, font: 'Arial', color: '0080AD' }),
+        new TextRun({ text: `   (${pg.sourceFile})`, size: 14, font: 'Arial', color: 'AAAAAA' }),
+      ],
+    }));
+
+    // Trait
+    pvPageChildren.push(new Paragraph({
+      spacing: { before: 0, after: 120 },
+      border: { bottom: { style: BorderStyle.SINGLE, size: 2, color: '00B0F0' } },
+      children: [],
+    }));
+
+    // Image de la page PDF
+    const IMG_MAX_W_DXA = USABLE_W;
+    const IMG_MAX_H_DXA = USABLE_H - 700;
+    const IMG_MAX_W_PX  = Math.floor(IMG_MAX_W_DXA / 1440 * 96);
+    const IMG_MAX_H_PX  = Math.floor(IMG_MAX_H_DXA / 1440 * 96);
+    const ratio  = Math.min(IMG_MAX_W_PX / pg.width, IMG_MAX_H_PX / pg.height, 1);
+    const imgW   = Math.round(pg.width  * ratio);
+    const imgH   = Math.round(pg.height * ratio);
+
+    pvPageChildren.push(new Paragraph({
+      alignment: AlignmentType.CENTER,
+      spacing: { before: 0, after: 0 },
+      children: [new ImageRun({ data: pg.imageData, transformation: { width: imgW, height: imgH }, type: 'jpg' })],
+    }));
+  }
+
+  setProgress(92, 'Assemblage du document…');
 
   const doc = new Document({
     styles: { default: { document: { run: { font: 'Arial', size: 16 } } } },
     sections: [
-      // ── Section 1 : page de garde paysage ──
       {
         properties: {
           type: SectionType.NEXT_PAGE,
           page: {
-            size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE },
-            margin: { top: 567, right: 567, bottom: 567, left: 567 },
+            size: { width: PAGE_W, height: PAGE_H },
+            margin: { top: MARGIN, right: MARGIN, bottom: MARGIN, left: MARGIN },
           },
         },
         children: coverChildren,
       },
-      // ── Section 2 : planches paysage ──
       {
         properties: {
           page: {
-            size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE },
-            margin: { top: 567, right: 567, bottom: 567, left: 567 },
+            size: { width: PAGE_W, height: PAGE_H },
+            margin: { top: MARGIN, right: MARGIN, bottom: MARGIN, left: MARGIN },
           },
         },
-        children,
+        children: pvPageChildren,
       },
     ],
   });
 
   setProgress(96, 'Finalisation…');
   const blob = await Packer.toBlob(doc);
-  downloadBlob(blob, `Dossier_Plans_${rootName}.docx`);
+  await downloadBlob(blob, `Annexe_PV_${rootName}.docx`);
 
   setProgress(100, '100% — Terminé !');
-  setStatus(`✅ Dossier plans généré ! <strong>${total}</strong> plan(s) intégré(s).`, 'success');
-  log(`=== Terminé. ${total} plan(s) traité(s) ===`, 'ok');
+  setStatus(`✅ Annexe PV générée ! ${allPages.length} page(s) · ${pvList.length} prélèvement(s) référencé(s) · ${pvPdfEntries.length} PDF source(s)`, 'success');
+  log(`=== Terminé. Pages: ${allPages.length} / Prélèvements: ${pvList.length} / Refs PDF: ${Object.keys(refToPage).join(', ')} ===`, 'ok');
 
-  document.getElementById('btnGenPhotos').disabled = false;
-  document.getElementById('btnGenPlans').disabled  = false;
+  ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
   isRunning = false;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// SAUVEGARDE / CHARGEMENT ÉTAT (JSON)
+// SAUVEGARDE / CHARGEMENT ÉTAT
 // ═══════════════════════════════════════════════════════════════
-
-// Recrée un blob crop à partir d'un File original + nb rotations + sel
-// Utilisé à la restauration depuis JSON
 async function restoreCrop(file, rotations, sel) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
@@ -2820,33 +2120,19 @@ async function restoreCrop(file, rotations, sel) {
     img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Chargement image échoué')); };
     img.onload  = () => {
       URL.revokeObjectURL(url);
-      // Appliquer N rotations de 90°
-      let current = img;
       const applyRot = (src, n, cb) => {
         if (n <= 0) { cb(src); return; }
         const c = document.createElement('canvas');
         c.width = src.height; c.height = src.width;
         const ctx = c.getContext('2d');
-        ctx.translate(c.width / 2, c.height / 2);
-        ctx.rotate(Math.PI / 2);
-        ctx.drawImage(src, -src.width / 2, -src.height / 2);
-        c.toBlob(b => {
-          const u2 = URL.createObjectURL(b);
-          const i2 = new Image();
-          i2.onload = () => { URL.revokeObjectURL(u2); applyRot(i2, n - 1, cb); };
-          i2.src = u2;
-        }, 'image/jpeg', 0.95);
+        ctx.translate(c.width/2, c.height/2); ctx.rotate(Math.PI/2); ctx.drawImage(src, -src.width/2, -src.height/2);
+        c.toBlob(b => { const u2 = URL.createObjectURL(b); const i2 = new Image(); i2.onload = () => { URL.revokeObjectURL(u2); applyRot(i2, n-1, cb); }; i2.src = u2; }, 'image/jpeg', 0.95);
       };
-
       applyRot(img, rotations, rotated => {
-        // Appliquer le crop
         const out = document.createElement('canvas');
-        const sx = Math.max(0, Math.round(sel.x));
-        const sy = Math.max(0, Math.round(sel.y));
-        const sw = Math.min(Math.round(sel.w), rotated.width  - sx);
-        const sh = Math.min(Math.round(sel.h), rotated.height - sy);
-        out.width  = sw;
-        out.height = sh;
+        const sx = Math.max(0, Math.round(sel.x)); const sy = Math.max(0, Math.round(sel.y));
+        const sw = Math.min(Math.round(sel.w), rotated.width-sx); const sh = Math.min(Math.round(sel.h), rotated.height-sy);
+        out.width = sw; out.height = sh;
         out.getContext('2d').drawImage(rotated, sx, sy, sw, sh, 0, 0, sw, sh);
         out.toBlob(blob => resolve(blob), 'image/jpeg', 0.95);
       });
@@ -2857,51 +2143,29 @@ async function restoreCrop(file, rotations, sel) {
 
 async function saveState() {
   if (!xmlData) return;
-
-  // Lire l'ordre actuel des cards + état coché
   const cards = [...document.querySelectorAll('#planGrid .plan-card')];
   const agence = document.getElementById('optAgence').value.trim();
   const qualite = document.getElementById('optQualite').value;
-
   const plans = cards.map(card => {
     const idx = parseInt(card.dataset.idx, 10);
     const pf  = xmlData.planFiles[idx];
     const chk = card.querySelector('input[type="checkbox"]');
     const d   = planTableData.get(idx) || {};
     return {
-      fileName    : pf.file.name,
-      checked     : chk ? chk.checked : true,
-      objet       : d.objet        || OBJET_OPTIONS[0],
-      objetLibre  : d.objetLibre   || '',
-      localisation: d.localisation || '',
-      complements : d.complements  || {},
-      autresText  : d.autresText   || '',
-      commentaire : d.commentaire  || '',
-      cropData    : (() => {
+      fileName: pf.file.name, checked: chk ? chk.checked : true,
+      objet: d.objet || OBJET_OPTIONS[0], objetLibre: d.objetLibre || '',
+      localisation: d.localisation || '', complements: d.complements || {},
+      autresText: d.autresText || '', commentaire: d.commentaire || '',
+      cropData: (() => {
         const ce = planCropData.get(idx);
-        if (ce && ce.manualSel) {
-          return {
-            rotations : ce.rotations || 0,
-            sel       : { ...ce.manualSel },
-          };
-        }
+        if (ce && ce.manualSel) return { rotations: ce.rotations || 0, sel: { ...ce.manualSel } };
         return null;
       })(),
     };
   });
-
-  const state = {
-    version  : '1.1',
-    date     : new Date().toISOString().slice(0,10),
-    mission  : rootName,
-    agence,
-    qualite,
-    plans,
-  };
-
+  const state = { version: '1.1', date: new Date().toISOString().slice(0,10), mission: rootName, agence, qualite, plans };
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
   await downloadBlob(blob, `Config_Plans_${rootName || 'mission'}.json`);
-
   showSaveLoadMsg('✓ Configuration sauvegardée');
   log('Configuration sauvegardée en JSON', 'ok');
 }
@@ -2909,147 +2173,78 @@ async function saveState() {
 function loadState(input) {
   const file = input.files[0];
   if (!file) return;
-  input.value = '';   // reset pour pouvoir recharger le même fichier
-
+  input.value = '';
   const reader = new FileReader();
   reader.onload = e => {
     try {
       const state = JSON.parse(e.target.result);
       if (!state.plans || !Array.isArray(state.plans)) throw new Error('Format JSON invalide');
-
-      if (!xmlData) {
-        showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true);
-        return;
-      }
-
-      // Restaurer agence et qualité
+      if (!xmlData) { showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true); return; }
       if (state.agence)  document.getElementById('optAgence').value  = state.agence;
       if (state.qualite) document.getElementById('optQualite').value = state.qualite;
-
-      // Construire un index fileName → cardIdx courant
       const fnToIdx = {};
       xmlData.planFiles.forEach((pf, idx) => { fnToIdx[pf.file.name] = idx; });
-
-      // Réordonner la grille selon l'ordre du JSON
       const grid = document.getElementById('planGrid');
       const allCards = [...grid.querySelectorAll('.plan-card')];
-
-      // Appliquer les données de chaque plan
       let applied = 0;
       state.plans.forEach(saved => {
         const idx = fnToIdx[saved.fileName];
-        if (idx === undefined) return;  // fichier absent dans la mission courante
-
-        // Mettre à jour planTableData
+        if (idx === undefined) return;
         const locDefaut = xmlData.planFiles[idx].file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' ');
-        planTableData.set(idx, {
-          objet       : saved.objet        || OBJET_OPTIONS[0],
-          objetLibre  : saved.objetLibre   || '',
-          localisation: saved.localisation || locDefaut,
-          complements : saved.complements  || {},
-          autresText  : saved.autresText   || '',
-          commentaire : saved.commentaire  || '',
-        });
-
-        // Mettre à jour la checkbox de la card
+        planTableData.set(idx, { objet: saved.objet||OBJET_OPTIONS[0], objetLibre: saved.objetLibre||'', localisation: saved.localisation||locDefaut, complements: saved.complements||{}, autresText: saved.autresText||'', commentaire: saved.commentaire||'' });
         const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
         if (card) {
           const chk = card.querySelector('input[type="checkbox"]');
-          if (chk) {
-            chk.checked = saved.checked !== false;
-            card.classList.toggle('checked',   chk.checked);
-            card.classList.toggle('unchecked', !chk.checked);
-          }
+          if (chk) { chk.checked = saved.checked !== false; card.classList.toggle('checked', chk.checked); card.classList.toggle('unchecked', !chk.checked); }
         }
         applied++;
       });
-
-      // Réordonner les cards selon l'ordre du JSON
       const ordered = [];
-      state.plans.forEach(saved => {
-        const idx = fnToIdx[saved.fileName];
-        if (idx === undefined) return;
-        const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
-        if (card) ordered.push(card);
-      });
-      // Ajouter les cards non présentes dans le JSON (nouvelles) à la fin
+      state.plans.forEach(saved => { const idx = fnToIdx[saved.fileName]; if (idx === undefined) return; const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx); if (card) ordered.push(card); });
       allCards.forEach(c => { if (!ordered.includes(c)) ordered.push(c); });
       ordered.forEach(c => grid.appendChild(c));
-
-      updatePlanCountLabel();  // rebuild badges + table
-
-      // ── Restaurer les crops (async, en arrière-plan) ──────────
+      updatePlanCountLabel();
       let cropCount = 0;
-      const cropPromises = state.plans
-        .filter(s => s.cropData && s.cropData.sel)
-        .map(async saved => {
-          const idx = fnToIdx[saved.fileName];
-          if (idx === undefined) return;
-          const pf  = xmlData.planFiles[idx];
-          const cd  = saved.cropData;
-          try {
-            const restoredBlob = await restoreCrop(pf.file, cd.rotations || 0, cd.sel);
-            if (!restoredBlob) return;
-            // Stocker dans planCropData
-            const existing = planCropData.get(idx) || {};
-            planCropData.set(idx, {
-              ...existing,
-              manualBlob : restoredBlob,
-              manualSel  : { ...cd.sel },
-              rotations  : cd.rotations || 0,
-            });
-            // Mettre à jour la miniature
-            const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
-            if (card) {
-              const thumb = card.querySelector('.plan-thumb');
-              if (thumb) thumb.src = URL.createObjectURL(restoredBlob);
-              const btnCrop = card.querySelector('.btn-crop');
-              if (btnCrop) {
-                btnCrop.classList.add('has-crop');
-                btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓';
-              }
-            }
-            cropCount++;
-          } catch(e) {
-            log(`Erreur restauration crop ${saved.fileName} : ${e.message}`, 'err');
+      const cropPromises = state.plans.filter(s => s.cropData && s.cropData.sel).map(async saved => {
+        const idx = fnToIdx[saved.fileName];
+        if (idx === undefined) return;
+        const pf = xmlData.planFiles[idx]; const cd = saved.cropData;
+        try {
+          const restoredBlob = await restoreCrop(pf.file, cd.rotations || 0, cd.sel);
+          if (!restoredBlob) return;
+          const existing = planCropData.get(idx) || {};
+          planCropData.set(idx, { ...existing, manualBlob: restoredBlob, manualSel: { ...cd.sel }, rotations: cd.rotations || 0 });
+          const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
+          if (card) {
+            const thumb = card.querySelector('.plan-thumb');
+            if (thumb) thumb.src = URL.createObjectURL(restoredBlob);
+            const btnCrop = card.querySelector('.btn-crop');
+            if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
           }
-        });
-
+          cropCount++;
+        } catch(e) { log(`Erreur restauration crop ${saved.fileName} : ${e.message}`, 'err'); }
+      });
       Promise.all(cropPromises).then(() => {
-        const msg = cropCount > 0
-          ? `✓ ${applied} plan(s) restauré(s) · ${cropCount} crop(s) recalculé(s)`
-          : `✓ ${applied} plan(s) restauré(s)`;
+        const msg = cropCount > 0 ? `✓ ${applied} plan(s) restauré(s) · ${cropCount} crop(s) recalculé(s)` : `✓ ${applied} plan(s) restauré(s)`;
         showSaveLoadMsg(msg);
         log(`Configuration chargée : ${applied} plan(s), ${cropCount} crop(s)`, 'ok');
       });
-
-    } catch(err) {
-      showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true);
-      log('Erreur chargement JSON : ' + err.message, 'err');
-    }
+    } catch(err) { showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true); log('Erreur chargement JSON : ' + err.message, 'err'); }
   };
   reader.readAsText(file);
 }
 
 function showSaveLoadMsg(msg, isError=false) {
   const el = document.getElementById('saveLoadMsg');
-  el.textContent = msg;
-  el.style.color = isError ? '#dc2626' : '#16a34a';
-  el.style.display = 'inline';
+  el.textContent = msg; el.style.color = isError ? '#dc2626' : '#16a34a'; el.style.display = 'inline';
   setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
 // ═══════════════════════════════════════════════════════════════
-// TÉLÉCHARGEMENT BLOB
+// TÉLÉCHARGEMENT / ÉCRITURE DIRECTE
 // ═══════════════════════════════════════════════════════════════
-// ═══════════════════════════════════════════════════════════════
-// FILE SYSTEM ACCESS — Enregistrement dans le dossier mission
-// ═══════════════════════════════════════════════════════════════
-
 function showFsStatus(msg, isError) {
-  // Afficher un message court dans le folderName
   const el = document.getElementById('folderName');
-  const orig = el.textContent;
   const span = document.createElement('span');
   span.textContent = '  ' + msg;
   span.style.cssText = `font-size:0.7rem;color:${isError ? '#dc2626' : '#16a34a'};display:block;margin-top:3px;`;
@@ -3057,64 +2252,36 @@ function showFsStatus(msg, isError) {
   setTimeout(() => { if (span.parentNode) span.parentNode.removeChild(span); }, 4000);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// FILE SYSTEM ACCESS — Enregistrement robuste dans /exports/
-// ═══════════════════════════════════════════════════════════════
-
 async function downloadBlob(blob, filename) {
-
-  // ─────────────────────────────────────────────
-  // MODE 1 — écriture directe dossier mission
-  // ─────────────────────────────────────────────
+  // ── MODE 1 : écriture directe dans le dossier mission ────────
   if (missionDirHandle) {
     try {
+      let perm = await missionDirHandle.queryPermission({ mode: 'readwrite' });
+      if (perm !== 'granted') perm = await missionDirHandle.requestPermission({ mode: 'readwrite' });
+      if (perm !== 'granted') throw new Error('Permission écriture refusée');
 
-      // 🔐 Vérifie / demande permission write
-      let perm = await missionDirHandle.queryPermission({ mode: "readwrite" });
-      if (perm !== "granted") {
-        perm = await missionDirHandle.requestPermission({ mode: "readwrite" });
-      }
-
-      if (perm !== "granted") {
-        throw new Error("Permission écriture refusée");
-      }
-
-      // 📁 crée / récupère le sous dossier exports
-      const exportDir = await missionDirHandle.getDirectoryHandle("exports", { create: true });
-
-      // 💾 crée le fichier dans exports
+      // Créer/récupérer le sous-dossier exports/
+      const exportDir  = await missionDirHandle.getDirectoryHandle('exports', { create: true });
       const fileHandle = await exportDir.getFileHandle(filename, { create: true });
       const writable   = await fileHandle.createWritable();
-
       await writable.write(blob);
       await writable.close();
 
-      log(`✅ Enregistré dans /exports/ : ${filename}`, "ok");
+      log(`✅ Enregistré dans /exports/ : ${filename}`, 'ok');
       showFsStatus(`💾 /exports/${filename}`, false);
-
       return;
-
     } catch (e) {
-      log(`⚠️ Écriture FS API impossible : ${e.message}`, "warn");
-      // fallback téléchargement
+      log(`⚠️ Écriture directe impossible : ${e.message} — bascule téléchargement`, 'warn');
     }
   }
-
-  // ─────────────────────────────────────────────
-  // MODE 2 — fallback téléchargement navigateur
-  // ─────────────────────────────────────────────
+  // ── MODE 2 : téléchargement navigateur (fallback) ─────────────
   const url = URL.createObjectURL(blob);
-  const a   = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-
-  document.body.appendChild(a);
-  a.click();
+  const a   = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
   document.body.removeChild(a);
-
   URL.revokeObjectURL(url);
-
-  log(`📥 Téléchargement navigateur : ${filename}`, "warn");
+  log(`📥 Téléchargement navigateur : ${filename}`, 'warn');
 }
 </script>
 
