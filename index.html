@@ -1550,9 +1550,14 @@ function openPlanPosMenu(card, badge) {
 
   // Position fixe sous le badge (pas dans la card pour eviter overflow)
   const rect = badge.getBoundingClientRect();
+  // Calculer si le menu doit s'ouvrir vers le haut si manque de place en bas
+  const spaceBelow = window.innerHeight - rect.bottom - 8;
+  const maxH = Math.min(320, Math.max(120, spaceBelow > 200 ? spaceBelow : window.innerHeight - rect.top - 8));
+  const topPos = spaceBelow > 120 ? (rect.bottom + 4) : Math.max(8, rect.top - maxH - 4);
+
   menu.style.cssText = [
     'position:fixed',
-    'top:' + (rect.bottom + 4) + 'px',
+    'top:' + topPos + 'px',
     'left:' + rect.left + 'px',
     'z-index:9999',
     'background:#fff',
@@ -1561,6 +1566,8 @@ function openPlanPosMenu(card, badge) {
     'box-shadow:0 4px 20px rgba(0,0,0,0.22)',
     'padding:4px 0',
     'min-width:160px',
+    'max-height:' + maxH + 'px',
+    'overflow-y:auto',
     'font-family:Arial,sans-serif'
   ].join(';');
 
