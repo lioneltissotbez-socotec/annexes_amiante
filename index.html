@@ -585,9 +585,9 @@
 <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
 
 <script>
-// ═══════════════════════════════════════════════════════════
+// -----------------------------------------------------------
 // RÉFÉRENTIEL AGENCES SOCOTEC (généré depuis Matrice_Socotec)
-// ═══════════════════════════════════════════════════════════
+// -----------------------------------------------------------
 const AGENCES_MAP = {
   '02D90': 'AGENCE CONSTRUCTION & IMMOBILIER — 122 Rue du Château d\'Orgemont B.P. 50206, 49002 ANGERS Cedex 01 — Tél : 02 41 68 67 00',
   '10480': 'AGENCE CONSTRUCTION LE HAVRE — 20 Rue du Capuchet CS 72030, 76070 LE HAVRE CEDEX — Tél : 02 32 85 39 39',
@@ -885,18 +885,18 @@ function applyAgenceToField(folderName) {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // VARIABLES GLOBALES
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 let xmlData          = null;
 let fileIndex        = {};
 let rootName         = '';
 let missionDirHandle = null;  // FileSystemDirectoryHandle
 let isRunning        = false;
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // HELPERS UI
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function log(msg, type = '') {
   const el = document.getElementById('log');
   el.style.display = 'block';
@@ -937,9 +937,9 @@ function resetUI() {
   xmlData = null; fileIndex = {};
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // LECTURE MULTI-ENCODAGE
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function readFileCorrectly(file) {
   const buffer = await file.arrayBuffer();
   try { return new TextDecoder('utf-8', { fatal: true }).decode(buffer); } catch(e) {}
@@ -947,16 +947,16 @@ async function readFileCorrectly(file) {
   return new TextDecoder('windows-1252').decode(buffer);
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // NORMALISATION DES CHEMINS
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function normPath(p) {
   return (p || '').replace(/\\/g, '/').toLowerCase().trim();
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // PARSING XMLs
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function parseTableGeneralPhoto(xmlText) {
   const photoMap = {};
   const itemRx = /<LiItem_table_General_Photo>([\s\S]*?)<\/LiItem_table_General_Photo>/gi;
@@ -1038,9 +1038,9 @@ function parseTableGeneralBien(xmlText) {
   return bien;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // ROGNAGE AUTOMATIQUE DES BORDS BLANCS
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function cropWhiteBorders(srcCanvas, seuil = 240) {
   const ctx  = srcCanvas.getContext('2d');
   const w    = srcCanvas.width;
@@ -1093,9 +1093,9 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
   return { canvas: dst, cropX: left, cropY: top, cropW, cropH };
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // COMPRESSION IMAGE
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function compressImage(file, targetKB, maxDim = 1200) {
   return new Promise(resolve => {
     const url = URL.createObjectURL(file);
@@ -1129,9 +1129,9 @@ async function compressImage(file, targetKB, maxDim = 1200) {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // SÉLECTION DU DOSSIER
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function selectMissionFolder() {
   if (window.showDirectoryPicker) {
     try {
@@ -1214,9 +1214,9 @@ document.getElementById('folderInput').addEventListener('change', async (e) => {
   await loadAllData();
 });
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // CHARGEMENT & PARSING DE TOUS LES XML
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function loadAllData() {
   const xmlRequired = {
     photo        : 'xml/table_general_photo.xml',
@@ -1391,9 +1391,9 @@ async function loadAllData() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // PREVIEW PLANS : grille + drag & drop
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function cropAutoForPreview(cardIdx, file, imgEl) {
   try {
     const url = URL.createObjectURL(file);
@@ -1525,9 +1525,9 @@ function selectAllPlans(state) {
   updatePlanCountLabel();
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // CROP MODAL
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 let cropState = {
   cardIdx: null, cardEl: null, thumbEl: null, srcImage: null,
   canvas: null, ctx: null, sel: { x: 0, y: 0, w: 0, h: 0 },
@@ -1889,18 +1889,18 @@ function getPlanFilesFromGrid() {
   return result;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // HELPERS DOCX
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function getLib() {
   const lib = window.docx;
   if (!lib) { setStatus('❌ La librairie docx.js n\'est pas chargée.', 'error'); return null; }
   return lib;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // GÉNÉRATION 1 : DOSSIER PHOTOS
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function generateDocxPhotos() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2026,9 +2026,9 @@ async function generateDocxPhotos() {
   isRunning = false;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // GÉNÉRATION 2 : DOSSIER PLANS
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 async function generateDocxPlans() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2173,9 +2173,9 @@ async function generateDocxPlans() {
   isRunning = false;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // GÉNÉRATION 3 : ANNEXE PV D'ANALYSES — scan PDF (prelevements_amiante/)
-// ═══════════════════════════════════════════════════════════════════════
+// -----------------------------------------------------------------------
 async function generateDocxPV() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2257,23 +2257,8 @@ async function generateDocxPV() {
         const textContent = await page.getTextContent();
         const fullText = textContent.items.map(i => i.str).join(' ');
 
-        // Chercher les patterns P641, P642... dans "Réf échantillon client : P641"
-        const refs = [];
-        const refRegex = /P(\d{3,4})(?:\s*[-–]\s*[^\s])?/g;
-        // On cherche d'abord dans le contexte "Réf échantillon client"
-        const contextMatches = fullText.matchAll(/[Rr][ée]f[\s.]*[ée]chantillon\s+client\s*:?\s*(P\d{3,4})/g);
-        for (const m of contextMatches) {
-          refs.push(m[1]);
-        }
-        // Fallback : chercher tous les Pxxx isolés si pas trouvés par contexte
-        if (refs.length === 0) {
-          const allRefs = fullText.matchAll(/\b(P\d{3,4})\b/g);
-          for (const m of allRefs) {
-            if (!refs.includes(m[1])) refs.push(m[1]);
-          }
-        }
-
-        // ── Rendu page en image via canvas ──────────────────────
+        // Utilise la fonction partagee (meme logique que le preview)
+        const refs = extractRefsFromText(fullText);
         const scale = 2.0; // résolution × 2 pour qualité
         const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
@@ -2618,9 +2603,10 @@ async function generateDocxPV() {
   isRunning = false;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // ONGLETS
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
+// Mapping explicite : evite casse 'pv' -> 'Pv' au lieu de 'PV'
 const _TAB_PANELS = { plans: 'tabPlans', photos: 'tabPhotos', pv: 'tabPV' };
 const _TAB_BTNS   = { plans: 'tabBtnPlans', photos: 'tabBtnPhotos', pv: 'tabBtnPV' };
 
@@ -2644,9 +2630,9 @@ function updateTabBadge(name, count) {
   el.classList.toggle('empty', count === 0);
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // PREVIEW PHOTOS — grille identique aux plans
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function renderTabPhotos(prelevements, photoMap, zpsoMap) {
   const container = document.getElementById('photoPreviewContent');
   if (!prelevements.length) {
@@ -2758,260 +2744,369 @@ function openPhotoLightbox(src, label) {
 // TODO: mini-éditeur photo
 // function openPhotoEditor(file, numPrelevement) { ... }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // PREVIEW PV — rendu PDF page par page via PDF.js (DOM direct)
-// ═══════════════════════════════════════════════════════════════
-function renderTabPV(pvPdfEntries) {
+
+// ---------------------------------------------------
+// FONCTION PARTAGEE : scan refs dans un PDF via PDF.js
+// Meme logique que la generation Word (join + regex accents)
+// ---------------------------------------------------
+
+/**
+ * Scanne un fichier PDF et retourne pour chaque page les refs prélevements trouvées.
+ * @param {File} pdfFile
+ * @returns {Promise<Array<{num:number, total:number, refs:string[]}>>}
+ */
+async function scanPdfPages(pdfFile) {
+  const ab  = await pdfFile.arrayBuffer();
+  const doc = await pdfjsLib.getDocument({ data: ab }).promise;
+  const pages = [];
+
+  for (let p = 1; p <= doc.numPages; p++) {
+    const page = await doc.getPage(p);
+    const tc   = await page.getTextContent();
+
+    // join(' ') = même approche que l'export Word (fonctionne en prod)
+    const txt  = tc.items.map(i => i.str).join(' ');
+    const refs = extractRefsFromText(txt);
+
+    pages.push({ num: p, total: doc.numPages, refs });
+  }
+  return pages;
+}
+
+/**
+ * Extrait les numéros de prélèvements depuis un texte de page PDF.
+ * Même regex que la génération Word.
+ */
+function extractRefsFromText(txt) {
+  const refs = [];
+  let m;
+  // Regex ASCII : "chantillon client" couvre "echantillon" et "échantillon"
+  // car PDF.js restitue parfois les accents differemment
+  const re1 = /chantillon\s+client\s*:?\s*(P\d{3,4})/g;
+  while ((m = re1.exec(txt)) !== null) {
+    if (!refs.includes(m[1])) refs.push(m[1]);
+  }
+  // Fallback : "client : P641" sans le mot chantillon
+  if (!refs.length) {
+    const re2 = /\bclient\s*:\s*(P\d{3,4})/g;
+    while ((m = re2.exec(txt)) !== null) {
+      if (!refs.includes(m[1])) refs.push(m[1]);
+    }
+  }
+  // Dernier fallback : tous les P641 isoles
+  if (!refs.length) {
+    const re3 = /\b(P\d{3,4})\b/g;
+    while ((m = re3.exec(txt)) !== null) {
+      if (!refs.includes(m[1])) refs.push(m[1]);
+    }
+  }
+  return refs;
+}
+
+
+// ---------------------------------------------------
+// PREVIEW PV - scan + acces par page
+// ---------------------------------------------------
+// ---------------------------------------------------------------
+// PREVIEW PV — scan texte + affichage page à la demande
+// ---------------------------------------------------------------
+
+// Stockage global de l'index scanné : { pdfKey: { file, pages: [{num, refs}] } }
+let _pvIndex = null;
+
+async function renderTabPV(pvPdfEntries) {
   const container = document.getElementById('pvPreviewContent');
   container.innerHTML = '';
+
   if (!pvPdfEntries || !pvPdfEntries.length) {
     container.innerHTML = '<div class="tab-empty"><p>Aucun PV trouvé.</p></div>';
     return;
   }
-  const title = document.createElement('div');
-  title.className = 'panel-section-title';
-  title.textContent = 'PV d’analyses — ' + pvPdfEntries.length + ' fichier(s)';
-  container.appendChild(title);
-  const hint = document.createElement('p');
-  hint.style.cssText = 'font-size:0.75rem;color:#94a3b8;margin:0 0 14px;';
-  hint.textContent = 'Cliquez sur un fichier pour ouvrir l’aperçu.';
-  container.appendChild(hint);
-  const list = document.createElement('div');
-  list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
-  pvPdfEntries.forEach(([pdfKey, pdfFile]) => {
-    const row = document.createElement('div');
-    row.style.cssText = 'display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #e2e8f0;border-radius:8px;padding:12px 16px;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s;';
-    row.addEventListener('mouseover', () => { row.style.borderColor='#0080AD'; row.style.boxShadow='0 0 0 2px rgba(0,128,173,0.15)'; });
-    row.addEventListener('mouseout',  () => { row.style.borderColor='#e2e8f0'; row.style.boxShadow='none'; });
-    row.addEventListener('click',     () => openPVPopup(pdfFile));
-    const icon = document.createElement('span'); icon.style.cssText='font-size:1.6rem;flex-shrink:0;'; icon.textContent='📄';
-    const info = document.createElement('div'); info.style.cssText='flex:1;min-width:0;';
-    const nameEl = document.createElement('div'); nameEl.style.cssText='font-size:0.85rem;font-weight:700;color:#1a3a5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'; nameEl.textContent=pdfFile.name;
-    const sizeEl = document.createElement('div'); sizeEl.style.cssText='font-size:0.72rem;color:#94a3b8;margin-top:2px;'; sizeEl.textContent=(pdfFile.size/1024).toFixed(0)+' Ko';
-    info.appendChild(nameEl); info.appendChild(sizeEl);
-    const arrow = document.createElement('span'); arrow.style.cssText='font-size:1.1rem;color:#0080AD;flex-shrink:0;font-weight:700;'; arrow.textContent='▶';
-    row.appendChild(icon); row.appendChild(info); row.appendChild(arrow);
-    list.appendChild(row);
+
+  // ── Barre de recherche globale ──────────────────────────────
+  const searchBar = document.createElement('div');
+  searchBar.style.cssText = 'display:flex;align-items:center;gap:8px;background:#fff;border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;margin-bottom:14px;';
+  const searchIcon = document.createElement('span');
+  searchIcon.textContent = '🔍';
+  searchIcon.style.cssText = 'font-size:1rem;flex-shrink:0;';
+  const searchInput = document.createElement('input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Rechercher un prélèvement (ex : P641) — Entrée pour accéder directement';
+  searchInput.style.cssText = 'flex:1;border:none;outline:none;font-size:0.85rem;font-family:Arial,sans-serif;color:#1a3a5c;background:transparent;';
+  const searchStatus = document.createElement('span');
+  searchStatus.style.cssText = 'font-size:0.72rem;color:#94a3b8;flex-shrink:0;white-space:nowrap;';
+  searchBar.appendChild(searchIcon);
+  searchBar.appendChild(searchInput);
+  searchBar.appendChild(searchStatus);
+  searchInput.addEventListener('focus', () => searchBar.style.borderColor='#0080AD');
+  searchInput.addEventListener('blur',  () => searchBar.style.borderColor='#e2e8f0');
+  container.appendChild(searchBar);
+
+  // ── Zone liste des PDF ──────────────────────────────────────
+  const listZone = document.createElement('div');
+  listZone.style.cssText = 'display:flex;flex-direction:column;gap:10px;';
+  container.appendChild(listZone);
+
+  // ── Scan de tous les PDFs (texte seulement, pas de rendu) ──
+  const scanMsg = document.createElement('div');
+  scanMsg.style.cssText = 'text-align:center;padding:20px;color:#0080AD;font-size:0.82rem;';
+  scanMsg.textContent = '⏳ Scan des PV en cours…';
+  listZone.appendChild(scanMsg);
+
+  _pvIndex = {};
+
+  if (typeof pdfjsLib === 'undefined') {
+    scanMsg.style.color = '#dc2626';
+    scanMsg.textContent = '⚠️ PDF.js non disponible — vérifiez votre connexion.';
+    return;
+  }
+
+  for (const [pdfKey, pdfFile] of pvPdfEntries) {
+    try {
+      // Utilise la meme fonction que la generation Word
+      const pages = await scanPdfPages(pdfFile);
+      _pvIndex[pdfKey] = { file: pdfFile, pages };
+    } catch(e) {
+      _pvIndex[pdfKey] = { file: pdfFile, pages: [], error: e.message };
+    }
+  }
+
+  listZone.removeChild(scanMsg);
+
+  // ── Construire les cartes PDF ───────────────────────────────
+  buildPVList(listZone, _pvIndex, searchInput, searchStatus, pvPdfEntries);
+
+  // ── Recherche live ──────────────────────────────────────────
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toUpperCase();
+    highlightPVSearch(listZone, q, searchStatus);
   });
-  container.appendChild(list);
+
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const q = searchInput.value.trim().toUpperCase();
+    if (!q) return;
+    // Trouver la première occurrence
+    const found = findFirstOccurrence(_pvIndex, q);
+    if (found) {
+      openPagePopup(found.file, found.pageNum, found.refs, found.totalPages);
+    } else {
+      searchStatus.textContent = 'Introuvable';
+      searchStatus.style.color = '#dc2626';
+    }
+  });
 }
 
-async function openPVPopup(pdfFile) {
+function buildPVList(listZone, pvIndex, searchInput, searchStatus, pvPdfEntries) {
+  listZone.innerHTML = '';
 
-  // Structure overlay
+  for (const [pdfKey, data] of Object.entries(pvIndex)) {
+    const card = document.createElement('div');
+    card.className = 'pv-file-card';
+    card.dataset.pdfKey = pdfKey;
+    card.style.cssText = 'background:#fff;border:2px solid #e2e8f0;border-radius:10px;overflow:hidden;';
+
+    // En-tête du fichier
+    const fHeader = document.createElement('div');
+    fHeader.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 14px;background:#f0f4f8;border-bottom:1px solid #e2e8f0;cursor:pointer;';
+    fHeader.addEventListener('click', () => togglePVCard(card));
+
+    const fIcon = document.createElement('span');
+    fIcon.style.cssText = 'font-size:1.3rem;flex-shrink:0;';
+    fIcon.textContent = '📄';
+
+    const fInfo = document.createElement('div');
+    fInfo.style.cssText = 'flex:1;min-width:0;';
+
+    const fName = document.createElement('div');
+    fName.style.cssText = 'font-size:0.83rem;font-weight:700;color:#1a3a5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+    fName.textContent = data.file.name;
+
+    const allRefs = [...new Set(data.pages.flatMap(p => p.refs))].sort((a,b)=>{
+      return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);
+    });
+
+    const fMeta = document.createElement('div');
+    fMeta.style.cssText = 'font-size:0.71rem;color:#94a3b8;margin-top:2px;';
+    fMeta.textContent = data.pages.length + ' page(s) · ' + allRefs.length + ' prélèvement(s)';
+
+    fInfo.appendChild(fName);
+    fInfo.appendChild(fMeta);
+
+    const chevron = document.createElement('span');
+    chevron.className = 'pv-chevron';
+    chevron.style.cssText = 'color:#94a3b8;font-size:0.9rem;transition:transform 0.2s;';
+    chevron.textContent = '▼';
+
+    fHeader.appendChild(fIcon);
+    fHeader.appendChild(fInfo);
+    fHeader.appendChild(chevron);
+    card.appendChild(fHeader);
+
+    if (data.error) {
+      const errDiv = document.createElement('div');
+      errDiv.style.cssText = 'padding:10px 14px;color:#dc2626;font-size:0.78rem;';
+      errDiv.textContent = '⚠️ Erreur : ' + data.error;
+      card.appendChild(errDiv);
+    } else {
+      // Corps avec la liste des pages
+      const body = document.createElement('div');
+      body.className = 'pv-card-body';
+      body.style.cssText = 'padding:10px 14px 12px;display:flex;flex-direction:column;gap:6px;';
+
+      for (const pageData of data.pages) {
+        const pRow = document.createElement('div');
+        pRow.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
+
+        // Label page
+        const pLabel = document.createElement('div');
+        pLabel.style.cssText = 'font-size:0.72rem;font-weight:700;color:#0080AD;white-space:nowrap;flex-shrink:0;padding-top:2px;min-width:52px;';
+        pLabel.textContent = 'Page ' + pageData.num;
+
+        // Chips des refs
+        const chips = document.createElement('div');
+        chips.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;';
+
+        if (pageData.refs.length) {
+          pageData.refs.forEach(ref => {
+            const chip = document.createElement('button');
+            chip.className = 'pv-ref-chip';
+            chip.style.cssText = 'background:#e0f2fe;color:#1a3a5c;border:1px solid #bae6fd;border-radius:14px;padding:2px 10px;font-size:0.73rem;font-weight:700;cursor:pointer;transition:background 0.15s,border-color 0.15s;font-family:Arial,sans-serif;';
+            chip.textContent = ref;
+            chip.title = 'Afficher page ' + pageData.num + ' — ' + ref;
+            chip.addEventListener('mouseover', () => { chip.style.background='#0080AD'; chip.style.color='#fff'; });
+            chip.addEventListener('mouseout',  () => { chip.style.background='#e0f2fe'; chip.style.color='#1a3a5c'; });
+            chip.addEventListener('click', e => {
+              e.stopPropagation();
+              openPagePopup(data.file, pageData.num, pageData.refs, pageData.total);
+            });
+            chips.appendChild(chip);
+          });
+        } else {
+          const empty = document.createElement('span');
+          empty.style.cssText = 'font-size:0.71rem;color:#cbd5e1;font-style:italic;';
+          empty.textContent = '—';
+          chips.appendChild(empty);
+        }
+
+        // Bouton "Voir page"
+        const viewBtn = document.createElement('button');
+        viewBtn.style.cssText = 'background:transparent;border:1px solid #e2e8f0;border-radius:5px;padding:2px 8px;font-size:0.68rem;color:#94a3b8;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:Arial,sans-serif;margin-left:auto;';
+        viewBtn.textContent = '👁 Voir';
+        viewBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          openPagePopup(data.file, pageData.num, pageData.refs, pageData.total);
+        });
+
+        pRow.appendChild(pLabel);
+        pRow.appendChild(chips);
+        pRow.appendChild(viewBtn);
+        body.appendChild(pRow);
+      }
+
+      card.appendChild(body);
+    }
+
+    listZone.appendChild(card);
+  }
+}
+
+function togglePVCard(card) {
+  const body    = card.querySelector('.pv-card-body');
+  const chevron = card.querySelector('.pv-chevron');
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display    = open ? 'none' : '';
+  chevron.style.transform = open ? 'rotate(-90deg)' : '';
+}
+
+function highlightPVSearch(listZone, q, statusEl) {
+  if (!_pvIndex) return;
+  let count = 0;
+  listZone.querySelectorAll('.pv-ref-chip').forEach(chip => {
+    const match = q && chip.textContent.toUpperCase().includes(q);
+    chip.style.background   = match ? '#fbbf24' : '#e0f2fe';
+    chip.style.color        = match ? '#1a3a5c' : '#1a3a5c';
+    chip.style.borderColor  = match ? '#f59e0b' : '#bae6fd';
+    if (match) count++;
+  });
+  if (q) {
+    statusEl.textContent = count ? count + ' résultat(s) — Entrée pour ouvrir la 1ère page' : 'Introuvable';
+    statusEl.style.color = count ? '#16a34a' : '#dc2626';
+  } else {
+    statusEl.textContent = '';
+  }
+}
+
+function findFirstOccurrence(pvIndex, q) {
+  for (const [key, data] of Object.entries(pvIndex)) {
+    for (const page of data.pages) {
+      const match = page.refs.find(r => r.toUpperCase().includes(q));
+      if (match) return { file: data.file, pageNum: page.num, refs: page.refs, totalPages: page.total };
+    }
+  }
+  return null;
+}
+
+async function openPagePopup(pdfFile, pageNum, refs, totalPages) {
+  // Overlay
   const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9000;display:flex;flex-direction:column;align-items:center;padding:0;overflow:hidden;';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
+
+  const box = document.createElement('div');
+  box.style.cssText = 'background:#fff;border-radius:10px;overflow:hidden;max-width:820px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.4);';
 
   // Header
-  const header = document.createElement('div');
-  header.style.cssText = 'width:100%;display:flex;align-items:center;gap:10px;background:#1a3a5c;color:#fff;padding:11px 18px;flex-shrink:0;box-sizing:border-box;';
-  const htitle = document.createElement('span');
-  htitle.style.cssText = 'font-size:0.88rem;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
-  htitle.textContent = pdfFile.name;
+  const hdr = document.createElement('div');
+  hdr.style.cssText = 'display:flex;align-items:center;gap:10px;background:#1a3a5c;color:#fff;padding:11px 16px;flex-shrink:0;';
+  const hName = document.createElement('span');
+  hName.style.cssText = 'font-size:0.8rem;color:#94a3b8;flex-shrink:0;';
+  hName.textContent = pdfFile.name;
+  const hPage = document.createElement('span');
+  hPage.style.cssText = 'font-size:0.92rem;font-weight:800;color:#00B0F0;flex-shrink:0;';
+  hPage.textContent = 'Page ' + pageNum + ' / ' + totalPages;
+  const hRefs = document.createElement('span');
+  hRefs.style.cssText = 'font-size:0.82rem;font-weight:700;color:#fff;flex:1;';
+  hRefs.textContent = refs.length ? 'N° ' + refs.join(' · ') : '';
   const closeBtn = document.createElement('button');
   closeBtn.style.cssText = 'background:#dc2626;color:#fff;border:none;border-radius:6px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:0.85rem;flex-shrink:0;';
-  closeBtn.textContent = '\u2715 Fermer';
+  closeBtn.textContent = '✕ Fermer';
   closeBtn.addEventListener('click', () => document.body.removeChild(overlay));
-  header.appendChild(htitle); header.appendChild(closeBtn);
+  hdr.appendChild(hName); hdr.appendChild(hPage); hdr.appendChild(hRefs); hdr.appendChild(closeBtn);
 
-  // Corps : index gauche + pages droite
-  const body = document.createElement('div');
-  body.style.cssText = 'display:flex;flex:1;overflow:hidden;width:100%;';
+  // Zone image
+  const imgZone = document.createElement('div');
+  imgZone.style.cssText = 'flex:1;overflow:auto;background:#e8ecf1;display:flex;align-items:flex-start;justify-content:center;padding:14px;';
+  const loadSpan = document.createElement('span');
+  loadSpan.style.cssText = 'align-self:center;color:#0080AD;font-size:0.88rem;font-weight:600;';
+  loadSpan.textContent = '⏳ Rendu de la page…';
+  imgZone.appendChild(loadSpan);
 
-  // PANNEAU INDEX gauche
-  const indexPanel = document.createElement('div');
-  indexPanel.style.cssText = 'width:220px;flex-shrink:0;background:#f0f4f8;border-right:1px solid #d1dde8;display:flex;flex-direction:column;overflow:hidden;';
-
-  const indexHeader = document.createElement('div');
-  indexHeader.style.cssText = 'padding:10px 12px;background:#0080AD;color:#fff;font-size:0.78rem;font-weight:700;flex-shrink:0;letter-spacing:0.4px;';
-  indexHeader.textContent = 'Index des pr\u00e9l\u00e8vements';
-
-  const filterWrap = document.createElement('div');
-  filterWrap.style.cssText = 'padding:8px 10px;border-bottom:1px solid #d1dde8;flex-shrink:0;background:#fff;';
-  const filterInput = document.createElement('input');
-  filterInput.type = 'text';
-  filterInput.placeholder = 'Filtrer (ex\u00a0: P641)...';
-  filterInput.style.cssText = 'width:100%;padding:6px 8px;border:1.5px solid #cbd5e1;border-radius:6px;font-size:0.8rem;box-sizing:border-box;font-family:Arial,sans-serif;outline:none;';
-  filterInput.addEventListener('focus', () => filterInput.style.borderColor='#0080AD');
-  filterInput.addEventListener('blur',  () => filterInput.style.borderColor='#cbd5e1');
-  filterWrap.appendChild(filterInput);
-
-  const indexList = document.createElement('div');
-  indexList.style.cssText = 'flex:1;overflow-y:auto;padding:6px 0;';
-
-  indexPanel.appendChild(indexHeader);
-  indexPanel.appendChild(filterWrap);
-  indexPanel.appendChild(indexList);
-
-  // PANNEAU PAGES droite
-  const pagesPanel = document.createElement('div');
-  pagesPanel.style.cssText = 'flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;background:#e8ecf1;box-sizing:border-box;';
-
-  const loadMsg = document.createElement('div');
-  loadMsg.style.cssText = 'text-align:center;padding:50px 20px;color:#0080AD;font-size:0.9rem;font-weight:600;';
-  loadMsg.textContent = 'Analyse du PDF en cours\u2026';
-  pagesPanel.appendChild(loadMsg);
-
-  body.appendChild(indexPanel);
-  body.appendChild(pagesPanel);
-  overlay.appendChild(header);
-  overlay.appendChild(body);
+  box.appendChild(hdr);
+  box.appendChild(imgZone);
+  overlay.appendChild(box);
   document.body.appendChild(overlay);
   overlay.addEventListener('click', e => { if (e.target === overlay) document.body.removeChild(overlay); });
 
-  if (typeof pdfjsLib === 'undefined') {
-    loadMsg.style.color = '#dc2626';
-    loadMsg.textContent = 'PDF.js non disponible \u2014 v\u00e9rifiez votre connexion.';
-    return;
-  }
-
+  // Rendu de la seule page demandée
   try {
-    const arrayBuffer = await pdfFile.arrayBuffer();
-    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-    loadMsg.textContent = 'Rendu de ' + pdfDoc.numPages + ' pages\u2026 affichage au fur et \u00e0 mesure';
-
-    const refToPages = {};  // ref -> [pageNum, ...]
-    const pageCards  = {};  // pageNum -> { card, refs }
-
-    for (let p = 1; p <= pdfDoc.numPages; p++) {
-      const page = await pdfDoc.getPage(p);
-
-      // Extraire refs
-      const tc = await page.getTextContent();
-      const fullText = tc.items.map(i => i.str).join(' ');
-      const refs = [];
-      const re = /R.f.chantillon\s+client\s*:?\s*(P\d{3,4})/gi;
-      let mt;
-      while ((mt = re.exec(fullText)) !== null) {
-        if (!refs.includes(mt[1])) refs.push(mt[1]);
-      }
-
-      // Rendu canvas
-      const scale    = 1.4;
-      const viewport = page.getViewport({ scale });
-      const canvas   = document.createElement('canvas');
-      canvas.width   = viewport.width;
-      canvas.height  = viewport.height;
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-      const blob   = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.88));
-      const imgSrc = URL.createObjectURL(blob);
-
-      // Card page
-      const card = document.createElement('div');
-      card.id = 'pvpage-' + p;
-      card.style.cssText = 'background:#fff;border-radius:8px;overflow:hidden;border:2px solid #d1e3f0;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:border-color 0.2s,box-shadow 0.2s;';
-
-      const ph = document.createElement('div');
-      ph.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 14px;background:#e0f2fe;border-bottom:1px solid #b3d9f0;font-size:0.8rem;font-weight:700;';
-      const pgSpan = document.createElement('span');
-      pgSpan.style.cssText = 'color:#0080AD;font-weight:800;white-space:nowrap;flex-shrink:0;';
-      pgSpan.textContent = 'Page ' + p + ' / ' + pdfDoc.numPages;
-      const refSpan = document.createElement('span');
-      refSpan.style.cssText = 'color:#1a3a5c;font-weight:700;flex:1;font-size:0.82rem;';
-      refSpan.textContent = refs.length ? 'N\u00b0\u00a0' + refs.join(' \u00b7 ') : '';
-      ph.appendChild(pgSpan); ph.appendChild(refSpan);
-
-      const img = document.createElement('img');
-      img.src = imgSrc; img.style.cssText='width:100%;display:block;'; img.alt='Page '+p;
-
-      card.appendChild(ph); card.appendChild(img);
-      if (pagesPanel.contains(loadMsg)) pagesPanel.removeChild(loadMsg);
-      pagesPanel.appendChild(card);
-      pageCards[p] = { card, refs };
-
-      // Alimenter refToPages
-      refs.forEach(ref => {
-        if (!refToPages[ref]) refToPages[ref] = [];
-        refToPages[ref].push(p);
-      });
-
-      // Mettre \u00e0 jour l'index en temps r\u00e9el
-      buildPVIndex(refToPages, indexList, pageCards, pagesPanel);
-    }
-
-    // Index final + filtre live
-    buildPVIndex(refToPages, indexList, pageCards, pagesPanel);
-
-    filterInput.addEventListener('input', () => {
-      buildPVIndex(refToPages, indexList, pageCards, pagesPanel, filterInput.value);
-    });
-
-    filterInput.addEventListener('keydown', e => {
-      if (e.key !== 'Enter') return;
-      const val = filterInput.value.trim().toUpperCase();
-      const match = Object.keys(refToPages).find(r => r.toUpperCase() === val || r.toUpperCase().startsWith(val));
-      if (match) { scrollToPageCard(pagesPanel, pageCards, refToPages[match][0]); highlightPageCard(pageCards, refToPages[match][0]); }
-    });
-
+    const ab  = await pdfFile.arrayBuffer();
+    const doc = await pdfjsLib.getDocument({ data: ab }).promise;
+    const pg  = await doc.getPage(pageNum);
+    const vp  = pg.getViewport({ scale: 1.8 });
+    const canvas = document.createElement('canvas');
+    canvas.width  = vp.width;
+    canvas.height = vp.height;
+    canvas.style.cssText = 'max-width:100%;display:block;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.15);';
+    await pg.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+    imgZone.removeChild(loadSpan);
+    imgZone.appendChild(canvas);
   } catch(err) {
-    const errDiv = document.createElement('div');
-    errDiv.style.cssText = 'padding:20px;color:#dc2626;font-size:0.85rem;background:#fff;border-radius:8px;';
-    errDiv.textContent = 'Erreur\u00a0: ' + err.message;
-    pagesPanel.appendChild(errDiv);
-    console.error('openPVPopup', err);
-  }
-}
-
-function buildPVIndex(refToPages, indexList, pageCards, pagesPanel, filter) {
-  const f = (filter || '').trim().toUpperCase();
-  indexList.innerHTML = '';
-
-  const refs = Object.keys(refToPages).sort((a, b) => {
-    return (parseInt(a.replace(/\D/g,''),10)||0) - (parseInt(b.replace(/\D/g,''),10)||0);
-  });
-
-  const visible = f ? refs.filter(r => r.toUpperCase().includes(f)) : refs;
-
-  if (!visible.length) {
-    const none = document.createElement('div');
-    none.style.cssText = 'padding:14px;font-size:0.75rem;color:#94a3b8;text-align:center;';
-    none.textContent = refs.length ? 'Aucun r\u00e9sultat' : 'Analyse en cours\u2026';
-    indexList.appendChild(none);
-    return;
-  }
-
-  visible.forEach(ref => {
-    const pages = refToPages[ref];
-    const item  = document.createElement('div');
-    item.style.cssText = 'padding:8px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e8ecf1;transition:background 0.12s;';
-    item.addEventListener('mouseover', () => { item.style.background='#dbeafe'; });
-    item.addEventListener('mouseout',  () => { item.style.background=''; });
-    item.addEventListener('click', () => {
-      scrollToPageCard(pagesPanel, pageCards, pages[0]);
-      highlightPageCard(pageCards, pages[0]);
-    });
-
-    const badge = document.createElement('span');
-    badge.style.cssText = 'background:#1a3a5c;color:#fff;font-size:0.7rem;font-weight:800;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;';
-    badge.textContent = ref;
-
-    const pagesLbl = document.createElement('span');
-    pagesLbl.style.cssText = 'font-size:0.72rem;color:#475569;';
-    pagesLbl.textContent = 'p.\u00a0' + pages.join(', ');
-
-    item.appendChild(badge); item.appendChild(pagesLbl);
-    indexList.appendChild(item);
-  });
-}
-
-function scrollToPageCard(pagesPanel, pageCards, pageNum) {
-  const target = pageCards[pageNum];
-  if (target && target.card) target.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function highlightPageCard(pageCards, pageNum) {
-  Object.values(pageCards).forEach(({ card }) => {
-    card.style.borderColor = '#d1e3f0';
-    card.style.boxShadow   = '0 2px 6px rgba(0,0,0,0.08)';
-  });
-  const t = pageCards[pageNum];
-  if (t) {
-    t.card.style.borderColor = '#00B0F0';
-    t.card.style.boxShadow   = '0 0 0 3px rgba(0,176,240,0.35)';
-    setTimeout(() => {
-      t.card.style.borderColor = '#d1e3f0';
-      t.card.style.boxShadow   = '0 2px 6px rgba(0,0,0,0.08)';
-    }, 2500);
+    loadSpan.style.color = '#dc2626';
+    loadSpan.textContent = 'Erreur : ' + err.message;
+    console.error('openPagePopup', err);
   }
 }
 
@@ -3116,9 +3211,9 @@ function showSaveLoadMsg(msg, isError=false) {
   setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 // TÉLÉCHARGEMENT / ÉCRITURE DIRECTE
-// ═══════════════════════════════════════════════════════════════
+// ---------------------------------------------------------------
 function showFsStatus(msg, isError) {
   const el = document.getElementById('folderName');
   const span = document.createElement('span');
