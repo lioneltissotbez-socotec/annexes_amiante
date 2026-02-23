@@ -31,6 +31,99 @@
 #sapp .panel-left-inner { padding: 20px; flex: 1; }
 #sapp .panel-right { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: #e8ecf1; }
 #sapp .panel-right-inner { flex: 1; padding: 20px; overflow-y: auto; }
+
+/* ── ONGLETS ── */
+#sapp .tab-bar {
+  display: flex; background: #1a3a5c; gap: 0; flex-shrink: 0;
+  border-bottom: 3px solid #0080AD;
+}
+#sapp .tab-btn {
+  flex: 1; padding: 11px 8px; font-size: 0.78rem; font-weight: 600;
+  color: #94a3b8; background: transparent; border: none; cursor: pointer;
+  transition: all 0.18s; text-align: center; border-bottom: 3px solid transparent;
+  margin-bottom: -3px; font-family: Arial, sans-serif; white-space: nowrap;
+}
+#sapp .tab-btn:hover:not(:disabled) { color: #e2e8f0; background: rgba(255,255,255,0.07); }
+#sapp .tab-btn.active { color: #fff; border-bottom: 3px solid #00B0F0; background: rgba(0,176,240,0.12); }
+#sapp .tab-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+#sapp .tab-badge {
+  display: inline-block; background: #0080AD; color: #fff;
+  font-size: 0.65rem; border-radius: 10px; padding: 1px 6px;
+  margin-left: 5px; font-weight: 700; vertical-align: middle;
+}
+#sapp .tab-btn.active .tab-badge { background: #00B0F0; }
+#sapp .tab-badge.empty { background: #475569; }
+#sapp .tab-panel { display: none; }
+#sapp .tab-panel.active { display: block; }
+
+/* ── GRILLE PHOTOS (même style que plans) ── */
+#sapp #photoGrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 14px; margin-bottom: 16px; padding: 2px;
+}
+#sapp .photo-card {
+  background: #fff; border: 2px solid #e2e8f0; border-radius: 8px;
+  padding: 8px; display: flex; flex-direction: column; gap: 7px;
+  transition: border-color 0.15s, box-shadow 0.15s; position: relative;
+}
+#sapp .photo-card.absence { border-color: #86efac; }
+#sapp .photo-card.presence { border-color: #fca5a5; }
+#sapp .photo-card.attente { border-color: #93c5fd; }
+#sapp .photo-badge {
+  position: absolute; top: 6px; left: 6px;
+  background: #1a3a5c; color: white; font-size: 0.65rem; font-weight: 700;
+  border-radius: 3px; padding: 1px 5px; pointer-events: none; z-index: 1;
+}
+#sapp .photo-status-badge {
+  position: absolute; top: 6px; right: 6px;
+  font-size: 0.62rem; font-weight: 700; padding: 2px 6px; border-radius: 3px;
+  pointer-events: none; z-index: 1;
+}
+#sapp .photo-status-badge.absence  { background: #dcfce7; color: #166534; }
+#sapp .photo-status-badge.presence { background: #fee2e2; color: #991b1b; }
+#sapp .photo-status-badge.attente  { background: #dbeafe; color: #1e40af; }
+#sapp .photo-thumb {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  background: #f8fafc; border-radius: 4px;
+  cursor: pointer; pointer-events: auto;
+}
+#sapp .photo-thumb-placeholder {
+  width: 100%; aspect-ratio: 4/3; background: #f1f5f9; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  color: #94a3b8; font-size: 1.8rem;
+}
+#sapp .photo-card-info {
+  font-size: 0.72rem; color: #374151; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+#sapp .photo-card-info .mat { font-weight: 600; }
+#sapp .photo-card-info .loc { color: #94a3b8; }
+#sapp .btn-edit-photo {
+  font-size: 0.7rem; color: #94a3b8; background: #f1f5f9; border: 1px solid #e2e8f0;
+  border-radius: 5px; padding: 3px 8px; cursor: not-allowed; opacity: 0.55;
+  align-self: flex-end; margin-top: auto;
+}
+
+/* ── PV PREVIEW ── */
+#sapp .pv-page-card {
+  background: #fff; border-radius: 8px; border: 1px solid #e2e8f0;
+  margin-bottom: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+#sapp .pv-page-header {
+  padding: 8px 14px; background: #f0f9ff; border-bottom: 1px solid #e0f2fe;
+  font-size: 0.78rem; font-weight: 700; color: #0080AD;
+  display: flex; align-items: center; gap: 8px;
+}
+#sapp .pv-page-header .pv-refs { font-weight: 800; color: #1a3a5c; }
+#sapp .pv-page-header .pv-src  { font-size: 0.68rem; color: #94a3b8; margin-left: auto; }
+
+/* ── PLACEHOLDER ONGLET ── */
+#sapp .tab-empty {
+  text-align: center; padding: 48px 20px; color: #94a3b8;
+}
+#sapp .tab-empty svg { opacity: 0.25; margin-bottom: 12px; }
+#sapp .tab-empty p { font-size: 0.88rem; font-weight: 600; color: #64748b; }
+#sapp .tab-empty small { font-size: 0.75rem; }
 #sapp .card { background: white; }
 #sapp .intro { font-size: 0.82rem; color: #555; margin-bottom: 10px; line-height: 1.5; }
 #sapp .structure-box {
@@ -233,35 +326,34 @@
     <div class="panel-left">
       <div class="panel-left-inner">
 
-        <p class="intro">Sélectionnez le <strong>dossier racine</strong> de la mission.</p>
+        <p class="intro">Sélectionnez le <strong>dossier mission</strong> dans l'arborescence LICIEL.</p>
 
-        <div class="structure-box">
-📁 Mission/<br>
-&nbsp;&nbsp;📁 XML/<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├─ Table_General_Photo.xml<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├─ Table_Z_Amiante.xml<br>
-&nbsp;&nbsp;&nbsp;&nbsp;├─ Table_Z_Amiante_prelevements.xml<br>
-&nbsp;&nbsp;&nbsp;&nbsp;└─ Table_General_Bien.xml<br>
-&nbsp;&nbsp;📁 photos/<br>
-&nbsp;&nbsp;📁 plan/ &nbsp;← *_Ami.jpg
-        </div>
+        <div class="structure-box" style="font-family:'Segoe UI',Arial,sans-serif; line-height:2; padding:14px 16px;">
 
-        <div id="saveLoadRow" style="display:none; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
-          <button class="btn-saveload" onclick="saveState()" title="Exporter la configuration en JSON">
-            &#x1F4BE; Sauvegarder
-          </button>
-          <button class="btn-saveload" onclick="document.getElementById('loadStateInput').click()" title="Importer une configuration JSON">
-            &#x1F4C2; Charger
-          </button>
-          <input type="file" id="loadStateInput" accept=".json" style="display:none"
-            onchange="loadState(this)">
-          <span id="saveLoadMsg" style="font-size:0.7rem;color:#16a34a;align-self:center;display:none;"></span>
+          <span style="font-size:0.82em; color:#94a3b8;">🖥️&nbsp; Ce PC</span><br>
+
+          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;└──&nbsp; 💾 C:\</span><br>
+
+          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 LICIEL_Diagnostics\</span><br>
+
+          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 Dossiers_202x\</span><br>
+
+          <span style="display:inline-flex; align-items:center; gap:8px; margin-top:2px;">
+            <span style="font-size:1em; color:#1a3a5c; font-weight:800;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 2602CCENA&nbsp;-&nbsp;BI5860000000xxx</span>
+            <span style="background:#1d4ed8; color:#fff; font-size:0.7em; padding:3px 10px; border-radius:20px; font-weight:700; white-space:nowrap;">✔ sélectionner ce dossier</span>
+          </span><br>
+
+          <span style="font-size:1em; color:#16a34a; font-weight:700;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 exports\</span>
+          <span style="font-size:0.75em; color:#16a34a; font-weight:600;">&nbsp;&nbsp;← créé automatiquement · vos documents générés arrivent ici</span>
+
         </div>
 
         <div class="upload-zone" onclick="selectMissionFolder()">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
-          <p>Cliquer pour sélectionner le dossier</p>
-          <small>Chrome, Edge — Firefox : sélection fichiers</small>
+          <p><strong>Cliquer pour sélectionner le dossier mission</strong></p>
+          <small style="color:#475569; display:block; margin-top:4px;">ex : C:\LICIEL_Diagnostics\Dossiers_2026\2311CCENA - BI5860000000535</small>
+          <small style="color:#0080AD; display:block; margin-top:5px;">📤 Les documents générés seront enregistrés dans un sous-dossier <strong>exports\</strong> créé automatiquement à l'intérieur.</small>
+          <small style="color:#94a3b8; display:block; margin-top:3px;">Chrome / Edge recommandés — Firefox : sélection de fichiers uniquement</small>
         </div>
         <input id="folderInput" type="file" webkitdirectory multiple style="display:none;">
         <div id="folderName"></div>
@@ -279,9 +371,11 @@
             </div>
             <div class="option-group">
               <label>Adresse agence (cartouche)</label>
+              <span id="agenceNotice" style="display:none; font-size:0.72rem; margin-bottom:4px; display:block;"></span>
+              <select id="agenceSelect" style="display:none; width:100%; padding:5px 8px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.8rem; margin-bottom:5px;"></select>
               <input type="text" id="optAgence"
-                value="SOCOTEC Diagnostic Gémenos — Espaces de la Sainte-Baume Bat A8 - 30, avenue du Château de Jouques, 13420 Gémenos"
-                placeholder="Nom et adresse agence">
+                value=""
+                placeholder="Nom et adresse agence — détecté automatiquement">
             </div>
           </div>
         </div>
@@ -327,18 +421,25 @@
     </div>
 
     <div class="panel-right">
-      <div class="panel-right-inner">
 
-        <div id="sectionPlanGrid" style="display:none;">
-          <div class="panel-section-title">&#x1F4D0; Plans de repérage — _Ami.jpg</div>
-          <div class="plans-toolbar" id="plansToolbar">
-            <span id="planCountLabel"></span>
-            <button onclick="selectAllPlans(true)">&#x2705; Tout cocher</button>
-            <button onclick="selectAllPlans(false)">&#x274C; Tout d&eacute;cocher</button>
-            <span style="color:#94a3b8;font-size:0.72rem;">&#8645; Glisser-d&eacute;poser pour r&eacute;ordonner</span>
-          </div>
-          <div id="planGrid"></div>
-        </div>
+      <!-- ── BARRE D'ONGLETS ───────────────────────────────────────── -->
+      <div class="tab-bar" id="tabBar">
+        <button class="tab-btn active" id="tabBtnPlans" onclick="switchTab('plans')">
+          📐 Plans / Croquis
+          <span class="tab-badge empty" id="tabBadgePlans">0</span>
+        </button>
+        <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')" disabled>
+          📷 Preview Photos
+          <span class="tab-badge empty" id="tabBadgePhotos">0</span>
+        </button>
+        <button class="tab-btn" id="tabBtnPV" onclick="switchTab('pv')" disabled>
+          📄 Preview PV
+          <span class="tab-badge empty" id="tabBadgePV">0</span>
+        </button>
+      </div>
+
+      <!-- ── ONGLET PLANS ──────────────────────────────────────────── -->
+      <div class="panel-right-inner tab-panel active" id="tabPlans">
 
         <div id="panelPlaceholder">
           <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;">
@@ -352,7 +453,31 @@
           </div>
         </div>
 
-        <div id="sectionPlanTable" style="display:none;">
+        <div id="sectionPlanGrid" style="display:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:10px;">
+            <div class="panel-section-title" style="margin-bottom:0;">&#x1F4D0; Plans de repérage — _Ami.jpg</div>
+            <div id="saveLoadRow" style="display:none; gap:5px; flex-wrap:wrap; align-items:center;">
+              <span style="font-size:0.68rem; color:#94a3b8; margin-right:2px;">Corrections plans :</span>
+              <button class="btn-saveload" onclick="saveState()" title="Sauvegarder les corrections des plans (recadrages, rotations, cartouches)">
+                &#x1F4BE; Sauvegarder
+              </button>
+              <button class="btn-saveload" onclick="document.getElementById('loadStateInput').click()" title="Charger des corrections précédemment sauvegardées">
+                &#x1F4C2; Charger
+              </button>
+              <input type="file" id="loadStateInput" accept=".json" style="display:none" onchange="loadState(this)">
+              <span id="saveLoadMsg" style="font-size:0.7rem;color:#16a34a;align-self:center;display:none;"></span>
+            </div>
+          </div>
+          <div class="plans-toolbar" id="plansToolbar">
+            <span id="planCountLabel"></span>
+            <button onclick="selectAllPlans(true)">&#x2705; Tout cocher</button>
+            <button onclick="selectAllPlans(false)">&#x274C; Tout d&eacute;cocher</button>
+            <span style="color:#94a3b8;font-size:0.72rem;">&#8645; Glisser-d&eacute;poser pour r&eacute;ordonner</span>
+          </div>
+          <div id="planGrid"></div>
+        </div>
+
+        <div id="sectionPlanTable" style="display:none; margin-top:16px;">
           <div class="plan-table-header">
             <h4>&#x1F4CB; Informations cartouche des plans</h4>
             <button class="btn-copy-table" id="btnCopyTable" onclick="copyPlanTable()">
@@ -377,6 +502,29 @@
         </div>
 
       </div>
+
+      <!-- ── ONGLET PHOTOS ─────────────────────────────────────────── -->
+      <div class="panel-right-inner tab-panel" id="tabPhotos">
+        <div id="photoPreviewContent">
+          <div class="tab-empty">
+            <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p>Chargez un dossier mission</p>
+            <small>Les photos groupées par prélèvement s'afficheront ici</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ONGLET PV ──────────────────────────────────────────────── -->
+      <div class="panel-right-inner tab-panel" id="tabPV">
+        <div id="pvPreviewContent">
+          <div class="tab-empty">
+            <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <p>Chargez un dossier mission</p>
+            <small>Les PV d'analyses PDF s'afficheront ici</small>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -437,6 +585,306 @@
 <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
 
 <script>
+// ═══════════════════════════════════════════════════════════
+// RÉFÉRENTIEL AGENCES SOCOTEC (généré depuis Matrice_Socotec)
+// ═══════════════════════════════════════════════════════════
+const AGENCES_MAP = {
+  '02D90': 'AGENCE CONSTRUCTION & IMMOBILIER — 122 Rue du Château d\'Orgemont B.P. 50206, 49002 ANGERS Cedex 01 — Tél : 02 41 68 67 00',
+  '10480': 'AGENCE CONSTRUCTION LE HAVRE — 20 Rue du Capuchet CS 72030, 76070 LE HAVRE CEDEX — Tél : 02 32 85 39 39',
+  '10590': 'AGENCE CONSTRUCTION ROUEN — 97 Rue François Jacob, 76230 ISNEAUVILLE — Tél : 02 32 19 61 00',
+  '10591': 'AGENCE CONSTRUCTION EVREUX — 667 rue Henri Becquerel P.A. des Portes de la Forêt 27000 EVREUX, 27000 EVREUX — Tél : 02 32 28 19 29',
+  '109D0': 'AGENCE CONSTRUCTION & IMMOBILIER SAINT ETIENNE — TECHNOPOLE - 1 rue de la Logistique - CS40775, 42951 SAINT-ETIENNE — Tél : 04 77 91 12 20',
+  '11020': 'AGENCE CONSTRUCTION NANCY — 1 rue du clocher de Vézelise – CS 60010, 54230 CHAVIGNY — Tél : 03 83 35 48 86',
+  '11130': 'AGENCE CONSTRUCTION LILLE-LESQUIN — 11 rue Paul Dubrule CS50446, 59814 LESQUIN — Tél : 03 20 88 77 17',
+  '11240': 'AGENCE DIAGNOSTICS IMMOBILIER TOULOUSE — 3 rue jean Rodier, 31000 TOULOUSE — Tél : 05 61 16 49 60',
+  '11350': 'AGENCE CONSTRUCTION & IMMOBILIER NANTES — Immeuble Métronomy 5 - 2 rue Jacques Brel, 44800 SAINT HERBLAIN — Tél : 02 40 92 15 76',
+  '11460': 'AGENCE CONSTRUCTION & IMMOBILIER LA ROCHE SUR YON — 83 rue Benjamin Franklin - CS 70039, 85036 LA ROCHE SUR YON Cedex — Tél : 02 51 05 47 88',
+  '11570': 'Agence Construction Caen — 267, Rue Marie Curie - ZI La Sphère - BP 30, 14200 HEROUVILLE ST CLAIR — Tél : 02 31 46 24 24',
+  '11680': 'AGENCE CONSTRUCTION MULHOUSE — First Millénium - 3 rue Lefèbvre, 68100 MULHOUSE — Tél : 03 89 36 30 20',
+  '11790': 'AGENCE CONSTRUCTION STRASBOURG — 5 Allée Cérès, 67037 STRASBOURG CEDEX — Tél : 03 88 37 55 55',
+  '118A0': 'Agence Construction Rennes — Immeuble Le Noven - 318 Route de Fougères - CS 60642, 35706 RENNES — Tél : 02 99 83 47 00',
+  '119B0': 'AGENCE CONSTRUCTION LA ROCHELLE — Immeuble \'Le Challenge Ouest\' - Avenue Marillac - Les Minimes, 17025 LA ROCHELLE Cedex 1 — Tél : 05 46 41 88 88',
+  '12330': 'AGENCE CONSTRUCTION NIMES — 184 Rue Philippe MAUPAS, 30000 NIMES — Tél : 04 66 29 15 78',
+  '12440': 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE — 1 RUE DU DOCTEUR PASCAL - ZA DU RONDEAU, 38130 ECHIROLLES — Tél : 04 76 22 34 45',
+  '12550': 'Agence Construction Toulon — 215 Boulevard Amiral de Grasse, 83200 Toulon — Tél : 04 94 22 03 42',
+  '12990': 'Agence Construction Avignon — 18 Boulevard Saint-Michel, 84000 Avignon — Tél : 04 42 20 32 09',
+  '130Y0': 'AGENCE CONSTRUCTION & IMMOBILIER VALENCE — 55 rue Mozart, 26000 VALENCE — Tél : 04 75 43 41 25',
+  '13200': 'AGENCE CONSTRUCTION & IMMOBILIER REIMS — 34, rue des Moulins - CS 20001 - 51725 REIMS Cedex, 51100 REIMS — Tél : 03 26 40 60 40',
+  '13201': 'AGENCE CONSTRUCTION LAON — Espace Gustave Godard - 2 rue Jean Monnet, 02000 LAON — Tél : 03 23 79 26 69',
+  '13310': 'AGENCE CONSTRUCTION & IMMOBILIER CHARLEVILLE-MEZIERES — 23, Avenue d\'Arches, 08000 CHARLEVILLE-MEZIERES — Tél : 03 24 37 82 37',
+  '13860': 'AGENCE CONSTRUCTION & IMMOBILIER ANNECY — 16 ROUTE DE NANFRAY - PARC ACTIVITE DU LEVRAY, 74960 CRAN GEVRIER — Tél : 04 50 52 21 34',
+  '13970': 'AGENCE CONSTRUCTION CLERMONT-FERRAND — Parc Technologique de La Pardieu 19 avenue Léonard de Vinci, 63063 CLERMONT-FERRAND Cedex 1 — Tél : 04 73 44 27 00',
+  '141X0': 'AGENCE CONSTRUCTION LIMOGES — 5 rue Columbia - BP 6833 Lem d\'Ester Technopole, 87000 LIMOGES — Tél : 05 55 42 63 50',
+  '14620': 'AGENCE CONSTRUCTION DUNKERQUE — ZI de Petite Synthe - Avenue de la Gironde, 59944 DUNKERQUE — Tél : 03 28 28 96 90',
+  '14730': 'AGENCE CONSTRUCTIN TROYES — 59 rue Raymond Poincare - CS 50252, 10004 TROYES — Tél : 03 25 73 62 70',
+  '14950': 'AGENCE CONSTRUCTION BAYONNE — Immeuble Toki Lana 7 chemin de la Marouette, 64100 BAYONNE — Tél : 05 59 52 04 40',
+  '14951': 'AGENCE CONSTRUCTION PAU — Technopole Hélioparc Pau-Pyrénées - 2 avenue du Président Pierre Angot, 64053 PAU — Tél : 05 59 30 00 09',
+  '14952': 'AGENCE CONSTRUCTION MONT DE MARSAN — 363 avenue Georges Clémenceau 40000 MONT DE MARSAN, MONT DE MARSAN — Tél : 05 58 05 46 90',
+  '150U0': 'Agence Construction Ajaccio — 1 Parc du Belvédère - Route de Salario, 20000 Ajaccio — Tél : 04 95 51 73 73',
+  '150UA': 'Agence Construction Bastia — Résidence Plein sud - Bâtiment C - Avenue Paul Giacobbi, 20600 Bastia — Tél : 04 95 54 00 00',
+  '151V0': 'AGENCE CONSTRUCTION AMIENS — 1 Allée de la Pépinière - Centre Oasis Le Passiflore, 80480 DURY — Tél : 03 22 80 43 00',
+  '152W0': 'AGENCE CONSTRUCTION SAONE ET LOIRE — 7 rue de la Guerlande, 71880 CHATENOY LE ROYAL — Tél : 03 85 48 54 45',
+  '155Z0': 'AGENCE CONSTRUCTION & IMMOBILIER CHAMBERY — 256 rue François Guise, 73000 CHAMBERY — Tél : 04 79 69 47 09',
+  '15600': 'AGENCE CONSTRUCTION MONTPELLIER — 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 87',
+  '166Y0': 'AGENCE CONSTRUCTION LORRAINE — Parc des Varimonts – 10 avenue de Thionville – CS 90661, 57140 WOIPPY — Tél : 03 87 30 55 09',
+  '167Z0': 'AGENCE CONSTRUCTION PERPIGNAN — Tecnosud 2 - 140 Rue James WATT, 66000 PERPIGNAN — Tél : 04 68 50 35 96',
+  '171R0': 'Agence Construction & Immobilier Métropole Marseille — Le Virage - 5 Allée Marcel Leclerc, 13008 Marseille — Tél : 04 42 20 32 09',
+  '203B0': 'AGENCE DIAGNOSTICS IMMOBILIER IDF OUEST — Immeuble Le Floride - 11 Allée Rosa Luxemburg - BP 70234 - ERAGNY-SUR-OISE, 95614 CERGY-PONTOISE — Tél : 01 34 48 30 54',
+  '20PAM': 'AGENCE DIAGNOSTICS IMMOBILIER IDF EST — 108/112 Avenue de la liberté - 8/12 sur Parc, 94700 MAISONS-ALFORT — Tél : 01.45.18.21.07',
+  '21060': 'AGENCE CONSTRUCTION CREIL — Parc Alata - 1 rue des Prunelliers, 60100 CREIL — Tél : 03 44 63 84 00',
+  '214A0': 'Agence Construction Alpes-Maritimes — 1375 Route des Dolines - BP 172, 06903 Sophia-Antipolis — Tél : 04 92 96 85 00',
+  '215B0': 'AGENCE CONSTRUCTION & IMMOBILIER ANGERS — 7 rue Bouché-Thomas - CS 50206, 49002 ANGERS CEDEX 01 — Tél : 02 41 68 67 00',
+  '216C0': 'AGENCE CONSTRUCTION NIORT — 493, avenue de Paris, 79000 NIORT — Tél : 05 49 09 97 30',
+  '217D0': 'AGENCE CONSTRUCTION LE PUY EN VELAY — 597 avenue Lavoisier CS 50178 Saint Germain Laprade, 43009 LE PUY EN VELAY Cedex — Tél : 04 71 09 11 93',
+  '218': 'AGENCE CONSTRUCTION & IMMOBILIER ROANNE — 47 rue des Noyers, 42153 RIORGES — Tél : 04 77 91 12 20',
+  '22590': 'AGENCE CONSTRUCTION & IMMOBILIER BOURG EN BRESSE — 487 rue Léopold Le Hon, 01006 BOURG-EN-BRESSE — Tél : 04 74 21 20 17',
+  '24110': 'AGENCE CONSTRUCTION ARRAS — ZA Les Bonnettes - Bâtiment 3 - Rue des Genévriers, 62000 ARRAS — Tél : 03 21 21 43 70',
+  '24880': 'AGENCE CONSTRUCTION BOULOGNE — Agence Construction LITTORAL - 41 Bd du Parc d’Affaires, 62231 COQUELLES — Tél : 03 21 30 49 98',
+  '26510': 'AGENCE CONSTRUCTION BRIVE — Immeuble le 126 - 34 bis avenue Alsace Lorraine, 19100 BRIVE LA GAILLARDE — Tél : 05 55 17 59 00',
+  '296W0': 'AGENCE CONSTRUCTION & IMMOBILIER POITIERS — 10 rue Jean-Baptiste Boussingault - ZAE République III, 86000 POITIERS — Tél : 05 49 47 55 66',
+  '301D0': 'AGENCE CONSTRUCTION & IMMOBILIER LYON — 11 rue SAINT MAXIMIN, 69416 LYON — Tél : 04 72 11 45 00',
+  '336C0': 'Agence Construction Bourges — Bâtiment Euclide - 3 rue Charles Durand, 18023 BOURGES — Tél : 02 48 24 34 62',
+  '337D0': 'AGENCE CONSTRUCTION MOULINS — 25 rue de la Baigneuse, 03400 YZEURE — Tél : 04 70 44 76 09',
+  '34590': 'AGENCE CONSTRUCTION AURILLAC — 24 rue Gutenberg, 15000 AURILLAC — Tél : 04 71 48 41 58',
+  '36000': 'AGENCE CONSTRUCTION BEZIERS — Espace Les Mazeranes ZAC du Monestié, 34760 BOUJAN SUR LIBRON — Tél : 04 67 62 26 31',
+  '371Z0': 'AGENCE CONSTRUCTION CARCASSONNE — ZA de Sautès - Rue de l\'Industrie, 11800 TREBES — Tél : 04 68 47 94 86',
+  '37530': 'AGENCE CONSTRUCTION NARBONNE — 62 Rue Demoge - ZAC de Bonne Source, 11100 NARBONNE — Tél : 04 68 41 11 70',
+  '383Z0': 'AGENCES CONSTRUCTION & IMMOBILIER LAVAL — Parc technopôle Bâtiment C - Rue Louis de Broglie, 53810 CHANGE — Tél : 02 43 59 44 00',
+  '392W0': 'AGENCE CONSTRUCTION AIX-EN-PROVENCE — Le Rifkin ZAC du Petit Arbois Avenue Louis Philibert, 13100 AIX-EN-PROVENCE — Tél : 04 42 59 01 06',
+  '39600': 'AGENCE CONSTRUCTION BEAUVAIS — 36 avenue Salvador Allendé - Village Mikonos - Bâtiment B, 60000 BEAUVAIS — Tél : 03 44 48 61 45',
+  '39930': 'AGENCE DIAGNOSTICS IMMOBILIER TARBES — 72 rue Maréchal Foch, 65000 TARBES — Tél : 05 62 93 51 80',
+  'B15D0': 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE — 1 RUE DU DOCTEUR PASCAL - ZA DU RONDEAU, 38130 ECHIROLLES — Tél : 04 76 22 34 45',
+  'B18G0': 'Agence Construction Saint Rapahael — Pôle d\'excellence Jean LOUIS - 34 via Nova - le 7 CS, 20003 FREJUS — Tél : 04 94 19 82 62',
+  'CAMOA': 'SOCOTEC DIAGNOSTIC - Pôle AMO — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25',
+  'CBRLO': 'SOCOTEC Diagnostic Lorient — ZAC de kerfichant 4 rue Alice Coleno, 56100 LORIENT — Tél : 02 99 83 03 56',
+  'CBRRE': 'SOCOTEC Diagnostic Rennes — 318 route de Fougères - Immeuble le Noven- CS60642, 35706 RENNES CEDEX 7 — Tél : 02 99 83 64 44',
+  'CCEAN': 'SOCOTEC Diagnostic Angers — 7 Rue Bouché Thomas - CS 50206, 49002 ANGERS CEDEX 01 — Tél : 02 41 68 60 72',
+  'CCENA': 'SOCOTEC Diagnostic Nantes — Métronomy Park Bât. 5 2 rue Jacques Brel CS 10389, 44819 SAINT-HERBLAIN CEDEX — Tél : 02 40 92 48 47',
+  'CCETO': 'SOCOTEC Diagnostic Tours — les Granges Galand 2 Allée du Petit Cher, 37550 SAINT AVERTIN — Tél : 02 47 70 00 16',
+  'CGEDI': 'SOCOTEC Diagnostic Dijon — 19 avenue Françoise Giroud - Helios Park, 21000 DIJON — Tél : 03 81 41 40 38',
+  'CGENA': 'SOCOTEC Diagnostic Nancy — 1 rue du Clocher de Vezelise, 54230 CHAVIGNY — Tél : 03 83 17 98 36',
+  'CGERE': 'SOCOTEC Diagnostic Reims — 8 rue Jules Meline immeuble terranova, 51430 BEZANNES — Tél : 03 83 17 98 36',
+  'CGEST': 'SOCOTEC Diagnostic Strasbourg — 5 allée Cérès, 67000 STRASBOURG — Tél : 03 83 17 98 36',
+  'CHNBA': 'SOCOTEC Diagnostic Bapaume — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25',
+  'CHNBO': 'SOCOTEC Diagnostic Boulogne — Parc d\'affaires Eurotunnel 41 BD du parc, 62231 COQUELLES — Tél : 03.61.11.75.25',
+  'CHNCA': 'SOCOTEC Diagnostic Caen — 267 rue Marie Curie - ZI de la Sphère-CS 30030, 14201 HEROUVILLE-SAINT-CLAIR CEDEX — Tél : 03.61.11.75.25',
+  'CHNLI': 'SOCOTEC Diagnostic Lille Lesquin — 4 rue des Ormes, 59810 LESQUIN — Tél : 03.61.11.75.25',
+  'CHNRO': 'SOCOTEC Diagnostic Rouen — 97 RUE FRANCOIS JACOB -, 76230 ISNEAUVILLE — Tél : 03.61.11.75.25',
+  'CIDER': 'SOCOTEC Diagnostic Eragny — 13 avenue Rosa Luxembourg - Immeuble Le Pica, 95610 ERAGNY — Tél : 01 39 08 27 83',
+  'CIDMA': 'SOCOTEC Diagnostic Maisons Alfort — 108-112 AV DE LA LIBERTE, 94700 MAISONS-ALFORT — Tél : 01 45 18 21 07',
+  'CIDME': 'SOCOTEC Diagnostic Meudon — Immeuble Le Dynasteur-6-8 rue Andras Beck, 92366 MEUDON-LA FORET — Tél : 01 40 83 18 76',
+  'CIDMH': 'SOCOTEC Diagnostic Serris — Immeuble Faraday VI  1 bis avenue Christian Doppler, 77700 SERRIS — Tél : 01 39 08 27 83',
+  'CIDPO': 'SOCOTEC Diagnostic Poissy — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83',
+  'CIDSC': 'SOCOTEC Diagnostic Poissy CIDSC — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83',
+  'CIDSG': 'SOCOTEC Diagnostic Evry — Immeuble Olympe – Mosaic Parc Evry Nord, 91580 Evry-Courcouronnes — Tél : 01 39 08 27 83',
+  'CIDVI': 'SOCOTEC Diagnostic Villepinte — 22 Avenue des Nations, 93420 VILLEPINTE — Tél : 01 45 18 21 43',
+  'CNABA': 'SOCOTEC Diagnostic Bayonne — Immeuble Toki Lana-7 chemin de la Marouette, 64100 BAYONNE — Tél : 05 57 29 06 13',
+  'CNABO': 'SOCOTEC Diagnostic Bordeaux — 3 Impasse Henry le Châtelier, 33700 MERIGNAC — Tél : 05 57 29 06 16',
+  'CNALI': 'SOCOTEC Diagnostic Limoges — 5 rue Colombia - BP 6833-Lem d\'Ester -Technopole, 87068 LIMOGES CEDEX — Tél : 05 57 29 06 13',
+  'COCMO': 'SOCOTEC Diagnostic Montpellier — Symphonie Nord 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 41',
+  'COCPE': 'SOCOTEC Diagnostic Perpignan — Zone Tecnosud-140 rue James Watt, 66100 PERPIGNAN — Tél : 04 67 99 87 41',
+  'COCTO': 'SOCOTEC Diagnostic Toulouse — 3 rue Jean Rodier-BP 34012 -, 31028 TOULOUSE — Tél : 05 62 16 78 97',
+  'CPAAI': 'SOCOTEC Diagnostic Aix — Avenue Louis Philibert - ZAC du petit Arbois - Immeuble Rifkin, 13100 AIX-EN-PROVENCE — Tél : 04.42.20.91.73',
+  'CPAGE': 'SOCOTEC Diagnostic Gémenos — Espaces de la Sainte-Baume Bat A8 - 30, avenue du Château de Jouques, 13420 Gémenos — Tél : 04 42 70 92 33',
+  'CPAIN': 'SOCOTEC Diagnostic Gémenos — Espaces de la Sainte-Baume Bat A8 - 30, avenue du Château de Jouques, 13420 Gémenos — Tél : 04 42 70 92 33',
+  'CPASA': 'SOCOTEC Diagnostic Salon de Provence — 225 Boulevard Winston Churchill, 13300 Salon-de-Provence — Tél : 04 90 57 17 69',
+  'CPASI': 'SOCOTEC Diagnostic Six Fours les Plages — 73 Avenue Saint Mandrier Bâtiment A, 83140 Six-Fours-les-Plages — Tél : 04 94 10 09 19',
+  'CPASO': 'SOCOTEC Diagnostic Sophia Antipolis — Immeuble Taissounieres 1681 Rte des Dolines, 06560 VALBONNE — Tél : 04 42 20 91 73',
+  'CRACL': 'SOCOTEC Diagnostic Clermont Ferrand — Parc Technologique de la Pardieu-19 Avenue Léonard de Vinci, 63063 CLERMONT-FERRAND Cedex 1 — Tél : 04 72 11 45 27',
+  'CRAGR': 'SOCOTEC Diagnostic Grenoble — ZA du Rondeau-1 rue du Docteur Pascal CS 50289 -, 38130 ECHIROLLES CEDEX — Tél : 04 76 22 96 80',
+  'CRALY': 'SOCOTEC Diagnostic Lyon — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93',
+  'CRARA': 'Socotec Diagnostic Lyon — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93',
+  'EHIFL': 'SOCOTEC Diagnostic Saint Geneviève des Bois — Immeuble Olympe – Mosaic Parc Evry Nord rue du Pelvoux, 91080 Evry-Courcouronnes — Tél : 01 69 51 57 30',
+  'ENE00': 'SOCOTEC Diagnostic Maxeville — 8 rue Albert Einstein - Parc St Jacques II, 54320 MAXEVILLE — Tél : 03 83 96 33 30',
+  'ENEBR': 'Agence Bretagne - Contrat Enedis - Socotec Diagnostic — 318 route de Fougères - Immeuble le Noven- CS60642, 35706 RENNES CEDEX 7 — Tél : 02 99 83 64 44',
+  'ENECE': 'Agence Centre - Contrat Enedis - Socotec Diagnostic — les Granges Galand 2 Allée du Petit Cher, 37550 SAINT AVERTIN — Tél : 02 47 70 00 16',
+  'ENEGE': 'Agence Grand Est - Contrat Enedis - Socotec Diagnostic — 1 rue du Clocher de Vezelise, 54230 CHAVIGNY — Tél : 03 83 17 98 36',
+  'ENEHN': 'Agence Haut-de-France Normandie - Contrat Enedis - Socotec Diagnostic — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25',
+  'ENEID': 'Agence Ile de France - Contrat Enedis - Socotec Diagnostic — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83',
+  'ENENA': 'Agence Nouvelle Aquitaine - Contrat Enedis - Socotec Diagnostic — 3 Impasse Henry le Châtelier, 33700 MERIGNAC — Tél : 05 57 29 06 16',
+  'ENEOC': 'Agence Occitanie - Contrat Enedis - Socotec Diagnostic — Symphonie Nord 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 41',
+  'ENEPA': 'Agence PACA - Contrat Enedis - Socotec Diagnostic — Avenue Louis Philibert - ZAC du petit Arbois - Immeuble Rifkin, 13100 AIX-EN-PROVENCE — Tél : 03 81 41 40 38',
+  'ENERA': 'Agence Rhone Alpes - Contrat Enedis - Socotec Diagnostic — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93',
+  'GP021': 'AGENCE CONSTRUCTION NANCY — 1 rue du clocher de Vézelise – CS 60010, 54230 CHAVIGNY — Tél : 03 83 35 48 86',
+  'JC000': 'Agence CONSTRUCTION MONACO — Le Sagittaire - 8 avenue Pasteur, 98000 MONACO — Tél : 37792057501',
+  'MAYU6': 'SOCOTEC REUNION BUREAU MAYOTTE — IMMEUBLE MEGA, Z.I. KAWENI - BP 348, 97600 - MAMOUDZOU — Tél : 02 69 61 20 21',
+  'REUY6': 'AGENCE AMIANTE & FORMATION — 33 rue André Lardy - ZAE La Mare, 97438 SAINTE MARIE — Tél : 02.62.94.48.48',
+};
+
+const AGENCES_DEFAULT = 'SOCOTEC Diagnostic Bapaume — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25';
+
+const AGENCES_LIST = [
+  { code: 'REUY6', nom: 'AGENCE AMIANTE & FORMATION', adresse: 'AGENCE AMIANTE & FORMATION — 33 rue André Lardy - ZAE La Mare, 97438 SAINTE MARIE — Tél : 02.62.94.48.48' },
+  { code: '14730', nom: 'AGENCE CONSTRUCTIN TROYES', adresse: 'AGENCE CONSTRUCTIN TROYES — 59 rue Raymond Poincare - CS 50252, 10004 TROYES — Tél : 03 25 73 62 70' },
+  { code: '02D90', nom: 'AGENCE CONSTRUCTION & IMMOBILIER', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER — 122 Rue du Château d\'Orgemont B.P. 50206, 49002 ANGERS Cedex 01 — Tél : 02 41 68 67 00' },
+  { code: '215B0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER ANGERS', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER ANGERS — 7 rue Bouché-Thomas - CS 50206, 49002 ANGERS CEDEX 01 — Tél : 02 41 68 67 00' },
+  { code: '13860', nom: 'AGENCE CONSTRUCTION & IMMOBILIER ANNECY', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER ANNECY — 16 ROUTE DE NANFRAY - PARC ACTIVITE DU LEVRAY, 74960 CRAN GEVRIER — Tél : 04 50 52 21 34' },
+  { code: '22590', nom: 'AGENCE CONSTRUCTION & IMMOBILIER BOURG EN BRESSE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER BOURG EN BRESSE — 487 rue Léopold Le Hon, 01006 BOURG-EN-BRESSE — Tél : 04 74 21 20 17' },
+  { code: '155Z0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER CHAMBERY', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER CHAMBERY — 256 rue François Guise, 73000 CHAMBERY — Tél : 04 79 69 47 09' },
+  { code: '13310', nom: 'AGENCE CONSTRUCTION & IMMOBILIER CHARLEVILLE-MEZIERES', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER CHARLEVILLE-MEZIERES — 23, Avenue d\'Arches, 08000 CHARLEVILLE-MEZIERES — Tél : 03 24 37 82 37' },
+  { code: 'B15D0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE — 1 RUE DU DOCTEUR PASCAL - ZA DU RONDEAU, 38130 ECHIROLLES — Tél : 04 76 22 34 45' },
+  { code: '12440', nom: 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER GRENOBLE — 1 RUE DU DOCTEUR PASCAL - ZA DU RONDEAU, 38130 ECHIROLLES — Tél : 04 76 22 34 45' },
+  { code: '11460', nom: 'AGENCE CONSTRUCTION & IMMOBILIER LA ROCHE SUR YON', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER LA ROCHE SUR YON — 83 rue Benjamin Franklin - CS 70039, 85036 LA ROCHE SUR YON Cedex — Tél : 02 51 05 47 88' },
+  { code: '301D0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER LYON', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER LYON — 11 rue SAINT MAXIMIN, 69416 LYON — Tél : 04 72 11 45 00' },
+  { code: '11350', nom: 'AGENCE CONSTRUCTION & IMMOBILIER NANTES', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER NANTES — Immeuble Métronomy 5 - 2 rue Jacques Brel, 44800 SAINT HERBLAIN — Tél : 02 40 92 15 76' },
+  { code: '296W0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER POITIERS', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER POITIERS — 10 rue Jean-Baptiste Boussingault - ZAE République III, 86000 POITIERS — Tél : 05 49 47 55 66' },
+  { code: '13200', nom: 'AGENCE CONSTRUCTION & IMMOBILIER REIMS', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER REIMS — 34, rue des Moulins - CS 20001 - 51725 REIMS Cedex, 51100 REIMS — Tél : 03 26 40 60 40' },
+  { code: '218', nom: 'AGENCE CONSTRUCTION & IMMOBILIER ROANNE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER ROANNE — 47 rue des Noyers, 42153 RIORGES — Tél : 04 77 91 12 20' },
+  { code: '109D0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER SAINT ETIENNE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER SAINT ETIENNE — TECHNOPOLE - 1 rue de la Logistique - CS40775, 42951 SAINT-ETIENNE — Tél : 04 77 91 12 20' },
+  { code: '130Y0', nom: 'AGENCE CONSTRUCTION & IMMOBILIER VALENCE', adresse: 'AGENCE CONSTRUCTION & IMMOBILIER VALENCE — 55 rue Mozart, 26000 VALENCE — Tél : 04 75 43 41 25' },
+  { code: '392W0', nom: 'AGENCE CONSTRUCTION AIX-EN-PROVENCE', adresse: 'AGENCE CONSTRUCTION AIX-EN-PROVENCE — Le Rifkin ZAC du Petit Arbois Avenue Louis Philibert, 13100 AIX-EN-PROVENCE — Tél : 04 42 59 01 06' },
+  { code: '151V0', nom: 'AGENCE CONSTRUCTION AMIENS', adresse: 'AGENCE CONSTRUCTION AMIENS — 1 Allée de la Pépinière - Centre Oasis Le Passiflore, 80480 DURY — Tél : 03 22 80 43 00' },
+  { code: '24110', nom: 'AGENCE CONSTRUCTION ARRAS', adresse: 'AGENCE CONSTRUCTION ARRAS — ZA Les Bonnettes - Bâtiment 3 - Rue des Genévriers, 62000 ARRAS — Tél : 03 21 21 43 70' },
+  { code: '34590', nom: 'AGENCE CONSTRUCTION AURILLAC', adresse: 'AGENCE CONSTRUCTION AURILLAC — 24 rue Gutenberg, 15000 AURILLAC — Tél : 04 71 48 41 58' },
+  { code: '14950', nom: 'AGENCE CONSTRUCTION BAYONNE', adresse: 'AGENCE CONSTRUCTION BAYONNE — Immeuble Toki Lana 7 chemin de la Marouette, 64100 BAYONNE — Tél : 05 59 52 04 40' },
+  { code: '39600', nom: 'AGENCE CONSTRUCTION BEAUVAIS', adresse: 'AGENCE CONSTRUCTION BEAUVAIS — 36 avenue Salvador Allendé - Village Mikonos - Bâtiment B, 60000 BEAUVAIS — Tél : 03 44 48 61 45' },
+  { code: '36000', nom: 'AGENCE CONSTRUCTION BEZIERS', adresse: 'AGENCE CONSTRUCTION BEZIERS — Espace Les Mazeranes ZAC du Monestié, 34760 BOUJAN SUR LIBRON — Tél : 04 67 62 26 31' },
+  { code: '24880', nom: 'AGENCE CONSTRUCTION BOULOGNE', adresse: 'AGENCE CONSTRUCTION BOULOGNE — Agence Construction LITTORAL - 41 Bd du Parc d’Affaires, 62231 COQUELLES — Tél : 03 21 30 49 98' },
+  { code: '26510', nom: 'AGENCE CONSTRUCTION BRIVE', adresse: 'AGENCE CONSTRUCTION BRIVE — Immeuble le 126 - 34 bis avenue Alsace Lorraine, 19100 BRIVE LA GAILLARDE — Tél : 05 55 17 59 00' },
+  { code: '371Z0', nom: 'AGENCE CONSTRUCTION CARCASSONNE', adresse: 'AGENCE CONSTRUCTION CARCASSONNE — ZA de Sautès - Rue de l\'Industrie, 11800 TREBES — Tél : 04 68 47 94 86' },
+  { code: '13970', nom: 'AGENCE CONSTRUCTION CLERMONT-FERRAND', adresse: 'AGENCE CONSTRUCTION CLERMONT-FERRAND — Parc Technologique de La Pardieu 19 avenue Léonard de Vinci, 63063 CLERMONT-FERRAND Cedex 1 — Tél : 04 73 44 27 00' },
+  { code: '21060', nom: 'AGENCE CONSTRUCTION CREIL', adresse: 'AGENCE CONSTRUCTION CREIL — Parc Alata - 1 rue des Prunelliers, 60100 CREIL — Tél : 03 44 63 84 00' },
+  { code: '14620', nom: 'AGENCE CONSTRUCTION DUNKERQUE', adresse: 'AGENCE CONSTRUCTION DUNKERQUE — ZI de Petite Synthe - Avenue de la Gironde, 59944 DUNKERQUE — Tél : 03 28 28 96 90' },
+  { code: '10591', nom: 'AGENCE CONSTRUCTION EVREUX', adresse: 'AGENCE CONSTRUCTION EVREUX — 667 rue Henri Becquerel P.A. des Portes de la Forêt 27000 EVREUX, 27000 EVREUX — Tél : 02 32 28 19 29' },
+  { code: '119B0', nom: 'AGENCE CONSTRUCTION LA ROCHELLE', adresse: 'AGENCE CONSTRUCTION LA ROCHELLE — Immeuble \'Le Challenge Ouest\' - Avenue Marillac - Les Minimes, 17025 LA ROCHELLE Cedex 1 — Tél : 05 46 41 88 88' },
+  { code: '13201', nom: 'AGENCE CONSTRUCTION LAON', adresse: 'AGENCE CONSTRUCTION LAON — Espace Gustave Godard - 2 rue Jean Monnet, 02000 LAON — Tél : 03 23 79 26 69' },
+  { code: '10480', nom: 'AGENCE CONSTRUCTION LE HAVRE', adresse: 'AGENCE CONSTRUCTION LE HAVRE — 20 Rue du Capuchet CS 72030, 76070 LE HAVRE CEDEX — Tél : 02 32 85 39 39' },
+  { code: '217D0', nom: 'AGENCE CONSTRUCTION LE PUY EN VELAY', adresse: 'AGENCE CONSTRUCTION LE PUY EN VELAY — 597 avenue Lavoisier CS 50178 Saint Germain Laprade, 43009 LE PUY EN VELAY Cedex — Tél : 04 71 09 11 93' },
+  { code: '11130', nom: 'AGENCE CONSTRUCTION LILLE-LESQUIN', adresse: 'AGENCE CONSTRUCTION LILLE-LESQUIN — 11 rue Paul Dubrule CS50446, 59814 LESQUIN — Tél : 03 20 88 77 17' },
+  { code: '141X0', nom: 'AGENCE CONSTRUCTION LIMOGES', adresse: 'AGENCE CONSTRUCTION LIMOGES — 5 rue Columbia - BP 6833 Lem d\'Ester Technopole, 87000 LIMOGES — Tél : 05 55 42 63 50' },
+  { code: '166Y0', nom: 'AGENCE CONSTRUCTION LORRAINE', adresse: 'AGENCE CONSTRUCTION LORRAINE — Parc des Varimonts – 10 avenue de Thionville – CS 90661, 57140 WOIPPY — Tél : 03 87 30 55 09' },
+  { code: '14952', nom: 'AGENCE CONSTRUCTION MONT DE MARSAN', adresse: 'AGENCE CONSTRUCTION MONT DE MARSAN — 363 avenue Georges Clémenceau 40000 MONT DE MARSAN, MONT DE MARSAN — Tél : 05 58 05 46 90' },
+  { code: '15600', nom: 'AGENCE CONSTRUCTION MONTPELLIER', adresse: 'AGENCE CONSTRUCTION MONTPELLIER — 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 87' },
+  { code: '337D0', nom: 'AGENCE CONSTRUCTION MOULINS', adresse: 'AGENCE CONSTRUCTION MOULINS — 25 rue de la Baigneuse, 03400 YZEURE — Tél : 04 70 44 76 09' },
+  { code: '11680', nom: 'AGENCE CONSTRUCTION MULHOUSE', adresse: 'AGENCE CONSTRUCTION MULHOUSE — First Millénium - 3 rue Lefèbvre, 68100 MULHOUSE — Tél : 03 89 36 30 20' },
+  { code: 'GP021', nom: 'AGENCE CONSTRUCTION NANCY', adresse: 'AGENCE CONSTRUCTION NANCY — 1 rue du clocher de Vézelise – CS 60010, 54230 CHAVIGNY — Tél : 03 83 35 48 86' },
+  { code: '11020', nom: 'AGENCE CONSTRUCTION NANCY', adresse: 'AGENCE CONSTRUCTION NANCY — 1 rue du clocher de Vézelise – CS 60010, 54230 CHAVIGNY — Tél : 03 83 35 48 86' },
+  { code: '37530', nom: 'AGENCE CONSTRUCTION NARBONNE', adresse: 'AGENCE CONSTRUCTION NARBONNE — 62 Rue Demoge - ZAC de Bonne Source, 11100 NARBONNE — Tél : 04 68 41 11 70' },
+  { code: '12330', nom: 'AGENCE CONSTRUCTION NIMES', adresse: 'AGENCE CONSTRUCTION NIMES — 184 Rue Philippe MAUPAS, 30000 NIMES — Tél : 04 66 29 15 78' },
+  { code: '216C0', nom: 'AGENCE CONSTRUCTION NIORT', adresse: 'AGENCE CONSTRUCTION NIORT — 493, avenue de Paris, 79000 NIORT — Tél : 05 49 09 97 30' },
+  { code: '14951', nom: 'AGENCE CONSTRUCTION PAU', adresse: 'AGENCE CONSTRUCTION PAU — Technopole Hélioparc Pau-Pyrénées - 2 avenue du Président Pierre Angot, 64053 PAU — Tél : 05 59 30 00 09' },
+  { code: '167Z0', nom: 'AGENCE CONSTRUCTION PERPIGNAN', adresse: 'AGENCE CONSTRUCTION PERPIGNAN — Tecnosud 2 - 140 Rue James WATT, 66000 PERPIGNAN — Tél : 04 68 50 35 96' },
+  { code: '10590', nom: 'AGENCE CONSTRUCTION ROUEN', adresse: 'AGENCE CONSTRUCTION ROUEN — 97 Rue François Jacob, 76230 ISNEAUVILLE — Tél : 02 32 19 61 00' },
+  { code: '152W0', nom: 'AGENCE CONSTRUCTION SAONE ET LOIRE', adresse: 'AGENCE CONSTRUCTION SAONE ET LOIRE — 7 rue de la Guerlande, 71880 CHATENOY LE ROYAL — Tél : 03 85 48 54 45' },
+  { code: '11790', nom: 'AGENCE CONSTRUCTION STRASBOURG', adresse: 'AGENCE CONSTRUCTION STRASBOURG — 5 Allée Cérès, 67037 STRASBOURG CEDEX — Tél : 03 88 37 55 55' },
+  { code: '20PAM', nom: 'AGENCE DIAGNOSTICS IMMOBILIER IDF EST', adresse: 'AGENCE DIAGNOSTICS IMMOBILIER IDF EST — 108/112 Avenue de la liberté - 8/12 sur Parc, 94700 MAISONS-ALFORT — Tél : 01.45.18.21.07' },
+  { code: '203B0', nom: 'AGENCE DIAGNOSTICS IMMOBILIER IDF OUEST', adresse: 'AGENCE DIAGNOSTICS IMMOBILIER IDF OUEST — Immeuble Le Floride - 11 Allée Rosa Luxemburg - BP 70234 - ERAGNY-SUR-OISE, 95614 CERGY-PONTOISE — Tél : 01 34 48 30 54' },
+  { code: '39930', nom: 'AGENCE DIAGNOSTICS IMMOBILIER TARBES', adresse: 'AGENCE DIAGNOSTICS IMMOBILIER TARBES — 72 rue Maréchal Foch, 65000 TARBES — Tél : 05 62 93 51 80' },
+  { code: '11240', nom: 'AGENCE DIAGNOSTICS IMMOBILIER TOULOUSE', adresse: 'AGENCE DIAGNOSTICS IMMOBILIER TOULOUSE — 3 rue jean Rodier, 31000 TOULOUSE — Tél : 05 61 16 49 60' },
+  { code: '383Z0', nom: 'AGENCES CONSTRUCTION & IMMOBILIER LAVAL', adresse: 'AGENCES CONSTRUCTION & IMMOBILIER LAVAL — Parc technopôle Bâtiment C - Rue Louis de Broglie, 53810 CHANGE — Tél : 02 43 59 44 00' },
+  { code: 'ENEBR', nom: 'Agence Bretagne - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Bretagne - Contrat Enedis - Socotec Diagnostic — 318 route de Fougères - Immeuble le Noven- CS60642, 35706 RENNES CEDEX 7 — Tél : 02 99 83 64 44' },
+  { code: 'JC000', nom: 'Agence CONSTRUCTION MONACO', adresse: 'Agence CONSTRUCTION MONACO — Le Sagittaire - 8 avenue Pasteur, 98000 MONACO — Tél : 37792057501' },
+  { code: 'ENECE', nom: 'Agence Centre - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Centre - Contrat Enedis - Socotec Diagnostic — les Granges Galand 2 Allée du Petit Cher, 37550 SAINT AVERTIN — Tél : 02 47 70 00 16' },
+  { code: '171R0', nom: 'Agence Construction & Immobilier Métropole Marseille', adresse: 'Agence Construction & Immobilier Métropole Marseille — Le Virage - 5 Allée Marcel Leclerc, 13008 Marseille — Tél : 04 42 20 32 09' },
+  { code: '150U0', nom: 'Agence Construction Ajaccio', adresse: 'Agence Construction Ajaccio — 1 Parc du Belvédère - Route de Salario, 20000 Ajaccio — Tél : 04 95 51 73 73' },
+  { code: '214A0', nom: 'Agence Construction Alpes-Maritimes', adresse: 'Agence Construction Alpes-Maritimes — 1375 Route des Dolines - BP 172, 06903 Sophia-Antipolis — Tél : 04 92 96 85 00' },
+  { code: '12990', nom: 'Agence Construction Avignon', adresse: 'Agence Construction Avignon — 18 Boulevard Saint-Michel, 84000 Avignon — Tél : 04 42 20 32 09' },
+  { code: '150UA', nom: 'Agence Construction Bastia', adresse: 'Agence Construction Bastia — Résidence Plein sud - Bâtiment C - Avenue Paul Giacobbi, 20600 Bastia — Tél : 04 95 54 00 00' },
+  { code: '336C0', nom: 'Agence Construction Bourges', adresse: 'Agence Construction Bourges — Bâtiment Euclide - 3 rue Charles Durand, 18023 BOURGES — Tél : 02 48 24 34 62' },
+  { code: '11570', nom: 'Agence Construction Caen', adresse: 'Agence Construction Caen — 267, Rue Marie Curie - ZI La Sphère - BP 30, 14200 HEROUVILLE ST CLAIR — Tél : 02 31 46 24 24' },
+  { code: '118A0', nom: 'Agence Construction Rennes', adresse: 'Agence Construction Rennes — Immeuble Le Noven - 318 Route de Fougères - CS 60642, 35706 RENNES — Tél : 02 99 83 47 00' },
+  { code: 'B18G0', nom: 'Agence Construction Saint Rapahael', adresse: 'Agence Construction Saint Rapahael — Pôle d\'excellence Jean LOUIS - 34 via Nova - le 7 CS, 20003 FREJUS — Tél : 04 94 19 82 62' },
+  { code: '12550', nom: 'Agence Construction Toulon', adresse: 'Agence Construction Toulon — 215 Boulevard Amiral de Grasse, 83200 Toulon — Tél : 04 94 22 03 42' },
+  { code: 'ENEGE', nom: 'Agence Grand Est - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Grand Est - Contrat Enedis - Socotec Diagnostic — 1 rue du Clocher de Vezelise, 54230 CHAVIGNY — Tél : 03 83 17 98 36' },
+  { code: 'ENEHN', nom: 'Agence Haut-de-France Normandie - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Haut-de-France Normandie - Contrat Enedis - Socotec Diagnostic — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25' },
+  { code: 'ENEID', nom: 'Agence Ile de France - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Ile de France - Contrat Enedis - Socotec Diagnostic — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83' },
+  { code: 'ENENA', nom: 'Agence Nouvelle Aquitaine - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Nouvelle Aquitaine - Contrat Enedis - Socotec Diagnostic — 3 Impasse Henry le Châtelier, 33700 MERIGNAC — Tél : 05 57 29 06 16' },
+  { code: 'ENEOC', nom: 'Agence Occitanie - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Occitanie - Contrat Enedis - Socotec Diagnostic — Symphonie Nord 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 41' },
+  { code: 'ENEPA', nom: 'Agence PACA - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence PACA - Contrat Enedis - Socotec Diagnostic — Avenue Louis Philibert - ZAC du petit Arbois - Immeuble Rifkin, 13100 AIX-EN-PROVENCE — Tél : 03 81 41 40 38' },
+  { code: 'ENERA', nom: 'Agence Rhone Alpes - Contrat Enedis - Socotec Diagnostic', adresse: 'Agence Rhone Alpes - Contrat Enedis - Socotec Diagnostic — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93' },
+  { code: 'CAMOA', nom: 'SOCOTEC DIAGNOSTIC - Pôle AMO', adresse: 'SOCOTEC DIAGNOSTIC - Pôle AMO — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25' },
+  { code: 'CPAAI', nom: 'SOCOTEC Diagnostic Aix', adresse: 'SOCOTEC Diagnostic Aix — Avenue Louis Philibert - ZAC du petit Arbois - Immeuble Rifkin, 13100 AIX-EN-PROVENCE — Tél : 04.42.20.91.73' },
+  { code: 'CCEAN', nom: 'SOCOTEC Diagnostic Angers', adresse: 'SOCOTEC Diagnostic Angers — 7 Rue Bouché Thomas - CS 50206, 49002 ANGERS CEDEX 01 — Tél : 02 41 68 60 72' },
+  { code: 'CHNBA', nom: 'SOCOTEC Diagnostic Bapaume', adresse: 'SOCOTEC Diagnostic Bapaume — 21 Route d\'Albert, 62450 AVESNES LES BAPAUME — Tél : 03.61.11.75.25' },
+  { code: 'CNABA', nom: 'SOCOTEC Diagnostic Bayonne', adresse: 'SOCOTEC Diagnostic Bayonne — Immeuble Toki Lana-7 chemin de la Marouette, 64100 BAYONNE — Tél : 05 57 29 06 13' },
+  { code: 'CNABO', nom: 'SOCOTEC Diagnostic Bordeaux', adresse: 'SOCOTEC Diagnostic Bordeaux — 3 Impasse Henry le Châtelier, 33700 MERIGNAC — Tél : 05 57 29 06 16' },
+  { code: 'CHNBO', nom: 'SOCOTEC Diagnostic Boulogne', adresse: 'SOCOTEC Diagnostic Boulogne — Parc d\'affaires Eurotunnel 41 BD du parc, 62231 COQUELLES — Tél : 03.61.11.75.25' },
+  { code: 'CHNCA', nom: 'SOCOTEC Diagnostic Caen', adresse: 'SOCOTEC Diagnostic Caen — 267 rue Marie Curie - ZI de la Sphère-CS 30030, 14201 HEROUVILLE-SAINT-CLAIR CEDEX — Tél : 03.61.11.75.25' },
+  { code: 'CRACL', nom: 'SOCOTEC Diagnostic Clermont Ferrand', adresse: 'SOCOTEC Diagnostic Clermont Ferrand — Parc Technologique de la Pardieu-19 Avenue Léonard de Vinci, 63063 CLERMONT-FERRAND Cedex 1 — Tél : 04 72 11 45 27' },
+  { code: 'CGEDI', nom: 'SOCOTEC Diagnostic Dijon', adresse: 'SOCOTEC Diagnostic Dijon — 19 avenue Françoise Giroud - Helios Park, 21000 DIJON — Tél : 03 81 41 40 38' },
+  { code: 'CIDER', nom: 'SOCOTEC Diagnostic Eragny', adresse: 'SOCOTEC Diagnostic Eragny — 13 avenue Rosa Luxembourg - Immeuble Le Pica, 95610 ERAGNY — Tél : 01 39 08 27 83' },
+  { code: 'CIDSG', nom: 'SOCOTEC Diagnostic Evry', adresse: 'SOCOTEC Diagnostic Evry — Immeuble Olympe – Mosaic Parc Evry Nord, 91580 Evry-Courcouronnes — Tél : 01 39 08 27 83' },
+  { code: 'CRAGR', nom: 'SOCOTEC Diagnostic Grenoble', adresse: 'SOCOTEC Diagnostic Grenoble — ZA du Rondeau-1 rue du Docteur Pascal CS 50289 -, 38130 ECHIROLLES CEDEX — Tél : 04 76 22 96 80' },
+  { code: 'CPAGE', nom: 'SOCOTEC Diagnostic Gémenos', adresse: 'SOCOTEC Diagnostic Gémenos — Espaces de la Sainte-Baume Bat A8 - 30, avenue du Château de Jouques, 13420 Gémenos — Tél : 04 42 70 92 33' },
+  { code: 'CPAIN', nom: 'SOCOTEC Diagnostic Gémenos', adresse: 'SOCOTEC Diagnostic Gémenos — Espaces de la Sainte-Baume Bat A8 - 30, avenue du Château de Jouques, 13420 Gémenos — Tél : 04 42 70 92 33' },
+  { code: 'CHNLI', nom: 'SOCOTEC Diagnostic Lille Lesquin', adresse: 'SOCOTEC Diagnostic Lille Lesquin — 4 rue des Ormes, 59810 LESQUIN — Tél : 03.61.11.75.25' },
+  { code: 'CNALI', nom: 'SOCOTEC Diagnostic Limoges', adresse: 'SOCOTEC Diagnostic Limoges — 5 rue Colombia - BP 6833-Lem d\'Ester -Technopole, 87068 LIMOGES CEDEX — Tél : 05 57 29 06 13' },
+  { code: 'CBRLO', nom: 'SOCOTEC Diagnostic Lorient', adresse: 'SOCOTEC Diagnostic Lorient — ZAC de kerfichant 4 rue Alice Coleno, 56100 LORIENT — Tél : 02 99 83 03 56' },
+  { code: 'CRALY', nom: 'SOCOTEC Diagnostic Lyon', adresse: 'SOCOTEC Diagnostic Lyon — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93' },
+  { code: 'CIDMA', nom: 'SOCOTEC Diagnostic Maisons Alfort', adresse: 'SOCOTEC Diagnostic Maisons Alfort — 108-112 AV DE LA LIBERTE, 94700 MAISONS-ALFORT — Tél : 01 45 18 21 07' },
+  { code: 'ENE00', nom: 'SOCOTEC Diagnostic Maxeville', adresse: 'SOCOTEC Diagnostic Maxeville — 8 rue Albert Einstein - Parc St Jacques II, 54320 MAXEVILLE — Tél : 03 83 96 33 30' },
+  { code: 'CIDME', nom: 'SOCOTEC Diagnostic Meudon', adresse: 'SOCOTEC Diagnostic Meudon — Immeuble Le Dynasteur-6-8 rue Andras Beck, 92366 MEUDON-LA FORET — Tél : 01 40 83 18 76' },
+  { code: 'COCMO', nom: 'SOCOTEC Diagnostic Montpellier', adresse: 'SOCOTEC Diagnostic Montpellier — Symphonie Nord 1140 Avenue Albert Einstein, 34000 MONTPELLIER — Tél : 04 67 99 87 41' },
+  { code: 'CGENA', nom: 'SOCOTEC Diagnostic Nancy', adresse: 'SOCOTEC Diagnostic Nancy — 1 rue du Clocher de Vezelise, 54230 CHAVIGNY — Tél : 03 83 17 98 36' },
+  { code: 'CCENA', nom: 'SOCOTEC Diagnostic Nantes', adresse: 'SOCOTEC Diagnostic Nantes — Métronomy Park Bât. 5 2 rue Jacques Brel CS 10389, 44819 SAINT-HERBLAIN CEDEX — Tél : 02 40 92 48 47' },
+  { code: 'COCPE', nom: 'SOCOTEC Diagnostic Perpignan', adresse: 'SOCOTEC Diagnostic Perpignan — Zone Tecnosud-140 rue James Watt, 66100 PERPIGNAN — Tél : 04 67 99 87 41' },
+  { code: 'CIDPO', nom: 'SOCOTEC Diagnostic Poissy', adresse: 'SOCOTEC Diagnostic Poissy — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83' },
+  { code: 'CIDSC', nom: 'SOCOTEC Diagnostic Poissy CIDSC', adresse: 'SOCOTEC Diagnostic Poissy CIDSC — 33 B Boulevard Gambetta, 78300 POISSY — Tél : 01 39 08 27 83' },
+  { code: 'CGERE', nom: 'SOCOTEC Diagnostic Reims', adresse: 'SOCOTEC Diagnostic Reims — 8 rue Jules Meline immeuble terranova, 51430 BEZANNES — Tél : 03 83 17 98 36' },
+  { code: 'CBRRE', nom: 'SOCOTEC Diagnostic Rennes', adresse: 'SOCOTEC Diagnostic Rennes — 318 route de Fougères - Immeuble le Noven- CS60642, 35706 RENNES CEDEX 7 — Tél : 02 99 83 64 44' },
+  { code: 'CHNRO', nom: 'SOCOTEC Diagnostic Rouen', adresse: 'SOCOTEC Diagnostic Rouen — 97 RUE FRANCOIS JACOB -, 76230 ISNEAUVILLE — Tél : 03.61.11.75.25' },
+  { code: 'EHIFL', nom: 'SOCOTEC Diagnostic Saint Geneviève des Bois', adresse: 'SOCOTEC Diagnostic Saint Geneviève des Bois — Immeuble Olympe – Mosaic Parc Evry Nord rue du Pelvoux, 91080 Evry-Courcouronnes — Tél : 01 69 51 57 30' },
+  { code: 'CPASA', nom: 'SOCOTEC Diagnostic Salon de Provence', adresse: 'SOCOTEC Diagnostic Salon de Provence — 225 Boulevard Winston Churchill, 13300 Salon-de-Provence — Tél : 04 90 57 17 69' },
+  { code: 'CIDMH', nom: 'SOCOTEC Diagnostic Serris', adresse: 'SOCOTEC Diagnostic Serris — Immeuble Faraday VI  1 bis avenue Christian Doppler, 77700 SERRIS — Tél : 01 39 08 27 83' },
+  { code: 'CPASI', nom: 'SOCOTEC Diagnostic Six Fours les Plages', adresse: 'SOCOTEC Diagnostic Six Fours les Plages — 73 Avenue Saint Mandrier Bâtiment A, 83140 Six-Fours-les-Plages — Tél : 04 94 10 09 19' },
+  { code: 'CPASO', nom: 'SOCOTEC Diagnostic Sophia Antipolis', adresse: 'SOCOTEC Diagnostic Sophia Antipolis — Immeuble Taissounieres 1681 Rte des Dolines, 06560 VALBONNE — Tél : 04 42 20 91 73' },
+  { code: 'CGEST', nom: 'SOCOTEC Diagnostic Strasbourg', adresse: 'SOCOTEC Diagnostic Strasbourg — 5 allée Cérès, 67000 STRASBOURG — Tél : 03 83 17 98 36' },
+  { code: 'COCTO', nom: 'SOCOTEC Diagnostic Toulouse', adresse: 'SOCOTEC Diagnostic Toulouse — 3 rue Jean Rodier-BP 34012 -, 31028 TOULOUSE — Tél : 05 62 16 78 97' },
+  { code: 'CCETO', nom: 'SOCOTEC Diagnostic Tours', adresse: 'SOCOTEC Diagnostic Tours — les Granges Galand 2 Allée du Petit Cher, 37550 SAINT AVERTIN — Tél : 02 47 70 00 16' },
+  { code: 'CIDVI', nom: 'SOCOTEC Diagnostic Villepinte', adresse: 'SOCOTEC Diagnostic Villepinte — 22 Avenue des Nations, 93420 VILLEPINTE — Tél : 01 45 18 21 43' },
+  { code: 'MAYU6', nom: 'SOCOTEC REUNION BUREAU MAYOTTE', adresse: 'SOCOTEC REUNION BUREAU MAYOTTE — IMMEUBLE MEGA, Z.I. KAWENI - BP 348, 97600 - MAMOUDZOU — Tél : 02 69 61 20 21' },
+  { code: 'CHNBA', nom: 'SOCOTEC SIEGE ADMINISTRATIF', adresse: 'SOCOTEC SIEGE ADMINISTRATIF — 21 Route d\'Albert, 62450 BAPAUME — Tél : 03 21 73 41 44' },
+  { code: 'CRARA', nom: 'Socotec Diagnostic Lyon', adresse: 'Socotec Diagnostic Lyon — 11 rue Saint Maximin, 69003 LYON — Tél : 04 72 11 45 93' },
+];
+
+// Détection automatique de l'agence depuis le nom du dossier mission
+// Format dossier : AAMMXXXXX - ... (ex: 2602CCENA - BI5860000000535)
+// Les 5 caractères à partir de la position 4 = code agence
+function detectAgenceFromFolder(folderName) {
+  if (!folderName) return null;
+  // Extraire les 5 chars à partir du char 4 (après AAMM)
+  const match = folderName.match(/^\d{4}([A-Z0-9]{5})/i);
+  if (!match) return null;
+  const code = match[1].toUpperCase();
+  return AGENCES_MAP[code] || null;
+}
+
+// Appliquer l'agence dans le champ optAgence + afficher/masquer le select
+function applyAgenceToField(folderName) {
+  const detected = detectAgenceFromFolder(folderName);
+  const input    = document.getElementById('optAgence');
+  const notice   = document.getElementById('agenceNotice');
+  const select   = document.getElementById('agenceSelect');
+  if (detected) {
+    input.value = detected;
+    if (notice) {
+      notice.textContent = '✅ Agence détectée automatiquement';
+      notice.style.color = '#16a34a';
+      notice.style.display = 'block';
+    }
+    if (select) select.style.display = 'none';
+  } else {
+    input.value = AGENCES_DEFAULT;
+    if (notice) {
+      notice.textContent = '⚠️ Agence non reconnue — sélectionnez dans la liste ou modifiez manuellement';
+      notice.style.color = '#b45309';
+      notice.style.display = 'block';
+    }
+    if (select) {
+      // Peupler le select
+      select.innerHTML = '<option value="">— Choisir une agence —</option>';
+      AGENCES_LIST.forEach(a => {
+        const opt = document.createElement('option');
+        opt.value = a.adresse;
+        opt.textContent = a.nom;
+        select.appendChild(opt);
+      });
+      select.style.display = 'block';
+      select.onchange = () => { if (select.value) input.value = select.value; };
+    }
+  }
+}
+
 // ═══════════════════════════════════════════════════════════════
 // VARIABLES GLOBALES
 // ═══════════════════════════════════════════════════════════════
@@ -704,6 +1152,7 @@ async function selectMissionFolder() {
       resetUI();   // ← appelé APRÈS — ne touche plus missionDirHandle
 
       rootName = dirHandle.name;
+      applyAgenceToField(rootName);
       document.getElementById('folderName').innerHTML =
         `📁 ${rootName}<br>
          <span style="color:#16a34a;font-size:0.75rem;">
@@ -749,6 +1198,7 @@ document.getElementById('folderInput').addEventListener('change', async (e) => {
   missionDirHandle = null;  // pas de handle en mode Firefox
   resetUI();
   rootName = allFiles[0].webkitRelativePath.split('/')[0] || 'Mission';
+  applyAgenceToField(rootName);
   document.getElementById('folderName').innerHTML =
     `📁 ${rootName}<br>
      <span style="color:#dc2626;font-size:0.75rem;">
@@ -779,46 +1229,55 @@ async function loadAllData() {
   for (const [key, path] of Object.entries(xmlRequired)) {
     const file = fileIndex[path];
     if (!file) {
-      if (key === 'bien') {
-        log('Table_General_Bien.xml absent — cartouche plans incomplet', 'warn');
-      } else {
-        setStatus(`❌ Fichier manquant : <strong>${path}</strong>`, 'error');
-        log('Manquant : ' + path, 'err');
-        return;
-      }
+      log(`Absent (optionnel) : ${path}`, 'warn');
     } else {
       xmlFiles[key] = file;
       log('Trouvé : ' + (file.webkitRelativePath || file.name), 'ok');
     }
   }
 
+  // Vérifier qu'au moins un fichier XML est présent
+  const hasPhotosXML = !!xmlFiles.photo && !!xmlFiles.prelevements;
+  const hasBien      = !!xmlFiles.bien;
+  if (!hasPhotosXML && !xmlFiles.zpso) {
+    log('Aucun XML trouvé — mode fichiers seuls (plans + PV uniquement)', 'warn');
+  }
+
   try {
-    setStatus('⏳ Lecture des fichiers XML…', '');
+    setStatus('⏳ Lecture des fichiers…', '');
 
-    const photoMap = parseTableGeneralPhoto(await readFileCorrectly(xmlFiles.photo));
-    log(`Photos indexées : ${Object.keys(photoMap).length}`, 'ok');
+    // ── Photos + Prélèvements (optionnels) ─────────────────────
+    let photoMap = {}, zpsoMap = {}, prelevements = [];
+    if (xmlFiles.photo) {
+      photoMap = parseTableGeneralPhoto(await readFileCorrectly(xmlFiles.photo));
+      log(`Photos indexées : ${Object.keys(photoMap).length}`, 'ok');
+    } else { log('Table_General_Photo absent — preview photos désactivé', 'warn'); }
 
-    const zpsoMap = parseTableZAmiante(await readFileCorrectly(xmlFiles.zpso));
-    log(`ZPSO indexés : ${Object.keys(zpsoMap).length}`, 'ok');
+    if (xmlFiles.zpso) {
+      zpsoMap = parseTableZAmiante(await readFileCorrectly(xmlFiles.zpso));
+      log(`ZPSO indexés : ${Object.keys(zpsoMap).length}`, 'ok');
+    }
 
-    const rows = parsePrelevementFlatColonne(await readFileCorrectly(xmlFiles.prelevements));
-    const prelevements = rows
-      .map(r => ({
-        numPrelevement : (r['Num_Prelevement']          || '').trim(),
-        numMateriau    : (r['Num_Materiau']             || '').trim(),
-        localisation   : (r['Localisation']             || '').trim(),
-        commentaire    : (r['Commentaires_Prelevement'] || '').trim(),
-        resultat       : (r['Resultat_reperage']        || r['Data_07'] || '').trim(),
-        date           : (r['Date_Prelevement']         || '').trim(),
-        pvAnalyseLie   : (r['PV_Analyse_Lie']           || '').trim(),
-      }))
-      .filter(p => p.numPrelevement)
-      .sort((a, b) => {
-        const nA = parseInt(a.numPrelevement.replace(/\D/g, ''), 10) || 0;
-        const nB = parseInt(b.numPrelevement.replace(/\D/g, ''), 10) || 0;
-        return nA - nB;
-      });
-    log(`Prélèvements : ${prelevements.length}`, 'ok');
+    if (xmlFiles.prelevements) {
+      const rows = parsePrelevementFlatColonne(await readFileCorrectly(xmlFiles.prelevements));
+      prelevements = rows
+        .map(r => ({
+          numPrelevement : (r['Num_Prelevement']          || '').trim(),
+          numMateriau    : (r['Num_Materiau']             || '').trim(),
+          localisation   : (r['Localisation']             || '').trim(),
+          commentaire    : (r['Commentaires_Prelevement'] || '').trim(),
+          resultat       : (r['Resultat_reperage']        || r['Data_07'] || '').trim(),
+          date           : (r['Date_Prelevement']         || '').trim(),
+          pvAnalyseLie   : (r['PV_Analyse_Lie']           || '').trim(),
+        }))
+        .filter(p => p.numPrelevement)
+        .sort((a, b) => {
+          const nA = parseInt(a.numPrelevement.replace(/\D/g, ''), 10) || 0;
+          const nB = parseInt(b.numPrelevement.replace(/\D/g, ''), 10) || 0;
+          return nA - nB;
+        });
+      log(`Prélèvements : ${prelevements.length}`, 'ok');
+    } else { log('Table_Z_Amiante_prelevements absent — preview photos désactivé', 'warn'); }
 
     let bien = {};
     if (xmlFiles.bien) {
@@ -858,23 +1317,72 @@ async function loadAllData() {
       <div class="info-item"><label>Bien</label><span style="font-size:0.68rem;font-weight:500;line-height:1.3;">${(bien['Immeuble_Adresse1'] || '—').substring(0, 30)}</span></div>
     `;
 
-    if (planFiles.length > 0) {
+    // ── Plans ─────────────────────────────────────────────────────
+    const nbPlans = planFiles.length;
+    updateTabBadge('Plans', nbPlans);
+    if (nbPlans > 0) {
       buildPlanGrid(planFiles);
       document.getElementById('sectionPlanGrid').style.display  = 'block';
       document.getElementById('sectionPlanTable').style.display = 'block';
       document.getElementById('panelPlaceholder').style.display = 'none';
       buildPlanTable();
+      document.getElementById('tabBtnPlans').disabled = false;
+      document.getElementById('saveLoadRow').style.display = 'flex';
     } else {
       document.getElementById('planGrid').innerHTML =
-        '<p style="color:#dc2626;font-size:0.82rem;">Aucun plan *_Ami.jpg trouvé dans <code>plan/</code></p>';
+        '<p style="color:#dc2626;font-size:0.82rem;margin-top:16px;">Aucun plan *_Ami.jpg trouvé dans <code>plan/</code></p>';
       document.getElementById('btnGenPlans').disabled = true;
     }
 
-    document.getElementById('sectionOptions').style.display  = 'block';
-    document.getElementById('sectionResultat').style.display  = 'block';
-    document.getElementById('saveLoadRow').style.display      = 'flex';
+    // ── Preview Photos ─────────────────────────────────────────────
+    const hasPhotoData = prelevements.length > 0 && Object.keys(photoMap).length > 0;
+    document.getElementById('tabBtnPhotos').disabled = !hasPhotoData;
+    if (hasPhotoData) {
+      updateTabBadge('Photos', prelevements.length);
+      renderTabPhotos(prelevements, photoMap, zpsoMap);
+    } else {
+      updateTabBadge('Photos', 0);
+      document.getElementById('photoPreviewContent').innerHTML = `
+        <div class="tab-empty">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <p>Aucune donnée photos disponible</p>
+          <small>Vérifiez la présence des fichiers XML (Table_General_Photo + Table_Z_Amiante_prelevements)</small>
+        </div>`;
+    }
 
-    setStatus('✅ Données chargées.', 'success');
+    // ── Preview PV ─────────────────────────────────────────────────
+    const pvPdfEntries = Object.entries(fileIndex)
+      .filter(([k]) => k.toLowerCase().endsWith('.pdf') && k.toLowerCase().includes('pv_analyse'))
+      .sort(([a],[b]) => a.localeCompare(b, undefined, { numeric: true }));
+    // Stockage global pour rendu lazy au clic de l'onglet
+    window._pvPdfEntries = pvPdfEntries;
+    window._pvRendered   = false;
+    document.getElementById('tabBtnPV').disabled = pvPdfEntries.length === 0;
+    if (pvPdfEntries.length > 0) {
+      updateTabBadge('PV', pvPdfEntries.length);
+      // Placeholder "cliquer pour charger"
+      document.getElementById('pvPreviewContent').innerHTML = `
+        <div class="tab-empty" style="cursor:pointer;" onclick="switchTab('pv')">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <p>${pvPdfEntries.length} PDF trouvé(s)</p>
+          <small>Cliquez sur l'onglet "Preview PV" pour charger l'aperçu</small>
+        </div>`;
+    } else {
+      updateTabBadge('PV', 0);
+    }
+
+    // ── Boutons génération ─────────────────────────────────────────
+    document.getElementById('btnGenPhotos').disabled = prelevements.length === 0;
+    document.getElementById('btnGenPV').disabled     = pvPdfEntries.length === 0;
+
+    document.getElementById('sectionOptions').style.display  = 'block';
+    document.getElementById('sectionResultat').style.display = 'block';
+
+    const parts = [];
+    if (nbPlans > 0)          parts.push(`${nbPlans} plan(s)`);
+    if (prelevements.length)  parts.push(`${prelevements.length} prélèvement(s)`);
+    if (pvPdfEntries.length)  parts.push(`${pvPdfEntries.length} PDF PV`);
+    setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
 
   } catch(e) {
     setStatus('Erreur : ' + e.message, 'error');
@@ -2111,35 +2619,403 @@ async function generateDocxPV() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// SAUVEGARDE / CHARGEMENT ÉTAT
+// ONGLETS
 // ═══════════════════════════════════════════════════════════════
-async function restoreCrop(file, rotations, sel) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(file);
-    const img = new Image();
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Chargement image échoué')); };
-    img.onload  = () => {
-      URL.revokeObjectURL(url);
-      const applyRot = (src, n, cb) => {
-        if (n <= 0) { cb(src); return; }
-        const c = document.createElement('canvas');
-        c.width = src.height; c.height = src.width;
-        const ctx = c.getContext('2d');
-        ctx.translate(c.width/2, c.height/2); ctx.rotate(Math.PI/2); ctx.drawImage(src, -src.width/2, -src.height/2);
-        c.toBlob(b => { const u2 = URL.createObjectURL(b); const i2 = new Image(); i2.onload = () => { URL.revokeObjectURL(u2); applyRot(i2, n-1, cb); }; i2.src = u2; }, 'image/jpeg', 0.95);
-      };
-      applyRot(img, rotations, rotated => {
-        const out = document.createElement('canvas');
-        const sx = Math.max(0, Math.round(sel.x)); const sy = Math.max(0, Math.round(sel.y));
-        const sw = Math.min(Math.round(sel.w), rotated.width-sx); const sh = Math.min(Math.round(sel.h), rotated.height-sy);
-        out.width = sw; out.height = sh;
-        out.getContext('2d').drawImage(rotated, sx, sy, sw, sh, 0, 0, sw, sh);
-        out.toBlob(blob => resolve(blob), 'image/jpeg', 0.95);
+const _TAB_PANELS = { plans: 'tabPlans', photos: 'tabPhotos', pv: 'tabPV' };
+const _TAB_BTNS   = { plans: 'tabBtnPlans', photos: 'tabBtnPhotos', pv: 'tabBtnPV' };
+
+function switchTab(tab) {
+  Object.keys(_TAB_PANELS).forEach(t => {
+    const panel = document.getElementById(_TAB_PANELS[t]);
+    const btn   = document.getElementById(_TAB_BTNS[t]);
+    if (panel) panel.classList.toggle('active', t === tab);
+    if (btn)   btn.classList.toggle('active',   t === tab);
+  });
+  if (tab === 'pv' && !window._pvRendered && window._pvPdfEntries && window._pvPdfEntries.length > 0) {
+    window._pvRendered = true;
+    renderTabPV(window._pvPdfEntries);
+  }
+}
+
+function updateTabBadge(name, count) {
+  const el = document.getElementById('tabBadge' + name);
+  if (!el) return;
+  el.textContent = count;
+  el.classList.toggle('empty', count === 0);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PREVIEW PHOTOS — grille identique aux plans
+// ═══════════════════════════════════════════════════════════════
+function renderTabPhotos(prelevements, photoMap, zpsoMap) {
+  const container = document.getElementById('photoPreviewContent');
+  if (!prelevements.length) {
+    container.innerHTML = '<div class="tab-empty"><p>Aucun prélèvement trouvé.</p></div>';
+    return;
+  }
+
+  // Toolbar
+  const toolbar = document.createElement('div');
+  toolbar.className = 'plans-toolbar';
+  toolbar.innerHTML = `<span>${prelevements.length} prélèvement(s)</span>`;
+  container.innerHTML = '';
+  container.appendChild(toolbar);
+
+  // Grille
+  const grid = document.createElement('div');
+  grid.id = 'photoGrid';
+  container.appendChild(grid);
+
+  for (const p of prelevements) {
+    const r = (p.resultat || '').toLowerCase();
+    const statusClass = r.includes('absence') ? 'absence' : r.includes('pr') ? 'presence' : 'attente';
+    const statusLabel = r.includes('absence') ? '🟢 Abs.' : r.includes('pr') ? '🔴 Prés.' : '🔵 Att.';
+    const zpso      = zpsoMap[p.numPrelevement] || {};
+    const matLabel  = (zpso.description || p.numMateriau || '—').substring(0, 40);
+    const locLabel  = (p.localisation || '—').substring(0, 35);
+    const photoPath = photoMap[p.numPrelevement];
+    const photoFile = photoPath ? (fileIndex[photoPath] || findPhotoFile(photoPath)) : null;
+
+    const card = document.createElement('div');
+    card.className = `photo-card ${statusClass}`;
+
+    // Badge numéro (haut gauche)
+    const badge = document.createElement('span');
+    badge.className = 'photo-badge';
+    badge.textContent = p.numPrelevement;
+    card.appendChild(badge);
+
+    // Badge statut (haut droite)
+    const sBadge = document.createElement('span');
+    sBadge.className = `photo-status-badge ${statusClass}`;
+    sBadge.textContent = statusLabel;
+    card.appendChild(sBadge);
+
+    // Vignette
+    if (photoFile) {
+      const img = document.createElement('img');
+      img.className = 'photo-thumb';
+      img.src = URL.createObjectURL(photoFile);
+      img.alt = p.numPrelevement;
+      img.title = 'Cliquer pour agrandir';
+      img.addEventListener('click', () => openPhotoLightbox(img.src, p.numPrelevement));
+      card.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className = 'photo-thumb-placeholder';
+      ph.textContent = '🖼️';
+      card.appendChild(ph);
+    }
+
+    // Infos sous la vignette
+    const info = document.createElement('div');
+    info.className = 'photo-card-info';
+    info.innerHTML = `<div class="mat" title="${matLabel}">${matLabel}</div><div class="loc" title="${locLabel}">📍 ${locLabel}</div>`;
+    card.appendChild(info);
+
+    // Bouton éditer
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-edit-photo';
+    editBtn.disabled = true;
+    editBtn.title = 'Mini-éditeur disponible prochainement';
+    editBtn.textContent = '✏️ Éditer';
+    // TODO: openPhotoEditor(photoFile, p.numPrelevement)
+    card.appendChild(editBtn);
+
+    grid.appendChild(card);
+  }
+}
+
+function findPhotoFile(photoPath) {
+  if (!photoPath) return null;
+  const fname = photoPath.split('/').pop().toLowerCase();
+  const found = Object.entries(fileIndex).find(([k]) =>
+    k.toLowerCase().endsWith('/' + fname) || k.toLowerCase() === fname
+  );
+  return found ? found[1] : null;
+}
+
+function openPhotoLightbox(src, label) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:relative;max-width:90vw;max-height:90vh;';
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = 'max-width:90vw;max-height:88vh;border-radius:8px;box-shadow:0 4px 32px rgba(0,0,0,0.5);display:block;';
+  const lbl = document.createElement('div');
+  lbl.style.cssText = 'position:absolute;top:-28px;left:0;color:#e2e8f0;font-size:0.85rem;font-weight:700;';
+  lbl.textContent = label;
+  const hint = document.createElement('div');
+  hint.style.cssText = 'position:absolute;top:-28px;right:0;color:#94a3b8;font-size:0.75rem;';
+  hint.textContent = 'Cliquer pour fermer';
+  wrap.appendChild(lbl); wrap.appendChild(hint); wrap.appendChild(img);
+  overlay.appendChild(wrap);
+  overlay.addEventListener('click', () => document.body.removeChild(overlay));
+  document.body.appendChild(overlay);
+}
+
+// TODO: mini-éditeur photo
+// function openPhotoEditor(file, numPrelevement) { ... }
+
+// ═══════════════════════════════════════════════════════════════
+// PREVIEW PV — rendu PDF page par page via PDF.js (DOM direct)
+// ═══════════════════════════════════════════════════════════════
+function renderTabPV(pvPdfEntries) {
+  const container = document.getElementById('pvPreviewContent');
+  container.innerHTML = '';
+  if (!pvPdfEntries || !pvPdfEntries.length) {
+    container.innerHTML = '<div class="tab-empty"><p>Aucun PV trouvé.</p></div>';
+    return;
+  }
+  const title = document.createElement('div');
+  title.className = 'panel-section-title';
+  title.textContent = 'PV d’analyses — ' + pvPdfEntries.length + ' fichier(s)';
+  container.appendChild(title);
+  const hint = document.createElement('p');
+  hint.style.cssText = 'font-size:0.75rem;color:#94a3b8;margin:0 0 14px;';
+  hint.textContent = 'Cliquez sur un fichier pour ouvrir l’aperçu.';
+  container.appendChild(hint);
+  const list = document.createElement('div');
+  list.style.cssText = 'display:flex;flex-direction:column;gap:8px;';
+  pvPdfEntries.forEach(([pdfKey, pdfFile]) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #e2e8f0;border-radius:8px;padding:12px 16px;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s;';
+    row.addEventListener('mouseover', () => { row.style.borderColor='#0080AD'; row.style.boxShadow='0 0 0 2px rgba(0,128,173,0.15)'; });
+    row.addEventListener('mouseout',  () => { row.style.borderColor='#e2e8f0'; row.style.boxShadow='none'; });
+    row.addEventListener('click',     () => openPVPopup(pdfFile));
+    const icon = document.createElement('span'); icon.style.cssText='font-size:1.6rem;flex-shrink:0;'; icon.textContent='📄';
+    const info = document.createElement('div'); info.style.cssText='flex:1;min-width:0;';
+    const nameEl = document.createElement('div'); nameEl.style.cssText='font-size:0.85rem;font-weight:700;color:#1a3a5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'; nameEl.textContent=pdfFile.name;
+    const sizeEl = document.createElement('div'); sizeEl.style.cssText='font-size:0.72rem;color:#94a3b8;margin-top:2px;'; sizeEl.textContent=(pdfFile.size/1024).toFixed(0)+' Ko';
+    info.appendChild(nameEl); info.appendChild(sizeEl);
+    const arrow = document.createElement('span'); arrow.style.cssText='font-size:1.1rem;color:#0080AD;flex-shrink:0;font-weight:700;'; arrow.textContent='▶';
+    row.appendChild(icon); row.appendChild(info); row.appendChild(arrow);
+    list.appendChild(row);
+  });
+  container.appendChild(list);
+}
+
+async function openPVPopup(pdfFile) {
+
+  // Structure overlay
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9000;display:flex;flex-direction:column;align-items:center;padding:0;overflow:hidden;';
+
+  // Header
+  const header = document.createElement('div');
+  header.style.cssText = 'width:100%;display:flex;align-items:center;gap:10px;background:#1a3a5c;color:#fff;padding:11px 18px;flex-shrink:0;box-sizing:border-box;';
+  const htitle = document.createElement('span');
+  htitle.style.cssText = 'font-size:0.88rem;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+  htitle.textContent = pdfFile.name;
+  const closeBtn = document.createElement('button');
+  closeBtn.style.cssText = 'background:#dc2626;color:#fff;border:none;border-radius:6px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:0.85rem;flex-shrink:0;';
+  closeBtn.textContent = '\u2715 Fermer';
+  closeBtn.addEventListener('click', () => document.body.removeChild(overlay));
+  header.appendChild(htitle); header.appendChild(closeBtn);
+
+  // Corps : index gauche + pages droite
+  const body = document.createElement('div');
+  body.style.cssText = 'display:flex;flex:1;overflow:hidden;width:100%;';
+
+  // PANNEAU INDEX gauche
+  const indexPanel = document.createElement('div');
+  indexPanel.style.cssText = 'width:220px;flex-shrink:0;background:#f0f4f8;border-right:1px solid #d1dde8;display:flex;flex-direction:column;overflow:hidden;';
+
+  const indexHeader = document.createElement('div');
+  indexHeader.style.cssText = 'padding:10px 12px;background:#0080AD;color:#fff;font-size:0.78rem;font-weight:700;flex-shrink:0;letter-spacing:0.4px;';
+  indexHeader.textContent = 'Index des pr\u00e9l\u00e8vements';
+
+  const filterWrap = document.createElement('div');
+  filterWrap.style.cssText = 'padding:8px 10px;border-bottom:1px solid #d1dde8;flex-shrink:0;background:#fff;';
+  const filterInput = document.createElement('input');
+  filterInput.type = 'text';
+  filterInput.placeholder = 'Filtrer (ex\u00a0: P641)...';
+  filterInput.style.cssText = 'width:100%;padding:6px 8px;border:1.5px solid #cbd5e1;border-radius:6px;font-size:0.8rem;box-sizing:border-box;font-family:Arial,sans-serif;outline:none;';
+  filterInput.addEventListener('focus', () => filterInput.style.borderColor='#0080AD');
+  filterInput.addEventListener('blur',  () => filterInput.style.borderColor='#cbd5e1');
+  filterWrap.appendChild(filterInput);
+
+  const indexList = document.createElement('div');
+  indexList.style.cssText = 'flex:1;overflow-y:auto;padding:6px 0;';
+
+  indexPanel.appendChild(indexHeader);
+  indexPanel.appendChild(filterWrap);
+  indexPanel.appendChild(indexList);
+
+  // PANNEAU PAGES droite
+  const pagesPanel = document.createElement('div');
+  pagesPanel.style.cssText = 'flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;background:#e8ecf1;box-sizing:border-box;';
+
+  const loadMsg = document.createElement('div');
+  loadMsg.style.cssText = 'text-align:center;padding:50px 20px;color:#0080AD;font-size:0.9rem;font-weight:600;';
+  loadMsg.textContent = 'Analyse du PDF en cours\u2026';
+  pagesPanel.appendChild(loadMsg);
+
+  body.appendChild(indexPanel);
+  body.appendChild(pagesPanel);
+  overlay.appendChild(header);
+  overlay.appendChild(body);
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', e => { if (e.target === overlay) document.body.removeChild(overlay); });
+
+  if (typeof pdfjsLib === 'undefined') {
+    loadMsg.style.color = '#dc2626';
+    loadMsg.textContent = 'PDF.js non disponible \u2014 v\u00e9rifiez votre connexion.';
+    return;
+  }
+
+  try {
+    const arrayBuffer = await pdfFile.arrayBuffer();
+    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    loadMsg.textContent = 'Rendu de ' + pdfDoc.numPages + ' pages\u2026 affichage au fur et \u00e0 mesure';
+
+    const refToPages = {};  // ref -> [pageNum, ...]
+    const pageCards  = {};  // pageNum -> { card, refs }
+
+    for (let p = 1; p <= pdfDoc.numPages; p++) {
+      const page = await pdfDoc.getPage(p);
+
+      // Extraire refs
+      const tc = await page.getTextContent();
+      const fullText = tc.items.map(i => i.str).join(' ');
+      const refs = [];
+      const re = /R.f.chantillon\s+client\s*:?\s*(P\d{3,4})/gi;
+      let mt;
+      while ((mt = re.exec(fullText)) !== null) {
+        if (!refs.includes(mt[1])) refs.push(mt[1]);
+      }
+
+      // Rendu canvas
+      const scale    = 1.4;
+      const viewport = page.getViewport({ scale });
+      const canvas   = document.createElement('canvas');
+      canvas.width   = viewport.width;
+      canvas.height  = viewport.height;
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+      const blob   = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.88));
+      const imgSrc = URL.createObjectURL(blob);
+
+      // Card page
+      const card = document.createElement('div');
+      card.id = 'pvpage-' + p;
+      card.style.cssText = 'background:#fff;border-radius:8px;overflow:hidden;border:2px solid #d1e3f0;box-shadow:0 2px 6px rgba(0,0,0,0.08);transition:border-color 0.2s,box-shadow 0.2s;';
+
+      const ph = document.createElement('div');
+      ph.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 14px;background:#e0f2fe;border-bottom:1px solid #b3d9f0;font-size:0.8rem;font-weight:700;';
+      const pgSpan = document.createElement('span');
+      pgSpan.style.cssText = 'color:#0080AD;font-weight:800;white-space:nowrap;flex-shrink:0;';
+      pgSpan.textContent = 'Page ' + p + ' / ' + pdfDoc.numPages;
+      const refSpan = document.createElement('span');
+      refSpan.style.cssText = 'color:#1a3a5c;font-weight:700;flex:1;font-size:0.82rem;';
+      refSpan.textContent = refs.length ? 'N\u00b0\u00a0' + refs.join(' \u00b7 ') : '';
+      ph.appendChild(pgSpan); ph.appendChild(refSpan);
+
+      const img = document.createElement('img');
+      img.src = imgSrc; img.style.cssText='width:100%;display:block;'; img.alt='Page '+p;
+
+      card.appendChild(ph); card.appendChild(img);
+      if (pagesPanel.contains(loadMsg)) pagesPanel.removeChild(loadMsg);
+      pagesPanel.appendChild(card);
+      pageCards[p] = { card, refs };
+
+      // Alimenter refToPages
+      refs.forEach(ref => {
+        if (!refToPages[ref]) refToPages[ref] = [];
+        refToPages[ref].push(p);
       });
-    };
-    img.src = url;
+
+      // Mettre \u00e0 jour l'index en temps r\u00e9el
+      buildPVIndex(refToPages, indexList, pageCards, pagesPanel);
+    }
+
+    // Index final + filtre live
+    buildPVIndex(refToPages, indexList, pageCards, pagesPanel);
+
+    filterInput.addEventListener('input', () => {
+      buildPVIndex(refToPages, indexList, pageCards, pagesPanel, filterInput.value);
+    });
+
+    filterInput.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      const val = filterInput.value.trim().toUpperCase();
+      const match = Object.keys(refToPages).find(r => r.toUpperCase() === val || r.toUpperCase().startsWith(val));
+      if (match) { scrollToPageCard(pagesPanel, pageCards, refToPages[match][0]); highlightPageCard(pageCards, refToPages[match][0]); }
+    });
+
+  } catch(err) {
+    const errDiv = document.createElement('div');
+    errDiv.style.cssText = 'padding:20px;color:#dc2626;font-size:0.85rem;background:#fff;border-radius:8px;';
+    errDiv.textContent = 'Erreur\u00a0: ' + err.message;
+    pagesPanel.appendChild(errDiv);
+    console.error('openPVPopup', err);
+  }
+}
+
+function buildPVIndex(refToPages, indexList, pageCards, pagesPanel, filter) {
+  const f = (filter || '').trim().toUpperCase();
+  indexList.innerHTML = '';
+
+  const refs = Object.keys(refToPages).sort((a, b) => {
+    return (parseInt(a.replace(/\D/g,''),10)||0) - (parseInt(b.replace(/\D/g,''),10)||0);
+  });
+
+  const visible = f ? refs.filter(r => r.toUpperCase().includes(f)) : refs;
+
+  if (!visible.length) {
+    const none = document.createElement('div');
+    none.style.cssText = 'padding:14px;font-size:0.75rem;color:#94a3b8;text-align:center;';
+    none.textContent = refs.length ? 'Aucun r\u00e9sultat' : 'Analyse en cours\u2026';
+    indexList.appendChild(none);
+    return;
+  }
+
+  visible.forEach(ref => {
+    const pages = refToPages[ref];
+    const item  = document.createElement('div');
+    item.style.cssText = 'padding:8px 12px;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid #e8ecf1;transition:background 0.12s;';
+    item.addEventListener('mouseover', () => { item.style.background='#dbeafe'; });
+    item.addEventListener('mouseout',  () => { item.style.background=''; });
+    item.addEventListener('click', () => {
+      scrollToPageCard(pagesPanel, pageCards, pages[0]);
+      highlightPageCard(pageCards, pages[0]);
+    });
+
+    const badge = document.createElement('span');
+    badge.style.cssText = 'background:#1a3a5c;color:#fff;font-size:0.7rem;font-weight:800;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;';
+    badge.textContent = ref;
+
+    const pagesLbl = document.createElement('span');
+    pagesLbl.style.cssText = 'font-size:0.72rem;color:#475569;';
+    pagesLbl.textContent = 'p.\u00a0' + pages.join(', ');
+
+    item.appendChild(badge); item.appendChild(pagesLbl);
+    indexList.appendChild(item);
   });
 }
+
+function scrollToPageCard(pagesPanel, pageCards, pageNum) {
+  const target = pageCards[pageNum];
+  if (target && target.card) target.card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function highlightPageCard(pageCards, pageNum) {
+  Object.values(pageCards).forEach(({ card }) => {
+    card.style.borderColor = '#d1e3f0';
+    card.style.boxShadow   = '0 2px 6px rgba(0,0,0,0.08)';
+  });
+  const t = pageCards[pageNum];
+  if (t) {
+    t.card.style.borderColor = '#00B0F0';
+    t.card.style.boxShadow   = '0 0 0 3px rgba(0,176,240,0.35)';
+    setTimeout(() => {
+      t.card.style.borderColor = '#d1e3f0';
+      t.card.style.boxShadow   = '0 2px 6px rgba(0,0,0,0.08)';
+    }, 2500);
+  }
+}
+
+
 
 async function saveState() {
   if (!xmlData) return;
