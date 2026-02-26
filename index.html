@@ -225,24 +225,27 @@
 #sapp .plan-badge {
       position: absolute; top: 6px; left: 6px;
       background: #1a3a5c; color: white; font-size: 0.65rem; font-weight: 700;
-      border-radius: 3px; padding: 1px 5px; pointer-events: auto; z-index: 10;
-      cursor: pointer; user-select: none; transition: background 0.15s, transform 0.1s;
+      border-radius: 3px; padding: 1px 5px; pointer-events: auto; z-index: 2;
+      cursor: pointer; user-select: none;
+      transition: background 0.15s;
     }
+    #sapp .plan-badge:hover { background: #0080AD; }
+    #sapp .plan-reorder-dropdown {
+      position: absolute; top: 26px; left: 6px; z-index: 100;
+      background: #fff; border: 1px solid #0080AD; border-radius: 5px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18); padding: 4px 0;
+      min-width: 140px; max-height: 260px; overflow-y: auto;
+    }
+    #sapp .plan-reorder-dropdown div {
+      padding: 6px 14px; font-size: 0.75rem; cursor: pointer; color: #1a3a5c;
+      transition: background 0.1s;
+    }
+    #sapp .plan-reorder-dropdown div:hover { background: #e0f2fe; }
+    #sapp .plan-reorder-dropdown div.current { font-weight: 700; color: #0080AD; background: #f0f9ff; }
 #sapp .plan-card.unchecked .plan-badge { background: #9ca3af; }
 #sapp .plan-thumb { width: 100%; aspect-ratio: 4/3; object-fit: contain; background: #f8fafc; border-radius: 4px; pointer-events: none; }
 #sapp .plan-thumb-placeholder { width: 100%; aspect-ratio: 4/3; background: #f1f5f9; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 1.8rem; }
-#sapp .plan-badge:hover { background: #2a5a8c; transform: scale(1.08); }
-#sapp .plan-pos-menu { position: absolute; top: 34px; left: 6px; z-index: 100; background: #fff; border: 1.5px solid #0080AD; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); padding: 4px 0; min-width: 130px; font-family: Arial, sans-serif; }
-#sapp .plan-pos-menu-title { font-size: 0.68rem; font-weight: 700; color: #94a3b8; padding: 5px 12px 3px; text-transform: uppercase; letter-spacing: 0.5px; }
-#sapp .plan-pos-item { padding: 6px 12px; font-size: 0.8rem; color: #1a3a5c; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background 0.1s; }
-#sapp .plan-pos-item:hover { background: #e0f2fe; }
-#sapp .plan-pos-item.current { font-weight: 700; background: #f0f9ff; }
-#sapp .plan-pos-item .pos-num { font-weight: 800; color: #0080AD; min-width: 18px; text-align: center; }
 #sapp .plan-check-row { display: flex; align-items: center; gap: 6px; }
-#sapp .plan-name { font-size: 0.72rem; font-weight: 700; color: #1a3a5c; text-align: center; padding: 4px 6px 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
-#sapp .plan-edited-badge { display: none; position: absolute; top: 6px; right: 6px; background: #16a34a; color: #fff; font-size: 0.62rem; font-weight: 800; border-radius: 20px; padding: 2px 8px; pointer-events: none; }
-#sapp .plan-card.edited .plan-edited-badge { display: block; }
-#sapp .plan-card.edited { border-color: #86efac; }
 #sapp .plan-check-row input[type="checkbox"] { width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; accent-color: #1a3a5c; }
 #sapp .plan-check-row label { font-size: 0.78rem; color: #374151; cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 230px; }
 #sapp .plan-drag-handle { text-align: center; font-size: 0.85rem; color: #cbd5e1; line-height: 1; pointer-events: none; }
@@ -340,25 +343,6 @@
 
         <p class="intro">Sélectionnez le <strong>dossier mission</strong> dans l'arborescence LICIEL.</p>
 
-        <div class="structure-box" style="font-family:'Segoe UI',Arial,sans-serif; line-height:2; padding:14px 16px;">
-
-          <span style="font-size:0.82em; color:#94a3b8;">🖥️&nbsp; Ce PC</span><br>
-
-          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;└──&nbsp; 💾 C:\</span><br>
-
-          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 LICIEL_Diagnostics\</span><br>
-
-          <span style="font-size:0.82em; color:#94a3b8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 Dossiers_202x\</span><br>
-
-          <span style="display:inline-flex; align-items:center; gap:8px; margin-top:2px;">
-            <span style="font-size:1em; color:#1a3a5c; font-weight:800;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 2602CCENA&nbsp;-&nbsp;BI5860000000xxx</span>
-            <span style="background:#1d4ed8; color:#fff; font-size:0.7em; padding:3px 10px; border-radius:20px; font-weight:700; white-space:nowrap;">✔ sélectionner ce dossier</span>
-          </span><br>
-
-          <span style="font-size:1em; color:#16a34a; font-weight:700;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└──&nbsp; 📁 exports\</span>
-          <span style="font-size:0.75em; color:#16a34a; font-weight:600;">&nbsp;&nbsp;← créé automatiquement · vos documents générés arrivent ici</span>
-
-        </div>
 
         <div class="upload-zone" onclick="selectMissionFolder()">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 7a2 2 0 012-2h4l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
@@ -377,8 +361,8 @@
               <label>Qualité photo</label>
               <select id="optQualite">
                 <option value="75">Légère (~75 Ko)</option>
-                <option value="50" selected>Standard (~50 Ko)</option>
-                <option value="30">Forte (~30 Ko)</option>
+                <option value="50">Standard (~50 Ko)</option>
+                <option value="30" selected>Forte (~30 Ko)</option>
               </select>
             </div>
             <div class="option-group">
@@ -392,18 +376,11 @@
           </div>
         </div>
 
-        <div id="sectionStatsPhotos" style="display:none;">
+        <div id="sectionStats" style="display:none;">
           <hr>
           <div class="info-section">
-            <h3>📷 Dossier photographique</h3>
-            <div class="info-grid" id="infoGridPhotos"></div>
-          </div>
-        </div>
-
-        <div id="sectionStatsPlans" style="display:none;">
-          <div class="info-section">
-            <h3>&#x1F4D0; Plans</h3>
-            <div class="info-grid-2col" id="infoGridPlans"></div>
+            <h3>📊 Synthèse</h3>
+            <div class="info-grid" id="infoGridStats"></div>
           </div>
         </div>
 
@@ -412,6 +389,9 @@
           <div class="btn-row">
             <button class="btn btn-photos" id="btnGenPhotos" onclick="generateDocxPhotos()">
               📄 Dossier Photos (.docx)
+            </button>
+            <button class="btn btn-photos" id="btnGenZPSO" onclick="generateDocxZPSO()" disabled style="background:#0f766e;">
+              📋 Tableau ZPSO (.docx)
             </button>
             <button class="btn btn-plans" id="btnGenPlans" onclick="generateDocxPlans()">
               📐 Dossier Plans (.docx)
@@ -441,8 +421,12 @@
           <span class="tab-badge empty" id="tabBadgePlans">0</span>
         </button>
         <button class="tab-btn" id="tabBtnPhotos" onclick="switchTab('photos')" disabled>
-          📷 Preview Photos
+          📷 Preview Photos Prélèvements
           <span class="tab-badge empty" id="tabBadgePhotos">0</span>
+        </button>
+        <button class="tab-btn" id="tabBtnZPSO" onclick="switchTab('zpso')" disabled>
+          📋 Preview Photos ZPSO
+          <span class="tab-badge empty" id="tabBadgeZPSO">0</span>
         </button>
         <button class="tab-btn" id="tabBtnPV" onclick="switchTab('pv')" disabled>
           📄 Preview PV
@@ -526,7 +510,18 @@
         </div>
       </div>
 
-      <!-- ── ONGLET PV ──────────────────────────────────────────────── -->
+      <!-- ── ONGLET ZPSO ──────────────────────────────────────────── -->
+      <div class="panel-right-inner tab-panel" id="tabZPSO">
+        <div id="zpsoPreviewContent">
+          <div class="tab-empty">
+            <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <p>Chargez un dossier mission</p>
+            <small>Les photos ZPSO s'afficheront ici</small>
+          </div>
+        </div>
+      </div>
+
+  <!-- ── ONGLET PV ──────────────────────────────────────────────── -->
       <div class="panel-right-inner tab-panel" id="tabPV">
         <div id="pvPreviewContent">
           <div class="tab-empty">
@@ -597,9 +592,9 @@
 <script src="https://unpkg.com/docx@7.8.2/build/index.js"></script>
 
 <script>
-// -----------------------------------------------------------
+// ═══════════════════════════════════════════════════════════
 // RÉFÉRENTIEL AGENCES SOCOTEC (généré depuis Matrice_Socotec)
-// -----------------------------------------------------------
+// ═══════════════════════════════════════════════════════════
 const AGENCES_MAP = {
   '02D90': 'AGENCE CONSTRUCTION & IMMOBILIER — 122 Rue du Château d\'Orgemont B.P. 50206, 49002 ANGERS Cedex 01 — Tél : 02 41 68 67 00',
   '10480': 'AGENCE CONSTRUCTION LE HAVRE — 20 Rue du Capuchet CS 72030, 76070 LE HAVRE CEDEX — Tél : 02 32 85 39 39',
@@ -897,18 +892,18 @@ function applyAgenceToField(folderName) {
   }
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // VARIABLES GLOBALES
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 let xmlData          = null;
 let fileIndex        = {};
 let rootName         = '';
 let missionDirHandle = null;  // FileSystemDirectoryHandle
 let isRunning        = false;
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // HELPERS UI
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function log(msg, type = '') {
   const el = document.getElementById('log');
   el.style.display = 'block';
@@ -932,8 +927,7 @@ function setProgress(pct, label) {
 function resetUI() {
   document.getElementById('sectionResultat').style.display    = 'none';
   document.getElementById('sectionOptions').style.display     = 'none';
-  document.getElementById('sectionStatsPhotos').style.display = 'none';
-  document.getElementById('sectionStatsPlans').style.display  = 'none';
+  document.getElementById('sectionStats').style.display       = 'none';
   document.getElementById('sectionPlanGrid').style.display    = 'none';
   document.getElementById('sectionPlanTable').style.display   = 'none';
   document.getElementById('panelPlaceholder').style.display   = 'block';
@@ -949,9 +943,9 @@ function resetUI() {
   xmlData = null; fileIndex = {};
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // LECTURE MULTI-ENCODAGE
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function readFileCorrectly(file) {
   const buffer = await file.arrayBuffer();
   try { return new TextDecoder('utf-8', { fatal: true }).decode(buffer); } catch(e) {}
@@ -959,16 +953,16 @@ async function readFileCorrectly(file) {
   return new TextDecoder('windows-1252').decode(buffer);
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // NORMALISATION DES CHEMINS
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function normPath(p) {
   return (p || '').replace(/\\/g, '/').toLowerCase().trim();
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // PARSING XMLs
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function parseTableGeneralPhoto(xmlText) {
   const photoMap = {};
   const itemRx = /<LiItem_table_General_Photo>([\s\S]*?)<\/LiItem_table_General_Photo>/gi;
@@ -1001,25 +995,29 @@ function parseTableZAmiante(xmlText) {
   let m;
   while ((m = itemRx.exec(xmlText)) !== null) {
     const inner = m[1];
-    let id, ouvrages, description, resultats, localisation;
+    let id, ouvrages, description, resultats, localisation, justification, photo;
     try {
       const doc  = new DOMParser().parseFromString('<root>' + inner + '</root>', 'text/xml');
       const root = doc.documentElement;
       if (doc.querySelector('parsererror')) throw new Error('parseerror');
       const t = tag => (root.querySelector(tag)?.textContent || '').trim();
-      id          = t('LiColonne_Id_Prelevement');
-      ouvrages    = t('LiColonne_Ouvrages');
-      description = t('LiColonne_Partie_Inspectee') || t('LiColonne_Description');
-      resultats   = t('LiColonne_Resultats');
-      localisation= t('LiColonne_Localisation');
+      id           = t('LiColonne_Id_Prelevement');
+      ouvrages     = t('LiColonne_Ouvrages');
+      description  = t('LiColonne_Description');
+      resultats    = t('LiColonne_Resultats');
+      localisation = t('LiColonne_Localisation');
+      justification= [t('LiColonne_Resultats'), t('LiColonne_Justification')].filter(Boolean).join(' - ');
+      photo        = t('LiColonne_Photo');
     } catch(e) {
-      id          = re('LiColonne_Id_Prelevement', inner);
-      ouvrages    = re('LiColonne_Ouvrages', inner);
-      description = re('LiColonne_Partie_Inspectee', inner) || re('LiColonne_Description', inner);
-      resultats   = re('LiColonne_Resultats', inner);
-      localisation= re('LiColonne_Localisation', inner);
+      id           = re('LiColonne_Id_Prelevement', inner);
+      ouvrages     = re('LiColonne_Ouvrages', inner);
+      description  = re('LiColonne_Description', inner);
+      resultats    = re('LiColonne_Resultats', inner);
+      localisation = re('LiColonne_Localisation', inner);
+      justification= [re('LiColonne_Resultats', inner), re('LiColonne_Justification', inner)].filter(Boolean).join(' - ');
+      photo        = re('LiColonne_Photo', inner);
     }
-    if (id) zpsoMap[id] = { ouvrages, description, resultats, localisation };
+    if (id) zpsoMap[id] = { ouvrages, description, resultats, localisation, justification, photo };
   }
   return zpsoMap;
 }
@@ -1050,9 +1048,9 @@ function parseTableGeneralBien(xmlText) {
   return bien;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // ROGNAGE AUTOMATIQUE DES BORDS BLANCS
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function cropWhiteBorders(srcCanvas, seuil = 240) {
   const ctx  = srcCanvas.getContext('2d');
   const w    = srcCanvas.width;
@@ -1105,9 +1103,9 @@ function cropWhiteBorders(srcCanvas, seuil = 240) {
   return { canvas: dst, cropX: left, cropY: top, cropW, cropH };
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // COMPRESSION IMAGE
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function compressImage(file, targetKB, maxDim = 1200) {
   return new Promise(resolve => {
     const url = URL.createObjectURL(file);
@@ -1141,9 +1139,9 @@ async function compressImage(file, targetKB, maxDim = 1200) {
   });
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // SÉLECTION DU DOSSIER
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function selectMissionFolder() {
   if (window.showDirectoryPicker) {
     try {
@@ -1226,9 +1224,9 @@ document.getElementById('folderInput').addEventListener('change', async (e) => {
   await loadAllData();
 });
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // CHARGEMENT & PARSING DE TOUS LES XML
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function loadAllData() {
   const xmlRequired = {
     photo        : 'xml/table_general_photo.xml',
@@ -1313,47 +1311,32 @@ async function loadAllData() {
       else                       cntAttente++;
     }
 
-    document.getElementById('sectionStatsPhotos').style.display = 'block';
-    document.getElementById('infoGridPhotos').innerHTML = `
-      <div class="info-item"><label>Prélèvements</label><span>${prelevements.length}</span></div>
-      <div class="info-item"><label>Photos référencées</label><span>${Object.keys(photoMap).length}</span></div>
-      <div class="info-item"><label>ZPSO</label><span>${Object.keys(zpsoMap).length}</span></div>
-      <div class="info-item green"><label>🟢 Absence</label><span>${cntAbsence}</span></div>
-      <div class="info-item red"><label>🔴 Présence</label><span>${cntPresence}</span></div>
-      <div class="info-item yellow"><label>🔵 En attente</label><span>${cntAttente}</span></div>
-    `;
+    // synthèse affichée après les plans
 
-    document.getElementById('sectionStatsPlans').style.display = 'block';
-    document.getElementById('infoGridPlans').innerHTML = `
-      <div class="info-item"><label>Plans trouvés</label><span>${planFiles.length}</span></div>
-      <div class="info-item"><label>Bien</label><span style="font-size:0.68rem;font-weight:500;line-height:1.3;">${(bien['Immeuble_Adresse1'] || '—').substring(0, 30)}</span></div>
-    `;
+    // synthèse : sera remplie après détection PV
 
     // ── Plans ─────────────────────────────────────────────────────
     const nbPlans = planFiles.length;
     updateTabBadge('Plans', nbPlans);
     if (nbPlans > 0) {
-      // Scan vecXml : recuperer les titres de plans
+      // Scan vecXml : charger les titres de plans (encodage Windows-1252)
       planTitles.clear();
       await Promise.all(planFiles.map(async (pf, idx) => {
         const base = pf.file.name.replace(/_Ami\.jpg$/i, '');
-        // Chercher le vecXml dans le meme repertoire que le jpg
-        const dir = pf.path.replace(/[^/]+$/, '');
+        const dir  = pf.path.replace(/[^/]+$/, '');
         const xmlKey = dir + base + '.vecXml';
-        const xmlFile = fileIndex[xmlKey]
-          || fileIndex[xmlKey.toLowerCase()]
+        const xmlFile = fileIndex[xmlKey] || fileIndex[xmlKey.toLowerCase()]
           || Object.values(fileIndex).find(f => f.name === base + '.vecXml');
         if (!xmlFile) return;
         try {
-          // vecXml genere par Liciel en Windows-1252 (encodage Windows francais)
-          const ab = await xmlFile.arrayBuffer();
+          const ab  = await xmlFile.arrayBuffer();
           const txt = new TextDecoder('windows-1252').decode(ab);
-          const m = txt.match(/<Titre>([^<]+)<\/Titre>/);
+          const m   = txt.match(/<Titre>([^<]+)<\/Titre>/);
           if (m && m[1].trim()) {
             planTitles.set(idx, m[1].trim());
             log('  ' + base + '.vecXml -> "' + m[1].trim() + '"', 'ok');
           }
-        } catch(e) { log('  vecXml ' + base + ' : ' + e.message, 'warn'); }
+        } catch(e) { log('vecXml ' + base + ' : ' + e.message, 'warn'); }
       }));
       if (planTitles.size > 0) log(planTitles.size + ' titre(s) vecXml chargé(s)', 'ok');
 
@@ -1385,27 +1368,74 @@ async function loadAllData() {
           <small>Vérifiez la présence des fichiers XML (Table_General_Photo + Table_Z_Amiante_prelevements)</small>
         </div>`;
     }
+    // Onglet ZPSO
+    const zpsoEntries = Object.entries(zpsoMap);
+    document.getElementById('tabBtnZPSO').disabled = zpsoEntries.length === 0;
+    if (zpsoEntries.length > 0) {
+      const nbZpsoPhoto = renderTabZPSO(zpsoMap, photoMap);
+      updateTabBadge('ZPSO', nbZpsoPhoto);
+      document.getElementById('btnGenZPSO').disabled = false;
+    } else {
+      updateTabBadge('ZPSO', 0);
+    }
 
-    // ── Preview PV ─────────────────────────────────────────────────
-    const pvPdfEntries = Object.entries(fileIndex)
+    // ── Preview PV — détection 3 niveaux ──────────────────────────
+    // Niveau 1 : PV_Analyse_xxx.pdf (Liciel standard)
+    let pvPdfEntries = Object.entries(fileIndex)
       .filter(([k]) => k.toLowerCase().endsWith('.pdf') && k.toLowerCase().includes('pv_analyse'))
       .sort(([a],[b]) => a.localeCompare(b, undefined, { numeric: true }));
-    // Stockage global pour rendu lazy au clic de l'onglet
+    let pvSource = 'pv_analyse';
+
+    // Niveau 2 : S.XXXXXXX.X.pdf (rapports labo)
+    if (!pvPdfEntries.length) {
+      pvPdfEntries = Object.entries(fileIndex)
+        .filter(([k]) => /\/s\.[0-9]+\.[0-9]+\.pdf$/i.test(k))
+        .sort(([a],[b]) => a.localeCompare(b, undefined, { numeric: true }));
+      if (pvPdfEntries.length) pvSource = 'sXXX';
+    }
+
+    log(pvPdfEntries.length
+      ? `PV trouvés (${pvSource}) : ${pvPdfEntries.length}`
+      : 'Aucun PV trouvé automatiquement', pvPdfEntries.length ? 'ok' : 'warn');
+
+    // Stockage global pour rendu lazy
     window._pvPdfEntries = pvPdfEntries;
     window._pvRendered   = false;
-    document.getElementById('tabBtnPV').disabled = pvPdfEntries.length === 0;
+    document.getElementById('tabBtnPV').disabled = false; // toujours accessible (bouton charge manuelle)
+
     if (pvPdfEntries.length > 0) {
       updateTabBadge('PV', pvPdfEntries.length);
-      // Placeholder "cliquer pour charger"
       document.getElementById('pvPreviewContent').innerHTML = `
         <div class="tab-empty" style="cursor:pointer;" onclick="switchTab('pv')">
           <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-          <p>${pvPdfEntries.length} PDF trouvé(s)</p>
-          <small>Cliquez sur l'onglet "Preview PV" pour charger l'aperçu</small>
+          <p>${pvPdfEntries.length} PV trouvé(s)</p>
+          <small>${pvSource === 'sXXX' ? 'Rapports laboratoire (S.XXX.pdf)' : 'PV Analyse Liciel'} — Cliquez sur l'onglet pour charger</small>
         </div>`;
     } else {
       updateTabBadge('PV', 0);
+      // Niveau 3 : proposer le chargement manuel
+      document.getElementById('pvPreviewContent').innerHTML = `
+        <div class="tab-empty">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <p style="margin-bottom:6px;">Aucun PV d'analyse trouvé automatiquement</p>
+          <small style="display:block;margin-bottom:14px;">Ni fichiers <code>PV_Analyse_*.pdf</code> ni fichiers <code>S.XXX.pdf</code> détectés dans le dossier mission.</small>
+          <button class="btn btn-pv" onclick="loadPVManually()" style="font-size:0.82rem;padding:8px 18px;">
+            📂 Charger les PV manuellement
+          </button>
+        </div>`;
     }
+
+    // ── Synthèse : Photos / Plans / PDF PV ─────────────────────────────
+    document.getElementById('sectionStats').style.display = 'block';
+    // pvPdfEntries est défini plus bas — on utilise une closure pour la MAJ
+    const nbPhotos = Object.keys(photoMap).length;
+    const nbPlans2 = planFiles.length;
+    // PV déjà calculé dans pvPdfEntries (variable locale définie plus haut)
+    const nbPV = pvPdfEntries ? pvPdfEntries.length : 0;
+    document.getElementById('infoGridStats').innerHTML =
+      `<div class="info-item"><label>📷 Photos</label><span>${nbPhotos}</span></div>` +
+      `<div class="info-item"><label>📐 Plans</label><span>${nbPlans2}</span></div>` +
+      `<div class="info-item"><label>📄 PDF PV</label><span>${nbPV}</span></div>`;
 
     // ── Boutons génération ─────────────────────────────────────────
     document.getElementById('btnGenPhotos').disabled = prelevements.length === 0;
@@ -1418,24 +1448,7 @@ async function loadAllData() {
     if (nbPlans > 0)          parts.push(`${nbPlans} plan(s)`);
     if (prelevements.length)  parts.push(`${prelevements.length} prélèvement(s)`);
     if (pvPdfEntries.length)  parts.push(`${pvPdfEntries.length} PDF PV`);
-    // Auto-load JSON : Config_Plans_*.json present dans le dossier mission
-    const jsonEntry = Object.entries(fileIndex).find(([k]) =>
-      k.toLowerCase().includes('config_plans') && k.toLowerCase().endsWith('.json')
-    );
-    if (jsonEntry) {
-      log('JSON trouvé : ' + jsonEntry[0] + ' - chargement auto...', 'ok');
-      try {
-        const jsonText = await jsonEntry[1].text();
-        applyStateFromJSON(jsonText, true);
-        setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'} — ✓ Config restaurée`, 'success');
-      } catch(ej) {
-        log('Erreur auto-load JSON : ' + ej.message, 'warn');
-        setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
-      }
-    } else {
-      setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
-    }
-
+    setStatus(`✅ Chargé : ${parts.join(' · ') || 'dossier vide'}`, 'success');
 
   } catch(e) {
     setStatus('Erreur : ' + e.message, 'error');
@@ -1444,9 +1457,9 @@ async function loadAllData() {
   }
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // PREVIEW PLANS : grille + drag & drop
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function cropAutoForPreview(cardIdx, file, imgEl) {
   try {
     const url = URL.createObjectURL(file);
@@ -1475,7 +1488,7 @@ async function cropAutoForPreview(cardIdx, file, imgEl) {
 // Map globale idx -> titre issu du vecXml (ex: "R+1 - Locaux techniques")
 const planTitles = new Map();
 
-// Retourne le nom par defaut d'un plan : titre vecXml prioritaire sur nom de fichier
+// Retourne le nom par défaut d'un plan : titre vecXml prioritaire sur nom de fichier
 function getPlanDefaultName(idx) {
   if (planTitles.has(idx)) return planTitles.get(idx);
   const pf = xmlData && xmlData.planFiles ? xmlData.planFiles[idx] : null;
@@ -1495,8 +1508,6 @@ function buildPlanGrid(planFiles) {
     const badge = document.createElement('div');
     badge.className = 'plan-badge';
     badge.textContent = i + 1;
-    badge.title = 'Cliquer pour changer la position';
-    badge.addEventListener('click', (e) => { e.stopPropagation(); openPlanPosMenu(card, badge); });
     const thumbWrap = document.createElement('div');
     const img = document.createElement('img');
     img.className = 'plan-thumb';
@@ -1522,18 +1533,13 @@ function buildPlanGrid(planFiles) {
     btnCrop.dataset.cardIdx = i;
     btnCrop.innerHTML = '&#x2702; Recadrer l\'image';
     btnCrop.addEventListener('click', (e) => { e.stopPropagation(); openCropModal(i, card, img); });
-    const editedBadge = document.createElement('div');
-    editedBadge.className = 'plan-edited-badge';
-    editedBadge.textContent = '✓ Corrigé';
-    const planName = document.createElement('div');
-    planName.className = 'plan-name';
-    planName.dataset.cardIdx = i;
-    planName.textContent = nomDefaut;
-    planName.title = nomDefaut;
-    card.appendChild(editedBadge);
+    // Clic badge → dropdown de réordonnancement
+    badge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openReorderDropdown(badge, card);
+    });
     card.appendChild(badge);
     card.appendChild(thumbWrap);
-    card.appendChild(planName);
     card.appendChild(checkRow);
     card.appendChild(btnCrop);
     card.appendChild(handle);
@@ -1570,107 +1576,53 @@ function onDrop(e) {
 }
 function onDragEnd() { this.classList.remove('dragging'); document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('drag-over')); }
 
-function openPlanPosMenu(card, badge) {
-  // Fermer tout menu deja ouvert
-  document.querySelectorAll('.plan-pos-menu').forEach(m => m.remove());
+function openReorderDropdown(badge, card) {
+  // Fermer tout dropdown ouvert
+  document.querySelectorAll('.plan-reorder-dropdown').forEach(d => d.remove());
 
-  const grid = document.getElementById('planGrid');
-  const allCards = [...grid.querySelectorAll('.plan-card')];
-  const currentPos = allCards.indexOf(card);
-  const total = allCards.length;
+  const cards = [...document.querySelectorAll('#planGrid .plan-card')];
+  const currentIdx = cards.indexOf(card);
+  const total = cards.length;
 
-  const menu = document.createElement('div');
-  menu.className = 'plan-pos-menu';
+  const dropdown = document.createElement('div');
+  dropdown.className = 'plan-reorder-dropdown';
 
-  // Position fixe sous le badge (pas dans la card pour eviter overflow)
-  const rect = badge.getBoundingClientRect();
-  // Calculer si le menu doit s'ouvrir vers le haut si manque de place en bas
-  const spaceBelow = window.innerHeight - rect.bottom - 8;
-  const maxH = Math.min(320, Math.max(120, spaceBelow > 200 ? spaceBelow : window.innerHeight - rect.top - 8));
-  const topPos = spaceBelow > 120 ? (rect.bottom + 4) : Math.max(8, rect.top - maxH - 4);
+  for (let pos = 0; pos < total; pos++) {
+    const opt = document.createElement('div');
+    opt.textContent = pos === currentIdx
+      ? `▶ Position ${pos + 1} (actuelle)`
+      : `Position ${pos + 1}`;
+    if (pos === currentIdx) opt.classList.add('current');
 
-  menu.style.cssText = [
-    'position:fixed',
-    'top:' + topPos + 'px',
-    'left:' + rect.left + 'px',
-    'z-index:9999',
-    'background:#fff',
-    'border:1.5px solid #0080AD',
-    'border-radius:8px',
-    'box-shadow:0 4px 20px rgba(0,0,0,0.22)',
-    'padding:4px 0',
-    'min-width:160px',
-    'max-height:' + maxH + 'px',
-    'overflow-y:auto',
-    'font-family:Arial,sans-serif'
-  ].join(';');
-
-  const title = document.createElement('div');
-  title.style.cssText = 'font-size:0.68rem;font-weight:700;color:#94a3b8;padding:5px 12px 3px;text-transform:uppercase;letter-spacing:0.5px;';
-  title.textContent = 'Déplacer en position :';
-  menu.appendChild(title);
-
-  for (let p = 1; p <= total; p++) {
-    const isCurrent = (p === currentPos + 1);
-    const item = document.createElement('div');
-    item.style.cssText = [
-      'padding:7px 12px',
-      'font-size:0.82rem',
-      'color:#1a3a5c',
-      'cursor:' + (isCurrent ? 'default' : 'pointer'),
-      'display:flex',
-      'align-items:center',
-      'gap:10px',
-      'background:' + (isCurrent ? '#f0f9ff' : 'transparent'),
-      'font-weight:' + (isCurrent ? '700' : '400')
-    ].join(';');
-
-    const numSpan = document.createElement('span');
-    numSpan.style.cssText = 'font-weight:800;color:#0080AD;min-width:22px;text-align:center;font-size:0.9rem;';
-    numSpan.textContent = p;
-
-    const lbl = document.createElement('span');
-    lbl.textContent = isCurrent ? '← Position actuelle' : '';
-    lbl.style.cssText = 'font-size:0.72rem;color:#94a3b8;';
-
-    item.appendChild(numSpan);
-    item.appendChild(lbl);
-
-    if (!isCurrent) {
-      item.addEventListener('mouseenter', () => { item.style.background = '#e0f2fe'; });
-      item.addEventListener('mouseleave', () => { item.style.background = 'transparent'; });
-      item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        movePlanToPosition(card, p - 1);
-        menu.remove();
-      });
-    }
-    menu.appendChild(item);
+    opt.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.remove();
+      if (pos === currentIdx) return;
+      // Déplacer la card à la position demandée
+      const grid = document.getElementById('planGrid');
+      const allCards = [...grid.querySelectorAll('.plan-card')];
+      const target = allCards[pos];
+      if (pos > currentIdx) {
+        grid.insertBefore(card, target.nextSibling);
+      } else {
+        grid.insertBefore(card, target);
+      }
+      updatePlanBadges();
+      buildPlanTable();
+    });
+    dropdown.appendChild(opt);
   }
 
-  document.body.appendChild(menu);
+  card.appendChild(dropdown);
 
-  // Fermer au clic en dehors
-  const closeMenu = (e) => {
-    if (!menu.contains(e.target)) {
-      menu.remove();
-      document.removeEventListener('click', closeMenu, true);
+  // Fermer si clic ailleurs
+  const closeHandler = (e) => {
+    if (!dropdown.contains(e.target) && e.target !== badge) {
+      dropdown.remove();
+      document.removeEventListener('click', closeHandler);
     }
   };
-  setTimeout(() => document.addEventListener('click', closeMenu, true), 50);
-}
-
-function movePlanToPosition(card, targetIdx) {
-  const grid = document.getElementById('planGrid');
-  const allCards = [...grid.querySelectorAll('.plan-card')];
-  const currentIdx = allCards.indexOf(card);
-  if (currentIdx === targetIdx) return;
-  allCards.splice(currentIdx, 1);
-  allCards.splice(targetIdx, 0, card);
-  allCards.forEach(c => grid.appendChild(c));
-  updatePlanBadges();
-  updatePlanCountLabel();
-  buildPlanTable();
+  setTimeout(() => document.addEventListener('click', closeHandler), 0);
 }
 
 function updatePlanBadges() {
@@ -1703,9 +1655,9 @@ function selectAllPlans(state) {
   updatePlanCountLabel();
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // CROP MODAL
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 let cropState = {
   cardIdx: null, cardEl: null, thumbEl: null, srcImage: null,
   canvas: null, ctx: null, sel: { x: 0, y: 0, w: 0, h: 0 },
@@ -1800,34 +1752,7 @@ function populateCropForm(cardIdx) {
   comIn.oninput = () => { d.commentaire = comIn.value; };
 }
 
-function syncCropFormToTable(cardIdx) {
-  buildPlanTable();
-  refreshPlanCard(cardIdx);
-}
-
-function refreshPlanCard(cardIdx) {
-  const d = planTableData.get(cardIdx);
-  if (!d) return;
-  const card = document.querySelector('#planGrid .plan-card[data-idx="' + cardIdx + '"]');
-  if (!card) return;
-  // Mettre a jour le nom affiche
-  const nameEl = card.querySelector('.plan-name');
-  if (nameEl) {
-    const label = (d.objet === 'Champ libre' && d.objetLibre)
-      ? d.objetLibre
-      : (d.localisation || d.objet || '');
-    nameEl.textContent = label;
-    nameEl.title = label;
-  }
-  // Badge corrige : si modification par rapport aux valeurs initiales
-  const locDefaut = getPlanDefaultName(cardIdx);
-  const isEdited = (d.localisation && d.localisation !== locDefaut)
-    || (d.objet && d.objet !== 'Croquis de prélèvements')
-    || (d.objetLibre !== '')
-    || Object.values(d.complements || {}).some(Boolean)
-    || (d.commentaire !== '');
-  card.classList.toggle('edited', isEdited);
-}
+function syncCropFormToTable(cardIdx) { buildPlanTable(); }
 
 function closeCropModal() {
   document.getElementById('cropModalOverlay').classList.remove('open');
@@ -1965,7 +1890,6 @@ function applyCrop() {
     thumbEl.src = URL.createObjectURL(blob);
     const btnCrop = cardEl.querySelector('.btn-crop');
     if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
-    cardEl.classList.add('edited');
     closeCropModal();
     log(`Crop appliqué : carte ${cardIdx + 1} — ${Math.round(sel.w)}×${Math.round(sel.h)} px`, 'ok');
   }, 'image/jpeg', 0.95);
@@ -1996,7 +1920,7 @@ function buildPlanTable() {
     const cardIdx = parseInt(card.dataset.idx, 10);
     const pf = xmlData.planFiles[cardIdx];
     if (!planTableData.has(cardIdx)) {
-      const locDefaut = getPlanDefaultName(cardIdx);
+      const locDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
       planTableData.set(cardIdx, { objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut, complements: {}, autresText: '', commentaire: '' });
     }
     const d = planTableData.get(cardIdx);
@@ -2094,18 +2018,18 @@ function getPlanFilesFromGrid() {
   return result;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // HELPERS DOCX
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function getLib() {
   const lib = window.docx;
   if (!lib) { setStatus('❌ La librairie docx.js n\'est pas chargée.', 'error'); return null; }
   return lib;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // GÉNÉRATION 1 : DOSSIER PHOTOS
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function generateDocxPhotos() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2201,7 +2125,7 @@ async function generateDocxPhotos() {
     ]}),
   ];
   const coverChildren_ph = [
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 }, children: [new TextRun({ text: 'DOSSIER PHOTOGRAPHIQUE', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 }, children: [new TextRun({ text: 'ANNEXE IDENTIFICATION DES PRÉLÈVEMENTS', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
     new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 }, children: [new TextRun({ text: 'Mission Amiante — Prélèvements', size: 24, font: 'Arial', color: '0080AD', italics: true })] }),
     new Table({ width: { size: PG_W, type: WidthType.DXA }, columnWidths: [PG_COL_PHOTO, PG_COL_INFO], borders: { top: brdNone_ph, bottom: brdNone_ph, left: brdNone_ph, right: brdNone_ph, insideH: brdNone_ph, insideV: brdNone_ph }, rows: [new TableRow({ cantSplit: false, children: [cellPhoto_ph, cellInfos_ph] })] }),
     new Paragraph({ spacing: { before: 480, after: 320 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } }, children: [] }),
@@ -2213,7 +2137,7 @@ async function generateDocxPhotos() {
     sections: [
       { properties: { type: SectionType.NEXT_PAGE, page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 567, right: 567, bottom: 567, left: 567 } } }, children: coverChildren_ph },
       { properties: { page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 720, right: 720, bottom: 720, left: 720 } } }, children: [
-        new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: 'Dossier Photographique — Mission Amiante', bold: true, size: 30, font: 'Arial', color: '0080AD' })] }),
+        new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: 'Identification des prélèvements', bold: true, size: 30, font: 'Arial', color: '0080AD' })] }),
         new Paragraph({ spacing: { after: 280 }, children: [new TextRun({ text: `Mission : ${rootName}   ·   ${prelevements.length} prélèvements   ·   Généré le ${new Date().toLocaleDateString('fr-FR')}`, size: 18, font: 'Arial', color: '888888' })] }),
         new Table({ width: { size: TOTAL_W, type: WidthType.DXA }, columnWidths: colWidths, rows: [headerRow, ...dataRows] }),
       ]},
@@ -2221,7 +2145,7 @@ async function generateDocxPhotos() {
   });
   setProgress(96, 'Finalisation…');
   const blob = await Packer.toBlob(doc);
-  await downloadBlob(blob, `Dossier_Photos_${rootName}.docx`);
+  await downloadBlob(blob, `Annexe_Prelevements_${rootName}.docx`);
   setProgress(100, '100% — Terminé !');
   setStatus(`✅ Dossier photos généré ! <strong>${nbOK}</strong> photos intégrées · <strong>${nbMissing}</strong> manquantes`, 'success');
   log(`=== Terminé. OK: ${nbOK} / Manquantes: ${nbMissing} ===`, 'ok');
@@ -2231,9 +2155,9 @@ async function generateDocxPhotos() {
   isRunning = false;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // GÉNÉRATION 2 : DOSSIER PLANS
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 async function generateDocxPlans() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2368,7 +2292,7 @@ async function generateDocxPlans() {
   });
   setProgress(96, 'Finalisation…');
   const blob = await Packer.toBlob(doc);
-  await downloadBlob(blob, `Dossier_Plans_${rootName}.docx`);
+  await downloadBlob(blob, `Annexe_Croquis_${rootName}.docx`);
   setProgress(100, '100% — Terminé !');
   setStatus(`✅ Dossier plans généré ! <strong>${total}</strong> plan(s) intégré(s).`, 'success');
   log(`=== Terminé. ${total} plan(s) traité(s) ===`, 'ok');
@@ -2378,9 +2302,9 @@ async function generateDocxPlans() {
   isRunning = false;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // GÉNÉRATION 3 : ANNEXE PV D'ANALYSES — scan PDF (prelevements_amiante/)
-// -----------------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════════════
 async function generateDocxPV() {
   if (!xmlData || isRunning) return;
   isRunning = true;
@@ -2411,18 +2335,27 @@ async function generateDocxPV() {
 
   // ── 1. Trouver les PDF dans fileIndex ─────────────────────────────
   // Cherche dans prelevements_amiante/ les fichiers PV_Analyse_*_Resultat_*.pdf
-  const pvPdfEntries = Object.entries(fileIndex)
-    .filter(([k]) => {
-      const lower = k.toLowerCase();
-      return lower.endsWith('.pdf') &&
-             lower.includes('pv_analyse') &&
-             (lower.includes('prelevements_amiante') || lower.includes('prélèvements_amiante') || lower.includes('pv_analyse'));
-    })
+  // Niveau 1 : PV_Analyse_*.pdf (Liciel)
+  let pvPdfEntries = Object.entries(fileIndex)
+    .filter(([k]) => k.toLowerCase().endsWith('.pdf') && k.toLowerCase().includes('pv_analyse'))
     .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }));
 
+  // Niveau 2 : S.XXXXXXX.X.pdf (rapports labo) — si _pvPdfEntries déjà chargés manuellement ou détectés
+  if (!pvPdfEntries.length) {
+    pvPdfEntries = Object.entries(fileIndex)
+      .filter(([k]) => /\/s\.[0-9]+\.[0-9]+\.pdf$/i.test(k))
+      .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }));
+  }
+
+  // Niveau 3 : utiliser les PV chargés manuellement (loadPVManually)
+  if (!pvPdfEntries.length && window._pvPdfEntries && window._pvPdfEntries.length) {
+    pvPdfEntries = window._pvPdfEntries;
+    log('PV : utilisation des fichiers chargés manuellement (' + pvPdfEntries.length + ')', 'ok');
+  }
+
   if (pvPdfEntries.length === 0) {
-    setStatus('⚠️ Aucun fichier PV_Analyse_*_Resultat_*.pdf trouvé dans le dossier prelevements_amiante/.', 'error');
-    log('Aucun PDF PV trouvé dans fileIndex. Clés disponibles : ' + Object.keys(fileIndex).filter(k=>k.endsWith('.pdf')).join(', '), 'warn');
+    setStatus("⚠️ Aucun PV trouvé. Utilisez le bouton \"Charger les PV manuellement\" dans l'onglet Preview PV.", 'error');
+    log('Aucun PDF PV trouvé. PDFs disponibles : ' + Object.keys(fileIndex).filter(k=>k.endsWith('.pdf')).join(', '), 'warn');
     isRunning = false;
     ['btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
     return;
@@ -2462,8 +2395,23 @@ async function generateDocxPV() {
         const textContent = await page.getTextContent();
         const fullText = textContent.items.map(i => i.str).join(' ');
 
-        // Utilise la fonction partagee (meme logique que le preview)
-        const refs = extractRefsFromText(fullText);
+        // Chercher les patterns P641, P642... dans "Réf échantillon client : P641"
+        const refs = [];
+        const refRegex = /P(\d{3,4})(?:\s*[-–]\s*[^\s])?/g;
+        // On cherche d'abord dans le contexte "Réf échantillon client"
+        const contextMatches = fullText.matchAll(/[Rr][ée]f[\s.]*[ée]chantillon\s+client\s*:?\s*(P\d{3,4})/g);
+        for (const m of contextMatches) {
+          refs.push(m[1]);
+        }
+        // Fallback : chercher tous les Pxxx isolés si pas trouvés par contexte
+        if (refs.length === 0) {
+          const allRefs = fullText.matchAll(/\b(P\d{3,4})\b/g);
+          for (const m of allRefs) {
+            if (!refs.includes(m[1])) refs.push(m[1]);
+          }
+        }
+
+        // ── Rendu page en image via canvas ──────────────────────
         const scale = 2.0; // résolution × 2 pour qualité
         const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
@@ -2609,21 +2557,20 @@ async function generateDocxPV() {
   }
 
   const mkNumCell = (p, isHeader = false) => {
-    const col = p ? getResultColor(p.resultat) : null;
     return new TableCell({
       borders: brdsRecap,
       width: { size: NUM_W, type: WidthType.DXA },
       verticalAlign: VerticalAlign.CENTER,
       shading: isHeader
         ? { fill: '1a3a5c', type: ShadingType.CLEAR }
-        : col ? { fill: col.fill, type: ShadingType.CLEAR } : { fill: 'F1F5F9', type: ShadingType.CLEAR },
+        : { fill: 'F1F5F9', type: ShadingType.CLEAR },
       margins: { top: 60, bottom: 60, left: 100, right: 60 },
       children: [new Paragraph({
         alignment: AlignmentType.CENTER,
         children: [new TextRun({
           text: isHeader ? 'N° prélèvement' : (p ? p.numPrelevement : ''),
           bold: true, size: isHeader ? 15 : 16, font: 'Arial',
-          color: isHeader ? 'FFFFFF' : (col ? col.text : '9CA3AF'),
+          color: isHeader ? 'FFFFFF' : '374151',
         })],
       })],
     });
@@ -2706,17 +2653,7 @@ async function generateDocxPV() {
         bold: true, size: 22, font: 'Arial', color: '0080AD',
       })],
     }),
-    new Paragraph({
-      spacing: { before: 0, after: 180 },
-      children: [
-        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: '2E7D32' }),
-        new TextRun({ text: 'Absence d\'amiante   ', size: 16, font: 'Arial', color: '374151' }),
-        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: 'C62828' }),
-        new TextRun({ text: 'Présence d\'amiante   ', size: 16, font: 'Arial', color: '374151' }),
-        new TextRun({ text: '■ ', size: 18, font: 'Arial', color: '1565C0' }),
-        new TextRun({ text: 'En attente de résultat', size: 16, font: 'Arial', color: '374151' }),
-      ],
-    }),
+
     new Table({
       width: { size: USABLE_W, type: WidthType.DXA },
       columnWidths: colWidths_recap,
@@ -2808,20 +2745,17 @@ async function generateDocxPV() {
   isRunning = false;
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // ONGLETS
-// ---------------------------------------------------------------
-// Mapping explicite : evite casse 'pv' -> 'Pv' au lieu de 'PV'
-const _TAB_PANELS = { plans: 'tabPlans', photos: 'tabPhotos', pv: 'tabPV' };
-const _TAB_BTNS   = { plans: 'tabBtnPlans', photos: 'tabBtnPhotos', pv: 'tabBtnPV' };
-
+// ═══════════════════════════════════════════════════════════════
 function switchTab(tab) {
-  Object.keys(_TAB_PANELS).forEach(t => {
-    const panel = document.getElementById(_TAB_PANELS[t]);
-    const btn   = document.getElementById(_TAB_BTNS[t]);
-    if (panel) panel.classList.toggle('active', t === tab);
-    if (btn)   btn.classList.toggle('active',   t === tab);
+  const PANELS = { plans:'tabPlans', photos:'tabPhotos', zpso:'tabZPSO', pv:'tabPV' };
+  const BTNS   = { plans:'tabBtnPlans', photos:'tabBtnPhotos', zpso:'tabBtnZPSO', pv:'tabBtnPV' };
+  Object.keys(PANELS).forEach(t => {
+    document.getElementById(PANELS[t]).classList.toggle('active', t === tab);
+    document.getElementById(BTNS[t]).classList.toggle('active', t === tab);
   });
+  // Rendu lazy PV au premier clic sur l'onglet
   if (tab === 'pv' && !window._pvRendered && window._pvPdfEntries && window._pvPdfEntries.length > 0) {
     window._pvRendered = true;
     renderTabPV(window._pvPdfEntries);
@@ -2835,9 +2769,9 @@ function updateTabBadge(name, count) {
   el.classList.toggle('empty', count === 0);
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // PREVIEW PHOTOS — grille identique aux plans
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function renderTabPhotos(prelevements, photoMap, zpsoMap) {
   const container = document.getElementById('photoPreviewContent');
   if (!prelevements.length) {
@@ -2917,6 +2851,366 @@ function renderTabPhotos(prelevements, photoMap, zpsoMap) {
   }
 }
 
+
+// ═══════════════════════════════════════════════════════════════
+// ONGLET PHOTOS ZPSO
+// ═══════════════════════════════════════════════════════════════
+function renderTabZPSO(zpsoMap, photoMap) {
+  const container = document.getElementById('zpsoPreviewContent');
+  container.innerHTML = '';
+
+  // Construire toutes les entrées, résoudre les photos
+  const allEntries = Object.entries(zpsoMap)
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([id, z]) => {
+      let file = null;
+      if (z.photo) {
+        const path = photoMap[z.photo];
+        if (path) file = fileIndex[path] || findPhotoFile(path) || null;
+      }
+      return { id, z, file };
+    });
+
+  // Debug log pour les ZPSO avec photo
+  allEntries.filter(e => e.z.photo).forEach(e => {
+    const path = e.z.photo ? photoMap[e.z.photo] : null;
+    log('ZPSO ' + e.id + ' photo=' + e.z.photo + ' -> path=' + (path||'ABSENT') + ' | trouvé=' + (e.file ? 'OUI' : 'NON'), e.file ? 'ok' : 'err');
+  });
+
+  // Filtre : uniquement celles avec photo pour l'onglet preview
+  const withPhoto = allEntries.filter(e => e.file !== null);
+  log('ZPSO avec photo affichées : ' + withPhoto.length + ' / ' + allEntries.length, 'ok');
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'plans-toolbar';
+  toolbar.innerHTML = '<span>' + withPhoto.length + ' ZPSO avec photo (total : ' + allEntries.length + ')</span>';
+  container.appendChild(toolbar);
+
+  if (!withPhoto.length) {
+    const empty = document.createElement('div');
+    empty.className = 'tab-empty';
+    empty.innerHTML = '<p>Aucune ZPSO avec photo trouvée.<br><small>Les photos doivent être dans le dossier photos/ et référencées dans Table_General_Photo.xml</small></p>';
+    container.appendChild(empty);
+    return 0;
+  }
+
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;padding:12px 0;';
+  container.appendChild(grid);
+
+  for (const { id, z, file } of withPhoto) {
+    const card = document.createElement('div');
+    card.className = 'photo-card';
+
+    // Badge ID
+    const badge = document.createElement('span');
+    badge.className = 'photo-badge';
+    badge.textContent = id;
+    card.appendChild(badge);
+
+    // Photo
+    const img = document.createElement('img');
+    img.className = 'photo-thumb';
+    img.alt = id;
+    img.title = 'Cliquer pour agrandir';
+    img.src = URL.createObjectURL(file);
+    img.addEventListener('click', () => openPhotoLightbox(img.src, id));
+    card.appendChild(img);
+
+    // Infos
+    const info = document.createElement('div');
+    info.className = 'photo-card-info';
+    const locs = (z.localisation || '').split(';').map(s => s.trim()).filter(Boolean);
+    const locHtml = locs.length
+      ? locs.map(l => '<div class="loc">📍 ' + l + '</div>').join('')
+      : '<div class="loc">📍 —</div>';
+    const desc = (z.description || '—').substring(0, 50);
+    const just = (z.justification || '').substring(0, 55);
+    info.innerHTML =
+      '<div class="mat" title="' + (z.description||'') + '">' + desc + '</div>' +
+      locHtml +
+      (just ? '<div class="loc" style="color:#64748b;font-size:0.68rem;" title="' + (z.justification||'') + '">📝 ' + just + '</div>' : '');
+    card.appendChild(info);
+
+    grid.appendChild(card);
+  }
+
+  return withPhoto.length;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// EXPORT WORD ZPSO — TOUTES les ZPSO, photo si disponible
+// ═══════════════════════════════════════════════════════════════
+async function generateDocxZPSO() {
+  if (!xmlData || isRunning) return;
+  isRunning = true;
+  document.getElementById('btnGenZPSO').disabled   = true;
+  document.getElementById('btnGenPhotos').disabled = true;
+  document.getElementById('btnGenPlans').disabled  = true;
+  document.getElementById('btnGenPV').disabled     = true;
+
+  const lib = getLib();
+  if (!lib) {
+    isRunning = false;
+    ['btnGenZPSO','btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+  const { Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+          ImageRun, AlignmentType, PageOrientation, BorderStyle,
+          WidthType, ShadingType, VerticalAlign, SectionType, HeightRule } = lib;
+
+  const { zpsoMap, photoMap, bien } = xmlData;
+  const entries = Object.entries(zpsoMap)
+    .sort(([a],[b]) => a.localeCompare(b, undefined, { numeric: true }));
+
+  if (!entries.length) {
+    setStatus('⚠️ Aucune ZPSO à exporter.', 'error');
+    isRunning = false;
+    ['btnGenZPSO','btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+    return;
+  }
+
+  setProgress(0, 'Démarrage…');
+  setStatus('⏳ Génération du tableau ZPSO…', '');
+  log('=== Génération tableau ZPSO ===', 'ok');
+
+  // ── Dimensions paysage ────────────────────────────────────────
+  const TOTAL_W   = 15398;
+  const colWidths = [1200, 2700, 3400, 3400, 4698]; // N° / Loc / Desc / Justif / Photo
+
+  // ── Helpers ───────────────────────────────────────────────────
+  const brd  = { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' };
+  const brds = { top: brd, bottom: brd, left: brd, right: brd };
+
+  const mkCell = (idx, children, extra = {}) => new TableCell({
+    borders: brds,
+    verticalAlign: VerticalAlign.CENTER,
+    width: { size: colWidths[idx], type: WidthType.DXA },
+    margins: { top: 80, bottom: 80, left: 120, right: 120 },
+    ...extra,
+    children,
+  });
+
+  const mkPara = (text, rOpts = {}, pOpts = {}) => new Paragraph({
+    ...pOpts,
+    children: [new TextRun({ text: text || '—', font: 'Arial', size: 16, ...rOpts })],
+  });
+
+  // ── En-tête tableau ───────────────────────────────────────────
+  const HEADS = ['N° composant', 'Localisation', 'Description', 'Justification', 'Photo'];
+  const headerRow = new TableRow({
+    tableHeader: true,
+    children: HEADS.map((lbl, i) => mkCell(i,
+      [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: lbl, bold: true, color: 'FFFFFF', size: 17, font: 'Arial' })] })],
+      { shading: { fill: '00B0F0', type: ShadingType.CLEAR } }
+    )),
+  });
+
+  // ── Lignes données ────────────────────────────────────────────
+  const dataRows = [];
+  let nbOK = 0, nbMissing = 0;
+
+  for (let i = 0; i < entries.length; i++) {
+    const [id, z] = entries[i];
+    setProgress(Math.round((i / entries.length) * 88), `${id} (${i+1}/${entries.length})`);
+    setStatus(`⏳ <strong>${id}</strong> (${i+1} sur ${entries.length})…`, '');
+
+    const rowBg = { fill: i % 2 === 0 ? 'FFFFFF' : 'F0F9FF', type: ShadingType.CLEAR };
+
+    // Localisation : un para par valeur séparée par ;
+    const locs = (z.localisation || '').split(';').map(s => s.trim()).filter(Boolean);
+    const locChildren = locs.length
+      ? locs.map(l => mkPara(l, { size: 15 }))
+      : [mkPara('—', { size: 15 })];
+
+    // Cellule photo
+    let cPhoto;
+    if (z.photo) {
+      const path  = photoMap[z.photo];
+      const pfile = path ? (fileIndex[path] || findPhotoFile(path)) : null;
+      if (pfile) {
+        try {
+          const comp = await compressImage(pfile, 100, 1400);
+          if (comp && comp.data) {
+            const dW = 220, dH = Math.round(comp.height * dW / comp.width);
+            nbOK++;
+            log(`Photo OK : ${id} → ${comp.sizeKB} Ko`, 'ok');
+            cPhoto = mkCell(4,
+              [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: comp.data, transformation: { width: dW, height: dH }, type: 'jpg' })] })],
+              { shading: rowBg }
+            );
+          }
+        } catch(e) { log(`Erreur image ${id} : ${e.message}`, 'warn'); }
+      } else { log(`Fichier introuvable : ${path || z.photo}`, 'warn'); }
+    }
+    if (!cPhoto) {
+      nbMissing++;
+      cPhoto = mkCell(4, [mkPara('Photo non disponible', { italics: true, color: 'AAAAAA', size: 14 })], { shading: rowBg });
+    }
+
+    dataRows.push(new TableRow({
+      children: [
+        mkCell(0, [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: id, bold: true, size: 16, font: 'Arial' })] })], { shading: rowBg }),
+        mkCell(1, locChildren, { shading: rowBg }),
+        mkCell(2, [mkPara(z.description || '—', { size: 15 })], { shading: rowBg }),
+        mkCell(3, (() => {
+          const jt = (z.justification || '').toLowerCase();
+          const jColor = jt.includes('absence') ? 'C8E6C9'
+                       : jt.includes('pr') ? 'FFCDD2'
+                       : null;
+          return [mkPara(z.justification || '—', { size: 15 })];
+        })(), { shading: (() => {
+          const jt = (z.justification || '').toLowerCase();
+          return jt.includes('absence') ? { fill: 'C8E6C9', type: ShadingType.CLEAR }
+               : jt.includes('pr')      ? { fill: 'FFCDD2', type: ShadingType.CLEAR }
+               : rowBg;
+        })() }),
+        cPhoto,
+      ],
+    }));
+  }
+
+  // ── Page de garde ─────────────────────────────────────────────
+  setProgress(90, 'Page de garde…');
+
+  const agence_z = document.getElementById('optAgence').value.trim();
+  const agenceLines_z = agence_z.split(/\s*[—\n]\s*/).filter(Boolean);
+
+  const PG_W         = 15704;
+  const PG_COL_PHOTO = 4800;
+  const PG_COL_INFO  = PG_W - PG_COL_PHOTO - 200;
+
+  const adresseBien_z  = [(bien||{})['Immeuble_Adresse1']||'', (bien||{})['Immeuble_Departement']||'', (bien||{})['Immeuble_Commune']||''].filter(Boolean).join(' ');
+  const refRapport_z   = (bien||{})['Mission_Num_Dossier']  || '—';
+  const dateRapport_z  = (bien||{})['Mission_Date_Rapport'] || '—';
+  const redacteur_z    = (bien||{})['Gen_Nom_operateur']    || '—';
+
+  const brdNone_z  = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
+  const brdsNone_z = { top: brdNone_z, bottom: brdNone_z, left: brdNone_z, right: brdNone_z };
+
+  const pgPara = (txt, bold=false, sz=18, color='222222', spacing={before:80,after:40}) =>
+    new Paragraph({ spacing, children: [new TextRun({ text: txt||'—', bold, size: sz, font: 'Arial', color })] });
+
+  // Photo de présentation
+  const presKey_z = Object.keys(fileIndex).find(k =>
+    k.startsWith('photos/') && (k.toLowerCase().endsWith('presentation.jpeg') || k.toLowerCase().endsWith('presentation.jpg'))
+  );
+  let presImg_z = null, presW_z = 0, presH_z = 0;
+  if (presKey_z) {
+    const pc = await compressImage(fileIndex[presKey_z], 120, 2400);
+    if (pc) {
+      presImg_z = pc.data;
+      const maxWpx = Math.floor((PG_COL_PHOTO - 80) / 1440 * 96);
+      const maxHpx = Math.floor(8000 / 1440 * 96);
+      const r = Math.min(maxWpx / pc.width, maxHpx / pc.height, 1);
+      presW_z = Math.round(pc.width * r);
+      presH_z = Math.round(pc.height * r);
+    }
+  }
+
+  const cellPhoto_z = new TableCell({
+    borders: brdsNone_z,
+    width: { size: PG_COL_PHOTO, type: WidthType.DXA },
+    verticalAlign: VerticalAlign.TOP,
+    margins: { top: 0, bottom: 0, left: 0, right: 200 },
+    children: presImg_z
+      ? [new Paragraph({ alignment: AlignmentType.CENTER, children: [new ImageRun({ data: presImg_z, transformation: { width: presW_z, height: presH_z }, type: 'jpg' })] })]
+      : [new Paragraph({ alignment: AlignmentType.CENTER, children: [new TextRun({ text: '[ Photo du bien ]', italics: true, color: 'AAAAAA', size: 18, font: 'Arial' })] })],
+  });
+
+  const cellInfos_z = new TableCell({
+    borders: brdsNone_z,
+    width: { size: PG_COL_INFO, type: WidthType.DXA },
+    verticalAlign: VerticalAlign.TOP,
+    margins: { top: 0, bottom: 0, left: 200, right: 0 },
+    children: [
+      pgPara('Adresse du bien :', true, 18, '0080AD', { before: 0, after: 40 }),
+      pgPara(adresseBien_z || '—'),
+      pgPara('Référence rapport :', true, 18, '0080AD', { before: 120, after: 40 }),
+      pgPara(refRapport_z),
+      pgPara('Rédacteur :', true, 18, '0080AD', { before: 120, after: 40 }),
+      pgPara(redacteur_z),
+      pgPara('Date :', true, 18, '0080AD', { before: 120, after: 40 }),
+      pgPara(dateRapport_z),
+      pgPara('Entreprise réalisant le repérage :', true, 18, '0080AD', { before: 120, after: 40 }),
+      ...agenceLines_z.map(l => pgPara(l)),
+    ],
+  });
+
+  // Récapitulatif ZPSO
+  const brdRecap_z  = { style: BorderStyle.SINGLE, size: 4, color: 'CBD5E1' };
+  const brdsRecap_z = { top: brdRecap_z, bottom: brdRecap_z, left: brdRecap_z, right: brdRecap_z };
+  const RECAP_COLS_Z = [900, 900, PG_W - 900 - 900];
+  const mkRP = (txt, bold=false, color='222222', align=AlignmentType.LEFT) =>
+    new Paragraph({ alignment: align, children: [new TextRun({ text: txt||'—', bold, size: 16, font: 'Arial', color })] });
+  const mkRC = (colIdx, children, isHeader=false, shading=undefined) => new TableCell({
+    borders: brdsRecap_z,
+    width: { size: RECAP_COLS_Z[colIdx], type: WidthType.DXA },
+    verticalAlign: VerticalAlign.CENTER,
+    shading: isHeader ? { fill: '00B0F0', type: ShadingType.CLEAR } : shading,
+    margins: { top: 80, bottom: 80, left: 120, right: 120 },
+    children,
+  });
+
+  const recapRows_z = [
+    new TableRow({ tableHeader: true, children: [
+      mkRC(0, [mkRP('📋 Total ZPSO', true, 'FFFFFF')], true),
+      mkRC(1, [mkRP('📷 Avec photo', true, 'FFFFFF')], true),
+      mkRC(2, [mkRP('— Sans photo', true, 'FFFFFF')], true),
+    ]}),
+    new TableRow({ children: [
+      new TableCell({ borders: brdsRecap_z, width: { size: RECAP_COLS_Z[0], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, children: [mkRP(String(entries.length), true, '0080AD', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_z, width: { size: RECAP_COLS_Z[1], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, shading: { fill: 'E3F2FD', type: ShadingType.CLEAR }, children: [mkRP(String(nbOK), true, '1565C0', AlignmentType.CENTER)] }),
+      new TableCell({ borders: brdsRecap_z, width: { size: RECAP_COLS_Z[2], type: WidthType.DXA }, margins: { top: 80, bottom: 80, left: 120, right: 120 }, shading: { fill: 'F8FAFB', type: ShadingType.CLEAR }, children: [mkRP(String(nbMissing), true, '888888', AlignmentType.CENTER)] }),
+    ]}),
+  ];
+
+  const coverChildren_z = [
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 320 }, children: [new TextRun({ text: 'Annexe Identification des composants', bold: true, size: 52, font: 'Arial', color: '0080AD' })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 480 }, children: [new TextRun({ text: 'Mission Amiante — Tableau ZPSO', size: 24, font: 'Arial', color: '0080AD', italics: true })] }),
+    new Table({
+      width: { size: PG_W, type: WidthType.DXA },
+      columnWidths: [PG_COL_PHOTO, PG_COL_INFO],
+      borders: { top: brdNone_z, bottom: brdNone_z, left: brdNone_z, right: brdNone_z, insideH: brdNone_z, insideV: brdNone_z },
+      rows: [new TableRow({ cantSplit: false, children: [cellPhoto_z, cellInfos_z] })],
+    }),
+    new Paragraph({ spacing: { before: 480, after: 320 }, border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: '0080AD' } }, children: [] }),
+    new Paragraph({ spacing: { before: 0, after: 200 }, children: [new TextRun({ text: 'Récapitulatif des composants ZPSO', bold: true, size: 22, font: 'Arial', color: '0080AD' })] }),
+    new Table({ width: { size: PG_W, type: WidthType.DXA }, columnWidths: RECAP_COLS_Z, rows: recapRows_z }),
+  ];
+
+  // ── Assemblage document ───────────────────────────────────────
+  setProgress(93, 'Assemblage…');
+  const doc = new Document({
+    styles: { default: { document: { run: { font: 'Arial', size: 16 } } } },
+    sections: [
+      {
+        properties: { type: SectionType.NEXT_PAGE, page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 567, right: 567, bottom: 567, left: 567 } } },
+        children: coverChildren_z,
+      },
+      {
+        properties: { page: { size: { width: 11906, height: 16838, orientation: PageOrientation.LANDSCAPE }, margin: { top: 720, right: 720, bottom: 720, left: 720 } } },
+        children: [
+          new Paragraph({ spacing: { after: 100 }, children: [new TextRun({ text: 'Identification des composants', bold: true, size: 30, font: 'Arial', color: '0080AD' })] }),
+          new Paragraph({ spacing: { after: 280 }, children: [new TextRun({ text: `Mission : ${rootName}   ·   ${entries.length} composants   ·   Généré le ${new Date().toLocaleDateString('fr-FR')}`, size: 18, font: 'Arial', color: '888888' })] }),
+          new Table({ width: { size: TOTAL_W, type: WidthType.DXA }, columnWidths: colWidths, rows: [headerRow, ...dataRows] }),
+        ],
+      },
+    ],
+  });
+
+  setProgress(96, 'Finalisation…');
+  const blob = await Packer.toBlob(doc);
+  await downloadBlob(blob, `Annexe_ZPSO_${rootName}.docx`);
+  setProgress(100, '100% — Terminé !');
+  setStatus(`✅ Tableau ZPSO généré ! <strong>${nbOK}</strong> photos intégrées · <strong>${nbMissing}</strong> sans photo`, 'success');
+  log(`=== Terminé. OK: ${nbOK} / Sans photo: ${nbMissing} ===`, 'ok');
+
+  isRunning = false;
+  ['btnGenZPSO','btnGenPhotos','btnGenPlans','btnGenPV'].forEach(id => document.getElementById(id).disabled = false);
+}
+
+
 function findPhotoFile(photoPath) {
   if (!photoPath) return null;
   const fname = photoPath.split('/').pop().toLowerCase();
@@ -2949,373 +3243,190 @@ function openPhotoLightbox(src, label) {
 // TODO: mini-éditeur photo
 // function openPhotoEditor(file, numPrelevement) { ... }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // PREVIEW PV — rendu PDF page par page via PDF.js (DOM direct)
-
-// ---------------------------------------------------
-// FONCTION PARTAGEE : scan refs dans un PDF via PDF.js
-// Meme logique que la generation Word (join + regex accents)
-// ---------------------------------------------------
-
-/**
- * Scanne un fichier PDF et retourne pour chaque page les refs prélevements trouvées.
- * @param {File} pdfFile
- * @returns {Promise<Array<{num:number, total:number, refs:string[]}>>}
- */
-async function scanPdfPages(pdfFile) {
-  const ab  = await pdfFile.arrayBuffer();
-  const doc = await pdfjsLib.getDocument({ data: ab }).promise;
-  const pages = [];
-
-  for (let p = 1; p <= doc.numPages; p++) {
-    const page = await doc.getPage(p);
-    const tc   = await page.getTextContent();
-
-    // join(' ') = même approche que l'export Word (fonctionne en prod)
-    const txt  = tc.items.map(i => i.str).join(' ');
-    const refs = extractRefsFromText(txt);
-
-    pages.push({ num: p, total: doc.numPages, refs });
-  }
-  return pages;
-}
-
-/**
- * Extrait les numéros de prélèvements depuis un texte de page PDF.
- * Même regex que la génération Word.
- */
-function extractRefsFromText(txt) {
-  const refs = [];
-  let m;
-  // Regex ASCII : "chantillon client" couvre "echantillon" et "échantillon"
-  // car PDF.js restitue parfois les accents differemment
-  const re1 = /chantillon\s+client\s*:?\s*(P\d{3,4})/g;
-  while ((m = re1.exec(txt)) !== null) {
-    if (!refs.includes(m[1])) refs.push(m[1]);
-  }
-  // Fallback : "client : P641" sans le mot chantillon
-  if (!refs.length) {
-    const re2 = /\bclient\s*:\s*(P\d{3,4})/g;
-    while ((m = re2.exec(txt)) !== null) {
-      if (!refs.includes(m[1])) refs.push(m[1]);
-    }
-  }
-  // Dernier fallback : tous les P641 isoles
-  if (!refs.length) {
-    const re3 = /\b(P\d{3,4})\b/g;
-    while ((m = re3.exec(txt)) !== null) {
-      if (!refs.includes(m[1])) refs.push(m[1]);
-    }
-  }
-  return refs;
-}
-
-
-// ---------------------------------------------------
-// PREVIEW PV - scan + acces par page
-// ---------------------------------------------------
-// ---------------------------------------------------------------
-// PREVIEW PV — scan texte + affichage page à la demande
-// ---------------------------------------------------------------
-
-// Stockage global de l'index scanné : { pdfKey: { file, pages: [{num, refs}] } }
-let _pvIndex = null;
-
+// ═══════════════════════════════════════════════════════════════
 async function renderTabPV(pvPdfEntries) {
   const container = document.getElementById('pvPreviewContent');
   container.innerHTML = '';
 
   if (!pvPdfEntries || !pvPdfEntries.length) {
-    container.innerHTML = '<div class="tab-empty"><p>Aucun PV trouvé.</p></div>';
+    container.innerHTML = `
+      <div class="tab-empty">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <p style="margin-bottom:6px;">Aucun PV d'analyse trouvé automatiquement</p>
+        <small style="display:block;margin-bottom:14px;">Ni <code>PV_Analyse_*.pdf</code> ni <code>S.XXX.pdf</code> détectés.</small>
+        <button class="btn btn-pv" onclick="loadPVManually()" style="font-size:0.82rem;padding:8px 18px;">
+          📂 Charger les PV manuellement
+        </button>
+      </div>`;
     return;
   }
-
-  // ── Barre de recherche globale ──────────────────────────────
-  const searchBar = document.createElement('div');
-  searchBar.style.cssText = 'display:flex;align-items:center;gap:8px;background:#fff;border:2px solid #e2e8f0;border-radius:8px;padding:8px 12px;margin-bottom:14px;';
-  const searchIcon = document.createElement('span');
-  searchIcon.textContent = '🔍';
-  searchIcon.style.cssText = 'font-size:1rem;flex-shrink:0;';
-  const searchInput = document.createElement('input');
-  searchInput.type = 'text';
-  searchInput.placeholder = 'Rechercher un prélèvement (ex : P641) — Entrée pour accéder directement';
-  searchInput.style.cssText = 'flex:1;border:none;outline:none;font-size:0.85rem;font-family:Arial,sans-serif;color:#1a3a5c;background:transparent;';
-  const searchStatus = document.createElement('span');
-  searchStatus.style.cssText = 'font-size:0.72rem;color:#94a3b8;flex-shrink:0;white-space:nowrap;';
-  searchBar.appendChild(searchIcon);
-  searchBar.appendChild(searchInput);
-  searchBar.appendChild(searchStatus);
-  searchInput.addEventListener('focus', () => searchBar.style.borderColor='#0080AD');
-  searchInput.addEventListener('blur',  () => searchBar.style.borderColor='#e2e8f0');
-  container.appendChild(searchBar);
-
-  // ── Zone liste des PDF ──────────────────────────────────────
-  const listZone = document.createElement('div');
-  listZone.style.cssText = 'display:flex;flex-direction:column;gap:10px;';
-  container.appendChild(listZone);
-
-  // ── Scan de tous les PDFs (texte seulement, pas de rendu) ──
-  const scanMsg = document.createElement('div');
-  scanMsg.style.cssText = 'text-align:center;padding:20px;color:#0080AD;font-size:0.82rem;';
-  scanMsg.textContent = '⏳ Scan des PV en cours…';
-  listZone.appendChild(scanMsg);
-
-  _pvIndex = {};
 
   if (typeof pdfjsLib === 'undefined') {
-    scanMsg.style.color = '#dc2626';
-    scanMsg.textContent = '⚠️ PDF.js non disponible — vérifiez votre connexion.';
+    container.innerHTML = '<div class="tab-empty"><p>PDF.js non chargé.</p></div>';
     return;
   }
 
-  for (const [pdfKey, pdfFile] of pvPdfEntries) {
-    try {
-      // Utilise la meme fonction que la generation Word
-      const pages = await scanPdfPages(pdfFile);
-      _pvIndex[pdfKey] = { file: pdfFile, pages };
-    } catch(e) {
-      _pvIndex[pdfKey] = { file: pdfFile, pages: [], error: e.message };
-    }
-  }
+  // En-tête
+  const toolbar = document.createElement('div');
+  toolbar.className = 'plans-toolbar';
+  toolbar.innerHTML = `<span>${pvPdfEntries.length} fichier(s) PV — cliquez sur une ligne pour afficher la page</span>`;
+  container.appendChild(toolbar);
 
-  listZone.removeChild(scanMsg);
+  const listWrap = document.createElement('div');
+  listWrap.style.cssText = 'display:flex;flex-direction:column;gap:0;';
+  container.appendChild(listWrap);
 
-  // ── Construire les cartes PDF ───────────────────────────────
-  buildPVList(listZone, _pvIndex, searchInput, searchStatus, pvPdfEntries);
+  // Regex extraction refs prélèvements
+  const reCtx  = /R.f.chantillon\s+client\s*:?\s*(P\d{3,4})/gi;
+  const reFall = /\bP(\d{3,4})\b/g;
 
-  // ── Recherche live ──────────────────────────────────────────
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toUpperCase();
-    highlightPVSearch(listZone, q, searchStatus);
-  });
+  let globalPage = 1;
 
-  searchInput.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-    const q = searchInput.value.trim().toUpperCase();
-    if (!q) return;
-    // Trouver la première occurrence
-    const found = findFirstOccurrence(_pvIndex, q);
-    if (found) {
-      openPagePopup(found.file, found.pageNum, found.refs, found.totalPages);
-    } else {
-      searchStatus.textContent = 'Introuvable';
-      searchStatus.style.color = '#dc2626';
-    }
-  });
-}
+  (async () => {
+    for (const [pdfKey, pdfFile] of pvPdfEntries) {
+      // En-tête fichier
+      const fileHdr = document.createElement('div');
+      fileHdr.style.cssText = 'background:#1a3a5c;color:#e2e8f0;font-size:0.75rem;font-weight:600;padding:6px 12px;letter-spacing:0.03em;';
+      fileHdr.textContent = '📄 ' + pdfFile.name;
+      listWrap.appendChild(fileHdr);
 
-function buildPVList(listZone, pvIndex, searchInput, searchStatus, pvPdfEntries) {
-  listZone.innerHTML = '';
-
-  for (const [pdfKey, data] of Object.entries(pvIndex)) {
-    const card = document.createElement('div');
-    card.className = 'pv-file-card';
-    card.dataset.pdfKey = pdfKey;
-    card.style.cssText = 'background:#fff;border:2px solid #e2e8f0;border-radius:10px;overflow:hidden;';
-
-    // En-tête du fichier
-    const fHeader = document.createElement('div');
-    fHeader.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 14px;background:#f0f4f8;border-bottom:1px solid #e2e8f0;cursor:pointer;';
-    fHeader.addEventListener('click', () => togglePVCard(card));
-
-    const fIcon = document.createElement('span');
-    fIcon.style.cssText = 'font-size:1.3rem;flex-shrink:0;';
-    fIcon.textContent = '📄';
-
-    const fInfo = document.createElement('div');
-    fInfo.style.cssText = 'flex:1;min-width:0;';
-
-    const fName = document.createElement('div');
-    fName.style.cssText = 'font-size:0.83rem;font-weight:700;color:#1a3a5c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
-    fName.textContent = data.file.name;
-
-    const allRefs = [...new Set(data.pages.flatMap(p => p.refs))].sort((a,b)=>{
-      return (parseInt(a.replace(/\D/g,''),10)||0)-(parseInt(b.replace(/\D/g,''),10)||0);
-    });
-
-    const fMeta = document.createElement('div');
-    fMeta.style.cssText = 'font-size:0.71rem;color:#94a3b8;margin-top:2px;';
-    fMeta.textContent = data.pages.length + ' page(s) · ' + allRefs.length + ' prélèvement(s)';
-
-    fInfo.appendChild(fName);
-    fInfo.appendChild(fMeta);
-
-    const chevron = document.createElement('span');
-    chevron.className = 'pv-chevron';
-    chevron.style.cssText = 'color:#94a3b8;font-size:0.9rem;transition:transform 0.2s;';
-    chevron.textContent = '▼';
-
-    fHeader.appendChild(fIcon);
-    fHeader.appendChild(fInfo);
-    fHeader.appendChild(chevron);
-    card.appendChild(fHeader);
-
-    if (data.error) {
-      const errDiv = document.createElement('div');
-      errDiv.style.cssText = 'padding:10px 14px;color:#dc2626;font-size:0.78rem;';
-      errDiv.textContent = '⚠️ Erreur : ' + data.error;
-      card.appendChild(errDiv);
-    } else {
-      // Corps avec la liste des pages
-      const body = document.createElement('div');
-      body.className = 'pv-card-body';
-      body.style.cssText = 'padding:10px 14px 12px;display:flex;flex-direction:column;gap:6px;';
-
-      for (const pageData of data.pages) {
-        const pRow = document.createElement('div');
-        pRow.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
-
-        // Label page
-        const pLabel = document.createElement('div');
-        pLabel.style.cssText = 'font-size:0.72rem;font-weight:700;color:#0080AD;white-space:nowrap;flex-shrink:0;padding-top:2px;min-width:52px;';
-        pLabel.textContent = 'Page ' + pageData.num;
-
-        // Chips des refs
-        const chips = document.createElement('div');
-        chips.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px;';
-
-        if (pageData.refs.length) {
-          pageData.refs.forEach(ref => {
-            const chip = document.createElement('button');
-            chip.className = 'pv-ref-chip';
-            chip.style.cssText = 'background:#e0f2fe;color:#1a3a5c;border:1px solid #bae6fd;border-radius:14px;padding:2px 10px;font-size:0.73rem;font-weight:700;cursor:pointer;transition:background 0.15s,border-color 0.15s;font-family:Arial,sans-serif;';
-            chip.textContent = ref;
-            chip.title = 'Afficher page ' + pageData.num + ' — ' + ref;
-            chip.addEventListener('mouseover', () => { chip.style.background='#0080AD'; chip.style.color='#fff'; });
-            chip.addEventListener('mouseout',  () => { chip.style.background='#e0f2fe'; chip.style.color='#1a3a5c'; });
-            chip.addEventListener('click', e => {
-              e.stopPropagation();
-              openPagePopup(data.file, pageData.num, pageData.refs, pageData.total);
-            });
-            chips.appendChild(chip);
-          });
-        } else {
-          const empty = document.createElement('span');
-          empty.style.cssText = 'font-size:0.71rem;color:#cbd5e1;font-style:italic;';
-          empty.textContent = '—';
-          chips.appendChild(empty);
-        }
-
-        // Bouton "Voir page"
-        const viewBtn = document.createElement('button');
-        viewBtn.style.cssText = 'background:transparent;border:1px solid #e2e8f0;border-radius:5px;padding:2px 8px;font-size:0.68rem;color:#94a3b8;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:Arial,sans-serif;margin-left:auto;';
-        viewBtn.textContent = '👁 Voir';
-        viewBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          openPagePopup(data.file, pageData.num, pageData.refs, pageData.total);
-        });
-
-        pRow.appendChild(pLabel);
-        pRow.appendChild(chips);
-        pRow.appendChild(viewBtn);
-        body.appendChild(pRow);
+      let pdfDoc;
+      try {
+        const ab = await pdfFile.arrayBuffer();
+        pdfDoc = await pdfjsLib.getDocument({ data: ab }).promise;
+      } catch(err) {
+        const errDiv = document.createElement('div');
+        errDiv.style.cssText = 'padding:10px 16px;color:#dc2626;font-size:0.8rem;background:#fff5f5;';
+        errDiv.textContent = '⚠️ Erreur lecture : ' + err.message;
+        listWrap.appendChild(errDiv);
+        continue;
       }
 
-      card.appendChild(body);
+      for (let p = 1; p <= pdfDoc.numPages; p++) {
+        const pageNum = globalPage;
+        const page = await pdfDoc.getPage(p);
+
+        // Scan texte pour extraire les refs
+        const textContent = await page.getTextContent();
+        const fullText = textContent.items.map(i => i.str).join(' ');
+        const refs = [];
+        reCtx.lastIndex = 0;
+        for (const m of fullText.matchAll(reCtx))  { if (!refs.includes(m[1])) refs.push(m[1]); }
+        if (!refs.length) {
+          reFall.lastIndex = 0;
+          for (const m of fullText.matchAll(reFall)) { const r = 'P'+m[1]; if (!refs.includes(r)) refs.push(r); }
+        }
+
+        // Ligne accordéon
+        const row = document.createElement('div');
+        row.style.cssText = [
+          'display:flex;align-items:center;gap:10px;padding:7px 14px;cursor:pointer;',
+          'border-bottom:1px solid #e2e8f0;background:#fff;user-select:none;',
+          'transition:background 0.12s;'
+        ].join('');
+        row.onmouseenter = () => { row.style.background = '#f0f9ff'; };
+        row.onmouseleave = () => { if (!row._open) row.style.background = '#fff'; };
+
+        const pgBadge = document.createElement('span');
+        pgBadge.style.cssText = 'min-width:36px;font-size:0.7rem;font-weight:700;color:#0080AD;';
+        pgBadge.textContent = 'p.' + pageNum;
+
+        const refBadges = document.createElement('span');
+        refBadges.style.cssText = 'flex:1;font-size:0.73rem;color:#334155;';
+        refBadges.innerHTML = refs.length
+          ? refs.map(r => `<span style="background:#dbeafe;color:#1e40af;border-radius:3px;padding:1px 5px;margin-right:3px;font-weight:600;">${r}</span>`).join('')
+          : '<span style="color:#94a3b8;font-style:italic;">— pas de référence</span>';
+
+        const chevron = document.createElement('span');
+        chevron.style.cssText = 'font-size:0.7rem;color:#94a3b8;transition:transform 0.2s;';
+        chevron.textContent = '▶';
+
+        row.appendChild(pgBadge);
+        row.appendChild(refBadges);
+        row.appendChild(chevron);
+        listWrap.appendChild(row);
+
+        // Zone preview (masquée par défaut)
+        const preview = document.createElement('div');
+        preview.style.cssText = 'display:none;background:#f8fafc;padding:10px 16px;border-bottom:2px solid #0080AD;';
+
+        let rendered = false;
+        row.addEventListener('click', async () => {
+          if (row._open) {
+            preview.style.display = 'none';
+            chevron.style.transform = '';
+            chevron.textContent = '▶';
+            row._open = false;
+            row.style.background = '#fff';
+            return;
+          }
+          row._open = true;
+          chevron.style.transform = 'rotate(90deg)';
+          chevron.textContent = '▼';
+          row.style.background = '#e0f2fe';
+          preview.style.display = 'block';
+
+          if (!rendered) {
+            rendered = true;
+            preview.innerHTML = '<div style="color:#0080AD;font-size:0.8rem;padding:8px 0;">⏳ Rendu en cours…</div>';
+            try {
+              const scale = 1.6;
+              const vp = page.getViewport({ scale });
+              const canvas = document.createElement('canvas');
+              canvas.width = vp.width; canvas.height = vp.height;
+              await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+              const blob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 0.88));
+              const img = document.createElement('img');
+              img.style.cssText = 'width:100%;display:block;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,0.15);';
+              img.src = URL.createObjectURL(blob);
+              preview.innerHTML = '';
+              preview.appendChild(img);
+            } catch(e) {
+              preview.innerHTML = '<div style="color:#dc2626;font-size:0.8rem;">⚠️ ' + e.message + '</div>';
+            }
+          }
+        });
+
+        listWrap.appendChild(preview);
+        globalPage++;
+      }
     }
-
-    listZone.appendChild(card);
-  }
+  })();
 }
 
-function togglePVCard(card) {
-  const body    = card.querySelector('.pv-card-body');
-  const chevron = card.querySelector('.pv-chevron');
-  if (!body) return;
-  const open = body.style.display !== 'none';
-  body.style.display    = open ? 'none' : '';
-  chevron.style.transform = open ? 'rotate(-90deg)' : '';
-}
 
-function highlightPVSearch(listZone, q, statusEl) {
-  if (!_pvIndex) return;
-  let count = 0;
-  listZone.querySelectorAll('.pv-ref-chip').forEach(chip => {
-    const match = q && chip.textContent.toUpperCase().includes(q);
-    chip.style.background   = match ? '#fbbf24' : '#e0f2fe';
-    chip.style.color        = match ? '#1a3a5c' : '#1a3a5c';
-    chip.style.borderColor  = match ? '#f59e0b' : '#bae6fd';
-    if (match) count++;
+// ═══════════════════════════════════════════════════════════════
+// SAUVEGARDE / CHARGEMENT ÉTAT
+// ═══════════════════════════════════════════════════════════════
+async function restoreCrop(file, rotations, sel) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Chargement image échoué')); };
+    img.onload  = () => {
+      URL.revokeObjectURL(url);
+      const applyRot = (src, n, cb) => {
+        if (n <= 0) { cb(src); return; }
+        const c = document.createElement('canvas');
+        c.width = src.height; c.height = src.width;
+        const ctx = c.getContext('2d');
+        ctx.translate(c.width/2, c.height/2); ctx.rotate(Math.PI/2); ctx.drawImage(src, -src.width/2, -src.height/2);
+        c.toBlob(b => { const u2 = URL.createObjectURL(b); const i2 = new Image(); i2.onload = () => { URL.revokeObjectURL(u2); applyRot(i2, n-1, cb); }; i2.src = u2; }, 'image/jpeg', 0.95);
+      };
+      applyRot(img, rotations, rotated => {
+        const out = document.createElement('canvas');
+        const sx = Math.max(0, Math.round(sel.x)); const sy = Math.max(0, Math.round(sel.y));
+        const sw = Math.min(Math.round(sel.w), rotated.width-sx); const sh = Math.min(Math.round(sel.h), rotated.height-sy);
+        out.width = sw; out.height = sh;
+        out.getContext('2d').drawImage(rotated, sx, sy, sw, sh, 0, 0, sw, sh);
+        out.toBlob(blob => resolve(blob), 'image/jpeg', 0.95);
+      });
+    };
+    img.src = url;
   });
-  if (q) {
-    statusEl.textContent = count ? count + ' résultat(s) — Entrée pour ouvrir la 1ère page' : 'Introuvable';
-    statusEl.style.color = count ? '#16a34a' : '#dc2626';
-  } else {
-    statusEl.textContent = '';
-  }
 }
-
-function findFirstOccurrence(pvIndex, q) {
-  for (const [key, data] of Object.entries(pvIndex)) {
-    for (const page of data.pages) {
-      const match = page.refs.find(r => r.toUpperCase().includes(q));
-      if (match) return { file: data.file, pageNum: page.num, refs: page.refs, totalPages: page.total };
-    }
-  }
-  return null;
-}
-
-async function openPagePopup(pdfFile, pageNum, refs, totalPages) {
-  // Overlay
-  const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
-
-  const box = document.createElement('div');
-  box.style.cssText = 'background:#fff;border-radius:10px;overflow:hidden;max-width:820px;width:100%;max-height:90vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,0.4);';
-
-  // Header
-  const hdr = document.createElement('div');
-  hdr.style.cssText = 'display:flex;align-items:center;gap:10px;background:#1a3a5c;color:#fff;padding:11px 16px;flex-shrink:0;';
-  const hName = document.createElement('span');
-  hName.style.cssText = 'font-size:0.8rem;color:#94a3b8;flex-shrink:0;';
-  hName.textContent = pdfFile.name;
-  const hPage = document.createElement('span');
-  hPage.style.cssText = 'font-size:0.92rem;font-weight:800;color:#00B0F0;flex-shrink:0;';
-  hPage.textContent = 'Page ' + pageNum + ' / ' + totalPages;
-  const hRefs = document.createElement('span');
-  hRefs.style.cssText = 'font-size:0.82rem;font-weight:700;color:#fff;flex:1;';
-  hRefs.textContent = refs.length ? 'N° ' + refs.join(' · ') : '';
-  const closeBtn = document.createElement('button');
-  closeBtn.style.cssText = 'background:#dc2626;color:#fff;border:none;border-radius:6px;padding:5px 14px;cursor:pointer;font-weight:700;font-size:0.85rem;flex-shrink:0;';
-  closeBtn.textContent = '✕ Fermer';
-  closeBtn.addEventListener('click', () => document.body.removeChild(overlay));
-  hdr.appendChild(hName); hdr.appendChild(hPage); hdr.appendChild(hRefs); hdr.appendChild(closeBtn);
-
-  // Zone image
-  const imgZone = document.createElement('div');
-  imgZone.style.cssText = 'flex:1;overflow:auto;background:#e8ecf1;display:flex;align-items:flex-start;justify-content:center;padding:14px;';
-  const loadSpan = document.createElement('span');
-  loadSpan.style.cssText = 'align-self:center;color:#0080AD;font-size:0.88rem;font-weight:600;';
-  loadSpan.textContent = '⏳ Rendu de la page…';
-  imgZone.appendChild(loadSpan);
-
-  box.appendChild(hdr);
-  box.appendChild(imgZone);
-  overlay.appendChild(box);
-  document.body.appendChild(overlay);
-  overlay.addEventListener('click', e => { if (e.target === overlay) document.body.removeChild(overlay); });
-
-  // Rendu de la seule page demandée
-  try {
-    const ab  = await pdfFile.arrayBuffer();
-    const doc = await pdfjsLib.getDocument({ data: ab }).promise;
-    const pg  = await doc.getPage(pageNum);
-    const vp  = pg.getViewport({ scale: 1.8 });
-    const canvas = document.createElement('canvas');
-    canvas.width  = vp.width;
-    canvas.height = vp.height;
-    canvas.style.cssText = 'max-width:100%;display:block;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.15);';
-    await pg.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
-    imgZone.removeChild(loadSpan);
-    imgZone.appendChild(canvas);
-  } catch(err) {
-    loadSpan.style.color = '#dc2626';
-    loadSpan.textContent = 'Erreur : ' + err.message;
-    console.error('openPagePopup', err);
-  }
-}
-
-
 
 async function saveState() {
   if (!xmlData) return;
@@ -3351,15 +3462,11 @@ function loadState(input) {
   if (!file) return;
   input.value = '';
   const reader = new FileReader();
-  reader.onload = e => { applyStateFromJSON(e.target.result); };
-  reader.readAsText(file);
-}
-
-function applyStateFromJSON(jsonText, silent = false) {
-  try {
-      const state = JSON.parse(jsonText);
+  reader.onload = e => {
+    try {
+      const state = JSON.parse(e.target.result);
       if (!state.plans || !Array.isArray(state.plans)) throw new Error('Format JSON invalide');
-      if (!xmlData) { if(!silent) showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true); return; }
+      if (!xmlData) { showSaveLoadMsg('⚠ Chargez d\'abord un dossier mission', true); return; }
       if (state.agence)  document.getElementById('optAgence').value  = state.agence;
       if (state.qualite) document.getElementById('optQualite').value = state.qualite;
       const fnToIdx = {};
@@ -3370,13 +3477,12 @@ function applyStateFromJSON(jsonText, silent = false) {
       state.plans.forEach(saved => {
         const idx = fnToIdx[saved.fileName];
         if (idx === undefined) return;
-                const locDefaut = getPlanDefaultName(idx);
+        const locDefaut = getPlanDefaultName(idx);
         planTableData.set(idx, { objet: saved.objet||OBJET_OPTIONS[0], objetLibre: saved.objetLibre||'', localisation: saved.localisation||locDefaut, complements: saved.complements||{}, autresText: saved.autresText||'', commentaire: saved.commentaire||'' });
         const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
         if (card) {
           const chk = card.querySelector('input[type="checkbox"]');
           if (chk) { chk.checked = saved.checked !== false; card.classList.toggle('checked', chk.checked); card.classList.toggle('unchecked', !chk.checked); }
-          refreshPlanCard(idx); // actualise nom + badge corrige
         }
         applied++;
       });
@@ -3401,20 +3507,18 @@ function applyStateFromJSON(jsonText, silent = false) {
             if (thumb) thumb.src = URL.createObjectURL(restoredBlob);
             const btnCrop = card.querySelector('.btn-crop');
             if (btnCrop) { btnCrop.classList.add('has-crop'); btnCrop.innerHTML = '&#x2702; Recadrage appliqué ✓'; }
-            card.classList.add('edited');
           }
           cropCount++;
         } catch(e) { log(`Erreur restauration crop ${saved.fileName} : ${e.message}`, 'err'); }
       });
       Promise.all(cropPromises).then(() => {
-        // Rafraichir toutes les cards apres restauration async des crops
-        allCards.forEach(c => { const ci = parseInt(c.dataset.idx,10); if (!isNaN(ci)) refreshPlanCard(ci); });
-        buildPlanTable();
         const msg = cropCount > 0 ? `✓ ${applied} plan(s) restauré(s) · ${cropCount} crop(s) recalculé(s)` : `✓ ${applied} plan(s) restauré(s)`;
         showSaveLoadMsg(msg);
         log(`Configuration chargée : ${applied} plan(s), ${cropCount} crop(s)`, 'ok');
       });
-    } catch(err) { if(!silent) showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true); log('Erreur chargement JSON : ' + err.message, 'err'); }
+    } catch(err) { showSaveLoadMsg('✗ Erreur lecture JSON : ' + err.message, true); log('Erreur chargement JSON : ' + err.message, 'err'); }
+  };
+  reader.readAsText(file);
 }
 
 function showSaveLoadMsg(msg, isError=false) {
@@ -3423,9 +3527,9 @@ function showSaveLoadMsg(msg, isError=false) {
   setTimeout(() => { el.style.display = 'none'; }, 3500);
 }
 
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 // TÉLÉCHARGEMENT / ÉCRITURE DIRECTE
-// ---------------------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
 function showFsStatus(msg, isError) {
   const el = document.getElementById('folderName');
   const span = document.createElement('span');
@@ -3433,6 +3537,49 @@ function showFsStatus(msg, isError) {
   span.style.cssText = `font-size:0.7rem;color:${isError ? '#dc2626' : '#16a34a'};display:block;margin-top:3px;`;
   el.appendChild(span);
   setTimeout(() => { if (span.parentNode) span.parentNode.removeChild(span); }, 4000);
+}
+
+// ── Chargement manuel des PV d'analyse ──────────────────────────────────────
+function loadPVManually() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.pdf';
+  input.multiple = true;
+  input.style.display = 'none';
+  document.body.appendChild(input);
+
+  input.addEventListener('change', () => {
+    const files = [...input.files];
+    document.body.removeChild(input);
+    if (!files.length) return;
+
+    // Injecter dans fileIndex sous un chemin virtuel pv_manuel/
+    const newEntries = [];
+    for (const file of files) {
+      const key = 'pv_manuel/' + file.name;
+      fileIndex[key] = file;
+      newEntries.push([key, file]);
+    }
+
+    window._pvPdfEntries = newEntries.sort(([a],[b]) => a.localeCompare(b, undefined, { numeric: true }));
+    window._pvRendered   = false;
+
+    document.getElementById('tabBtnPV').disabled = false;
+    updateTabBadge('PV', newEntries.length);
+    document.getElementById('btnGenPV').disabled = false;
+
+    document.getElementById('pvPreviewContent').innerHTML = `
+      <div class="tab-empty" style="cursor:pointer;" onclick="switchTab('pv')">
+        <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <p>${newEntries.length} PV chargé(s) manuellement</p>
+        <small>Cliquez sur l'onglet "Preview PV" pour charger l'aperçu</small>
+      </div>`;
+
+    log('PV chargés manuellement : ' + newEntries.map(([k]) => k.split('/').pop()).join(', '), 'ok');
+    setStatus('✅ ' + newEntries.length + ' PV chargé(s) manuellement.', 'success');
+  });
+
+  input.click();
 }
 
 async function downloadBlob(blob, filename) {
