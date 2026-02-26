@@ -1333,6 +1333,30 @@ async function loadAllData() {
     const nbPlans = planFiles.length;
     updateTabBadge('Plans', nbPlans);
     if (nbPlans > 0) {
+      // Scan vecXml : recuperer les titres de plans
+      planTitles.clear();
+      await Promise.all(planFiles.map(async (pf, idx) => {
+        const base = pf.file.name.replace(/_Ami\.jpg$/i, '');
+        // Chercher le vecXml dans le meme repertoire que le jpg
+        const dir = pf.path.replace(/[^/]+$/, '');
+        const xmlKey = dir + base + '.vecXml';
+        const xmlFile = fileIndex[xmlKey]
+          || fileIndex[xmlKey.toLowerCase()]
+          || Object.values(fileIndex).find(f => f.name === base + '.vecXml');
+        if (!xmlFile) return;
+        try {
+          // vecXml genere par Liciel en Windows-1252 (encodage Windows francais)
+          const ab = await xmlFile.arrayBuffer();
+          const txt = new TextDecoder('windows-1252').decode(ab);
+          const m = txt.match(/<Titre>([^<]+)<\/Titre>/);
+          if (m && m[1].trim()) {
+            planTitles.set(idx, m[1].trim());
+            log('  ' + base + '.vecXml -> "' + m[1].trim() + '"', 'ok');
+          }
+        } catch(e) { log('  vecXml ' + base + ' : ' + e.message, 'warn'); }
+      }));
+      if (planTitles.size > 0) log(planTitles.size + ' titre(s) vecXml chargé(s)', 'ok');
+
       buildPlanGrid(planFiles);
       document.getElementById('sectionPlanGrid').style.display  = 'block';
       document.getElementById('sectionPlanTable').style.display = 'block';
@@ -1448,11 +1472,21 @@ async function cropAutoForPreview(cardIdx, file, imgEl) {
   } catch(e) { /* silencieux */ }
 }
 
+// Map globale idx -> titre issu du vecXml (ex: "R+1 - Locaux techniques")
+const planTitles = new Map();
+
+// Retourne le nom par defaut d'un plan : titre vecXml prioritaire sur nom de fichier
+function getPlanDefaultName(idx) {
+  if (planTitles.has(idx)) return planTitles.get(idx);
+  const pf = xmlData && xmlData.planFiles ? xmlData.planFiles[idx] : null;
+  return pf ? pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ') : '';
+}
+
 function buildPlanGrid(planFiles) {
   const grid = document.getElementById('planGrid');
   grid.innerHTML = '';
   planFiles.forEach((pf, i) => {
-    const nomDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
+    const nomDefaut = getPlanDefaultName(i);
     const id = 'plan_' + i;
     const card = document.createElement('div');
     card.className = 'plan-card checked';
@@ -1477,7 +1511,7 @@ function buildPlanGrid(planFiles) {
     chk.type = 'checkbox'; chk.checked = true; chk.id = id + '_chk';
     const lbl = document.createElement('label');
     lbl.htmlFor = id + '_chk';
-    lbl.textContent = pf.file.name.replace(/_Ami\.jpg$/i, '');
+    lbl.textContent = getPlanDefaultName(i);
     lbl.title = pf.file.name;
     checkRow.appendChild(chk); checkRow.appendChild(lbl);
     const handle = document.createElement('div');
@@ -1722,8 +1756,7 @@ function openCropModal(cardIdx, cardEl, thumbEl) {
 
 function populateCropForm(cardIdx) {
   if (!planTableData.has(cardIdx)) {
-    const pf = xmlData.planFiles[cardIdx];
-    const locDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
+    const locDefaut = getPlanDefaultName(cardIdx);
     planTableData.set(cardIdx, { objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut, complements: {}, autresText: '', commentaire: '' });
   }
   const d = planTableData.get(cardIdx);
@@ -1787,8 +1820,7 @@ function refreshPlanCard(cardIdx) {
     nameEl.title = label;
   }
   // Badge corrige : si modification par rapport aux valeurs initiales
-  const pf = xmlData && xmlData.planFiles ? xmlData.planFiles[cardIdx] : null;
-  const locDefaut = pf ? pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ') : '';
+  const locDefaut = getPlanDefaultName(cardIdx);
   const isEdited = (d.localisation && d.localisation !== locDefaut)
     || (d.objet && d.objet !== 'Croquis de prélèvements')
     || (d.objetLibre !== '')
@@ -1964,7 +1996,7 @@ function buildPlanTable() {
     const cardIdx = parseInt(card.dataset.idx, 10);
     const pf = xmlData.planFiles[cardIdx];
     if (!planTableData.has(cardIdx)) {
-      const locDefaut = pf.file.name.replace(/_Ami\.jpg$/i, '').replace(/_/g, ' ');
+      const locDefaut = getPlanDefaultName(cardIdx);
       planTableData.set(cardIdx, { objet: OBJET_OPTIONS[0], objetLibre: '', localisation: locDefaut, complements: {}, autresText: '', commentaire: '' });
     }
     const d = planTableData.get(cardIdx);
@@ -2052,7 +2084,7 @@ function getPlanFilesFromGrid() {
       result.push({
         path: pf.path, file: pf.file,
         nomEdite: td.localisation || pf.file.name,
-        objet, localisation: td.localisation || pf.file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' '),
+        objet, localisation: td.localisation || getPlanDefaultName(parseInt(card.dataset.idx,10)),
         complements: compList.length > 0 ? compList.join(', ') : 'Sans Objet',
         commentaire: td.commentaire || '',
         cropBlob, hasManualCrop: !!(cropEntry && cropEntry.manualBlob),
@@ -3338,7 +3370,7 @@ function applyStateFromJSON(jsonText, silent = false) {
       state.plans.forEach(saved => {
         const idx = fnToIdx[saved.fileName];
         if (idx === undefined) return;
-        const locDefaut = xmlData.planFiles[idx].file.name.replace(/_Ami\.jpg$/i,'').replace(/_/g,' ');
+                const locDefaut = getPlanDefaultName(idx);
         planTableData.set(idx, { objet: saved.objet||OBJET_OPTIONS[0], objetLibre: saved.objetLibre||'', localisation: saved.localisation||locDefaut, complements: saved.complements||{}, autresText: saved.autresText||'', commentaire: saved.commentaire||'' });
         const card = allCards.find(c => parseInt(c.dataset.idx,10) === idx);
         if (card) {
