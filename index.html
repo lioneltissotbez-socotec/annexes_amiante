@@ -2067,7 +2067,7 @@ async function generateDocxPhotos() {
     let c6;
     const chm = photoMap[p.numPrelevement];
     if (chm) {
-      const photoFile = fileIndex[chm];
+      const photoFile = fileIndex[chm] || findPhotoFile(chm);
       if (photoFile) {
         try {
           const comp = await compressImage(photoFile, targetKB);
